@@ -1,0 +1,52 @@
+<AutoPilot:ProjectResources xmlns:AutoPilot="com.autoesl.autopilot.ui.directiveView">
+<sourceFile name="">
+<directive functionLabel="" functionName="backsub" label="">
+<pragma name="INTERFACE">
+<option name="m_axi" positionalBoolean="mode" value=""/>
+<option name="port" positionalBoolean="4" value="out_frame"/>
+<option name="offset" value="slave"/>
+</pragma>
+</directive>
+<directive functionLabel="" functionName="backsub" label="">
+<pragma name="INTERFACE">
+<option name="m_axi" positionalBoolean="mode" value=""/>
+<option name="port" positionalBoolean="4" value="data_array"/>
+<option name="offset" value="slave"/>
+</pragma>
+</directive>
+<directive functionLabel="" functionName="backsub" label="">
+<pragma name="INTERFACE">
+<option name="m_axi" positionalBoolean="mode" value=""/>
+<option name="port" positionalBoolean="4" value="parameters"/>
+<option name="offset" value="slave"/>
+</pragma>
+</directive>
+<directive functionLabel="" functionName="backsub" label="">
+<pragma name="INTERFACE">
+<option name="s_axilite" positionalBoolean="mode" value=""/>
+<option name="port" positionalBoolean="4" value="init"/>
+<option name="bundle" value="CRTL_BUS"/>
+</pragma>
+</directive>
+<directive functionLabel="" functionName="backsub" label="">
+<pragma name="INTERFACE">
+<option name="s_axilite" positionalBoolean="mode" value=""/>
+<option name="port" positionalBoolean="4" value="return"/>
+<option name="bundle" value="CRTL_BUS"/>
+</pragma>
+</directive>
+<directive functionLabel="" functionName="tostruct" label="">
+<pragma name="INLINE"/>
+</directive>
+<directive functionLabel="" functionName="EM_ALGO" label="">
+<pragma name="INLINE"/>
+</directive>
+<directive functionLabel="" functionName="EM_ALGO" label="">
+<pragma name="LOOP_TRIPCOUNT">
+<option name="min" value="1"/>
+<option name="max" value="4"/>
+<option name="avg" value="2"/>
+</pragma>
+</directive>
+</sourceFile>
+</AutoPilot:ProjectResources>

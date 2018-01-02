@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vivadoHLSLog:LogRoot xmlns:vivadoHLSLog="www.xilinx.com/vivadoHLSLog">
+  <errorLogs>
+    <logs>
+      <synLog/>
+      <simLog/>
+      <mgLog/>
+      <packageLog/>
+      <csimLog/>
+    </logs>
+  </errorLogs>
+  <warningLogs>
+    <logs>
+      <synLog>
+        <logs message="@W [RTGEN-101] Global scalar 'vinit' will not be exposed as RTL port." projectName="GMM_backsub_new" solutionName="solution1" date="2017-12-27T00:50:33.305+0530" type="Warning"/>
+        <logs message="@W [RTGEN-101] Register 'vinit' is power-on initialization." projectName="GMM_backsub_new" solutionName="solution1" date="2017-12-27T00:50:30.226+0530" type="Warning"/>
+        <logs message="@W [RTGEN-101] Global array 'F' will not be exposed as RTL port." projectName="GMM_backsub_new" solutionName="solution1" date="2017-12-27T00:50:30.221+0530" type="Warning"/>
+        <logs message="@W [RTGEN-101] Global array 'akt' will not be exposed as RTL port." projectName="GMM_backsub_new" solutionName="solution1" date="2017-12-27T00:50:30.216+0530" type="Warning"/>
+        <logs message="@W [RTGEN-101] Global scalar 'alpha_w' will not be exposed as RTL port." projectName="GMM_backsub_new" solutionName="solution1" date="2017-12-27T00:50:30.212+0530" type="Warning"/>
+        <logs message="@W [RTGEN-101] Register 'alpha_w' is power-on initialization." projectName="GMM_backsub_new" solutionName="solution1" date="2017-12-27T00:50:30.208+0530" type="Warning"/>
+        <logs message="@W [RTGEN-101] Global array 'back_gauss' will not be exposed as RTL port." projectName="GMM_backsub_new" solutionName="solution1" date="2017-12-27T00:50:30.204+0530" type="Warning"/>
+        <logs message="@W [RTGEN-101] Global array 'matchsum' will not be exposed as RTL port." projectName="GMM_backsub_new" solutionName="solution1" date="2017-12-27T00:50:30.199+0530" type="Warning"/>
+        <logs message="@W [SCHED-21] The critical path consists of the following:&#xA;&#x9;'sitodp' operation ('tmp_22', GMM_backsub_new/core.cpp:111->GMM_backsub_new/core.cpp:76) (6.56 ns)" projectName="GMM_backsub_new" solutionName="solution1" date="2017-12-27T00:50:24.151+0530" type="Warning"/>
+        <logs message="@W [SCHED-21] Estimated clock period (6.56ns) exceeds the target (target clock period: 5ns, clock uncertainty: 0.625ns, effective delay budget: 4.38ns)." projectName="GMM_backsub_new" solutionName="solution1" date="2017-12-27T00:50:24.147+0530" type="Warning"/>
+        <logs message="@W [SCHED-21] Estimated delay (6.56ns) of 'sitodp' operation ('tmp_22', GMM_backsub_new/core.cpp:111->GMM_backsub_new/core.cpp:76) exceeds the target cycle time (target cycle time: 5ns, clock uncertainty: 0.625ns, effective cycle time: 4.38ns)." projectName="GMM_backsub_new" solutionName="solution1" date="2017-12-27T00:50:24.142+0530" type="Warning"/>
+      </synLog>
+      <simLog/>
+      <mgLog/>
+      <packageLog/>
+      <csimLog/>
+    </logs>
+  </warningLogs>
+</vivadoHLSLog:LogRoot>
