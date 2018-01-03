@@ -53871,9 +53871,9 @@ _ssdm_op_SpecDataflowPipeline(-1, "");
 typedef float data_t;
 
 int backsub(uint8_t data_array[76800], uint8_t out_frame[76800],
-  bool init);
+  bool init, data_t parameters[76800*2*3]);
 
-uint8_t EM_ALGO(uint8_t pixel,int pos, data_t parameters[(76800/8)*2*3], int x);
+uint8_t EM_ALGO(uint8_t pixel,int pos, data_t parameters[(76800/128)*2*3], int x);
 #2 "GMM_backsub_new/core.cpp" 2
 
 
@@ -53894,38 +53894,43 @@ int backsub(uint8_t frame_in[76800], uint8_t frame_out[76800], bool init, data_t
 #pragma HLS INTERFACE m_axi port=para offset=slave
 #pragma HLS INTERFACE s_axilite port=init bundle=CRTL_BUS
 #pragma HLS INTERFACE s_axilite port=return bundle=CRTL_BUS
-
- static uint8_t data_array[76800/8];
- static uint8_t out_frame[76800/8];
+#pragma HLS protocol fixed
+ static uint8_t data_array[76800/128];
+ static uint8_t out_frame[76800/128];
  //uint8_t iterator = 0;
- static data_t parameters[76800*2*3/8];
+//	static data_t parameters[76800*MODELS*3/PARTS];
 
- for (int x=0; x<8;x++){
- memcpy(parameters, &para[x*(76800*2*3/8)], 76800*2*3/8);
- memcpy(data_array, &frame_in[x*(76800/8)], 76800/8);
+ for (int x=0; x<128;x++){
+#pragma HLS protocol fixed
+//	static uint8_t data_array[IMG_SIZE/PARTS];
+//	static uint8_t out_frame[IMG_SIZE/PARTS];
+//	//uint8_t iterator = 0;
+//	static data_t parameters[76800*MODELS*3/PARTS];
+//	memcpy(parameters, &para[x*(IMG_SIZE*MODELS*3/PARTS)], IMG_SIZE*MODELS*3/PARTS);
+ memcpy(data_array, &frame_in[x*(76800/128)], 76800/128);
 
  loop1: {
   if (init) {
-   for (int i = 0; i < 76800/8; i = i + 1) {
+   for (int i = 0; i < 76800/128; i = i + 1) {
 #pragma HLS PIPELINE
- matchsum[i+x*(76800/8)][0] = 0;
-     matchsum[i+x*(76800/8)][1] = 0;
+ matchsum[i+x*(76800/128)][0] = 0;
+     matchsum[i+x*(76800/128)][1] = 0;
 
-     back_gauss[i+x*(76800/8)][0] = true;
-     back_gauss[i+x*(76800/8)][1] = true;
+     back_gauss[i+x*(76800/128)][0] = true;
+     back_gauss[i+x*(76800/128)][1] = true;
 
-     parameters[i * 2 * 3 + 0] = 0;
-     parameters[i * 2 * 3 + 1] = 0;
+     para[x*(76800*2*3/128)+i * 2 * 3 + 0] = 0;
+     para[x*(76800*2*3/128)+i * 2 * 3 + 1] = 0;
      //parameters[i * MODELS * 3 + 2] = 0;
 
-     parameters[i * 2 * 3 + 2] = 4900;
-     parameters[i * 2 * 3 + 3] = 4900;
+     para[x*(76800*2*3/128)+i * 2 * 3 + 2] = 4900;
+     para[x*(76800*2*3/128)+i * 2 * 3 + 3] = 4900;
      //parameters[i * MODELS * 3 + 5] = 2500;
 
-     parameters[i * 2 * 3 + 4] = 0.09;
-     parameters[i * 2 * 3 + 5] = 0.09;
+     para[x*(76800*2*3/128)+i * 2 * 3 + 4] = 0.09;
+     para[x*(76800*2*3/128)+i * 2 * 3 + 5] = 0.09;
 
-     out_frame[i] = EM_ALGO(data_array[i], i, parameters, x);
+     out_frame[i] = EM_ALGO(data_array[i], i, &para[x*(76800*2*3/128)], x);
 //						out_frame[i] = 0;
 //					else
 //						out_frame[i] = 255;
@@ -53934,25 +53939,25 @@ int backsub(uint8_t frame_in[76800], uint8_t frame_out[76800], bool init, data_t
     }
 
   } else {
-   for (int j=0; j<76800/8; j++){
+   for (int j=0; j<76800/128; j++){
 #pragma HLS PIPELINE
 //				if (!EM_ALGO(data_array[j], j, parameters, matchsum, back_gauss))
 //					out_frame[j] = 0;
 //				else
 //					out_frame[j] = 255;
-    out_frame[j] = EM_ALGO(data_array[j], j, parameters, x);
+    out_frame[j] = EM_ALGO(data_array[j], j, &para[x*(76800*2*3/128)], x);
    }
   }
  }
 
- memcpy(&frame_out[x*(76800/8)], out_frame, 76800/8);
- memcpy(&para[x*((76800/8)*2*3)], parameters, (76800/8)*2*3);
+ memcpy(&frame_out[x*(76800/128)], out_frame, 76800/128);
+//	memcpy(&para[x*((IMG_SIZE/PARTS)*MODELS*3)], parameters, (IMG_SIZE/PARTS)*MODELS*3);
 
  }
  return 0;
 }
 
-uint8_t EM_ALGO(uint8_t pixel, int pos, data_t parameters[(76800/8)*2*3],int x) {_ssdm_SpecArrayDimSize(parameters,(76800/8)*2*3);
+uint8_t EM_ALGO(uint8_t pixel, int pos, data_t parameters[(76800/128)*2*3],int x) {_ssdm_SpecArrayDimSize(parameters,(76800/128)*2*3);
 
 //#pragma HLS INLINE
 
@@ -53961,7 +53966,7 @@ uint8_t EM_ALGO(uint8_t pixel, int pos, data_t parameters[(76800/8)*2*3],int x) 
  //Checking whether the pixel is in 2.5sigma distance of every mean
  for (int j = 0; j < 2; j++) {
   if ((abs(pixel - parameters[pos* 2 * 3 + j] ) < 2.5 * hls::sqrtf(parameters[pos* 2 * 3 + 2 + j] ))
-    and (back_gauss[x*(76800/8)+pos][j])) {
+    and (back_gauss[x*(76800/128)+pos][j])) {
    M[j] = true;
   }
   akt[j] = alpha_w / parameters[pos*2 * 3 + 4 + j] ;
@@ -54003,7 +54008,7 @@ uint8_t EM_ALGO(uint8_t pixel, int pos, data_t parameters[(76800/8)*2*3],int x) 
   parameters[pos* 2 * 3 + 4 + max_val] = parameters[pos* 2 * 3 + 4 + max_val]
   - alpha_w * parameters[pos* 2 * 3 + 4 + max_val] + alpha_w;
   //std::cout << 	"********"<<	weight[pos][max_val] << " " << pos<<std::endl;
-  matchsum[x*(76800/8)+pos][max_val] = matchsum[x*(76800/8)+pos][max_val] + 1;
+  matchsum[x*(76800/128)+pos][max_val] = matchsum[x*(76800/128)+pos][max_val] + 1;
 
   for (int j = 0; j < 2; j++) {
 #pragma HLS UNROLL
@@ -54017,7 +54022,7 @@ uint8_t EM_ALGO(uint8_t pixel, int pos, data_t parameters[(76800/8)*2*3],int x) 
  } else { // no match procedure
   parameters[pos* 2 * 3 + min_val] = pixel; //mean
   parameters[pos* 2 * 3 + 2 + min_val] =vinit; // sigma
-  matchsum[x*(76800/8)+pos][min_val] = 1;
+  matchsum[x*(76800/128)+pos][min_val] = 1;
 
   data_t matchsumtot = 0;
   for (int j = 0; j < 2; j++) {
@@ -54025,7 +54030,7 @@ uint8_t EM_ALGO(uint8_t pixel, int pos, data_t parameters[(76800/8)*2*3],int x) 
  //For the unmatched Gaussian distributions mean and variance are unchanged while the weights are updated
    if (j != min_val) {
     parameters[ 2 * 3*pos + 4 + j] = parameters[ 2 * 3*pos + 4 + j] - alpha_w;
-    matchsumtot = matchsumtot + matchsum[x*(76800/8)+pos][j]; // matchsumtot is the sum of the values of the matchsum of the K-1 Gaussians with highest F
+    matchsumtot = matchsumtot + matchsum[x*(76800/128)+pos][j]; // matchsumtot is the sum of the values of the matchsum of the K-1 Gaussians with highest F
    }
   }
   if (matchsumtot != 0) {
@@ -54072,8 +54077,8 @@ uint8_t EM_ALGO(uint8_t pixel, int pos, data_t parameters[(76800/8)*2*3],int x) 
   index[j + 1] = temp_index;
  }
 
- back_gauss[x*(76800/8)+pos][0]=false;
- back_gauss[x*(76800/8)+pos][1]=false;
+ back_gauss[x*(76800/128)+pos][0]=false;
+ back_gauss[x*(76800/128)+pos][1]=false;
 
  data_t T = 0.7;
  data_t B = 0;
@@ -54081,7 +54086,7 @@ uint8_t EM_ALGO(uint8_t pixel, int pos, data_t parameters[(76800/8)*2*3],int x) 
  for (int ind = 0; ind < 2; ind++) {
 #pragma HLS UNROLL
  B = B + sorted_weight[ind];
-  back_gauss[x*(76800/8)+pos][index[ind]]=true;
+  back_gauss[x*(76800/128)+pos][index[ind]]=true;
   if (B >= T) {
    break;
   }

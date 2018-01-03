@@ -94134,9 +94134,9 @@ namespace std
 typedef float data_t;
 #pragma empty_line
 int backsub(uint8_t data_array[76800], uint8_t out_frame[76800],
-  bool init);
+  bool init, data_t parameters[76800*2*3]);
 #pragma empty_line
-uint8_t EM_ALGO(uint8_t pixel,int pos, data_t parameters[(76800/8)*2*3], int x);
+uint8_t EM_ALGO(uint8_t pixel,int pos, data_t parameters[(76800/128)*2*3], int x);
 #pragma line 7 "F:/maxi_latest/GMM_backsub_new/test.cpp" 2
 #pragma line 1 "F:/Xilinx/Vivado_HLS/2015.4/include/ap_fixed.h" 1
 #pragma line 8 "F:/maxi_latest/GMM_backsub_new/test.cpp" 2
@@ -94157,7 +94157,23 @@ void execute(uint8_t *data_array, bool init);
 #ifndef HLS_FASTSIM
 #pragma line 21 "F:/maxi_latest/GMM_backsub_new/test.cpp"
 int main() {
-#pragma line 39 "F:/maxi_latest/GMM_backsub_new/test.cpp"
+#pragma empty_line
+ for (int i = 0; i < 76800; i = i + 1) {
+#pragma empty_line
+  parameters[i * 2 * 3 + 0] = 0;
+  parameters[i * 2 * 3 + 1] = 0;
+#pragma empty_line
+#pragma empty_line
+  parameters[i * 2 * 3 + 2] = 4900;
+  parameters[i * 2 * 3 + 3] = 4900;
+#pragma empty_line
+#pragma empty_line
+  parameters[i * 2 * 3 + 4] = 0.09;
+  parameters[i * 2 * 3 + 5] = 0.09;
+#pragma empty_line
+#pragma empty_line
+ }
+#pragma empty_line
  cv::Mat img_t;
 #pragma empty_line
  cv::VideoCapture cap;
@@ -94223,8 +94239,8 @@ int main() {
 #pragma empty_line
 void execute(uint8_t *data_array, bool init) {
 #pragma empty_line
+ backsub(data_array, out_frame, init, parameters);
 #pragma empty_line
- backsub(data_array, out_frame, init);
  for (int idxRows = 0; idxRows < 240; idxRows++) {
   for (int idxCols = 0; idxCols < 320; idxCols = idxCols + 1) {
    outImg1.at<unsigned char>(idxRows, idxCols) = out_frame[idxRows

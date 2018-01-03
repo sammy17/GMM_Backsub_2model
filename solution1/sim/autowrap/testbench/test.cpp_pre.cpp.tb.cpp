@@ -94141,9 +94141,9 @@ namespace std
 typedef float data_t;
 
 int backsub(uint8_t data_array[76800], uint8_t out_frame[76800],
-  bool init);
+  bool init, data_t parameters[76800*2*3]);
 
-uint8_t EM_ALGO(uint8_t pixel,int pos, data_t parameters[(76800/8)*2*3], int x);
+uint8_t EM_ALGO(uint8_t pixel,int pos, data_t parameters[(76800/128)*2*3], int x);
 #7 "F:/maxi_latest/GMM_backsub_new/test.cpp" 2
 #1 "F:/Xilinx/Vivado_HLS/2015.4/include/ap_fixed.h" 1
 #8 "F:/maxi_latest/GMM_backsub_new/test.cpp" 2
@@ -94164,7 +94164,23 @@ void execute(uint8_t *data_array, bool init);
 #ifndef HLS_FASTSIM
 #21 "F:/maxi_latest/GMM_backsub_new/test.cpp"
 int main() {
-#39 "F:/maxi_latest/GMM_backsub_new/test.cpp"
+
+ for (int i = 0; i < 76800; i = i + 1) {
+
+  parameters[i * 2 * 3 + 0] = 0;
+  parameters[i * 2 * 3 + 1] = 0;
+
+
+  parameters[i * 2 * 3 + 2] = 4900;
+  parameters[i * 2 * 3 + 3] = 4900;
+
+
+  parameters[i * 2 * 3 + 4] = 0.09;
+  parameters[i * 2 * 3 + 5] = 0.09;
+
+
+ }
+
  cv::Mat img_t;
 
  cv::VideoCapture cap;
@@ -94230,8 +94246,8 @@ int main() {
 
 void execute(uint8_t *data_array, bool init) {
 
+ backsub(data_array, out_frame, init, parameters);
 
- backsub(data_array, out_frame, init);
  for (int idxRows = 0; idxRows < 240; idxRows++) {
   for (int idxCols = 0; idxCols < 320; idxCols = idxCols + 1) {
    outImg1.at<unsigned char>(idxRows, idxCols) = out_frame[idxRows

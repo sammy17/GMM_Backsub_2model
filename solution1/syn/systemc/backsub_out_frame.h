@@ -22,8 +22,8 @@ using namespace sc_dt;
 struct backsub_out_frame_ram : public sc_core::sc_module {
 
   static const unsigned DataWidth = 1;
-  static const unsigned AddressRange = 9600;
-  static const unsigned AddressWidth = 14;
+  static const unsigned AddressRange = 600;
+  static const unsigned AddressWidth = 10;
 
 //latency = 1
 //input_reg = 1
@@ -41,7 +41,7 @@ sc_lv<DataWidth> ram[AddressRange];
 
 
    SC_CTOR(backsub_out_frame_ram) {
-        for (unsigned i = 0; i < 9600; i = i + 1) {
+        for (unsigned i = 0; i < 600; i = i + 1) {
             ram[i] = 0;
         }
 
@@ -82,8 +82,8 @@ SC_MODULE(backsub_out_frame) {
 
 
 static const unsigned DataWidth = 1;
-static const unsigned AddressRange = 9600;
-static const unsigned AddressWidth = 14;
+static const unsigned AddressRange = 600;
+static const unsigned AddressWidth = 10;
 
 sc_core::sc_in <sc_lv<AddressWidth> > address0;
 sc_core::sc_in<sc_logic> ce0;

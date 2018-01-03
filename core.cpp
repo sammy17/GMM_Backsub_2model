@@ -22,15 +22,15 @@ int backsub(uint8_t frame_in[IMG_SIZE], uint8_t frame_out[76800], bool init, dat
 	static uint8_t data_array[IMG_SIZE/PARTS];
 	static uint8_t out_frame[IMG_SIZE/PARTS];
 	//uint8_t iterator = 0;
-	static data_t parameters[76800*MODELS*3/PARTS];
+//	static data_t parameters[76800*MODELS*3/PARTS];
 
 	for (int x=0; x<PARTS;x++){
 #pragma HLS protocol fixed
-	static uint8_t data_array[IMG_SIZE/PARTS];
-	static uint8_t out_frame[IMG_SIZE/PARTS];
-	//uint8_t iterator = 0;
-	static data_t parameters[76800*MODELS*3/PARTS];
-	memcpy(parameters, &para[x*(IMG_SIZE*MODELS*3/PARTS)], IMG_SIZE*MODELS*3/PARTS);
+//	static uint8_t data_array[IMG_SIZE/PARTS];
+//	static uint8_t out_frame[IMG_SIZE/PARTS];
+//	//uint8_t iterator = 0;
+//	static data_t parameters[76800*MODELS*3/PARTS];
+//	memcpy(parameters, &para[x*(IMG_SIZE*MODELS*3/PARTS)], IMG_SIZE*MODELS*3/PARTS);
 	memcpy(data_array, &frame_in[x*(IMG_SIZE/PARTS)], IMG_SIZE/PARTS);
 
 	loop1: {
@@ -43,18 +43,18 @@ int backsub(uint8_t frame_in[IMG_SIZE], uint8_t frame_out[76800], bool init, dat
 					back_gauss[i+x*(IMG_SIZE/PARTS)][0] = true;
 					back_gauss[i+x*(IMG_SIZE/PARTS)][1] = true;
 
-					parameters[i * MODELS * 3 + 0] = 0;
-					parameters[i * MODELS * 3 + 1] = 0;
+					para[x*(IMG_SIZE*MODELS*3/PARTS)+i * MODELS * 3 + 0] = 0;
+					para[x*(IMG_SIZE*MODELS*3/PARTS)+i * MODELS * 3 + 1] = 0;
 					//parameters[i * MODELS * 3 + 2] = 0;
 
-					parameters[i * MODELS * 3 + 2] = 4900;
-					parameters[i * MODELS * 3 + 3] = 4900;
+					para[x*(IMG_SIZE*MODELS*3/PARTS)+i * MODELS * 3 + 2] = 4900;
+					para[x*(IMG_SIZE*MODELS*3/PARTS)+i * MODELS * 3 + 3] = 4900;
 					//parameters[i * MODELS * 3 + 5] = 2500;
 
-					parameters[i * MODELS * 3 + 4] = 0.09;
-					parameters[i * MODELS * 3 + 5] = 0.09;
+					para[x*(IMG_SIZE*MODELS*3/PARTS)+i * MODELS * 3 + 4] = 0.09;
+					para[x*(IMG_SIZE*MODELS*3/PARTS)+i * MODELS * 3 + 5] = 0.09;
 
-					out_frame[i] = EM_ALGO(data_array[i], i, parameters, x);
+					out_frame[i] = EM_ALGO(data_array[i], i, &para[x*(IMG_SIZE*MODELS*3/PARTS)], x);
 //						out_frame[i] = 0;
 //					else
 //						out_frame[i] = 255;
