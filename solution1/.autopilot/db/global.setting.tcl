@@ -1,6 +1,6 @@
 
 set TopModule "backsub"
-set ClockPeriod "5.000000"
+set ClockPeriod "10.000000"
 set ClockList {ap_clk}
 set multiClockList {}
 set PortClockMap {}
@@ -43,7 +43,7 @@ set SCTraceOption "all"
 set TargetInfo "xc7z020:clg484:-1"
 set SourceFiles {sc {} c ../core.cpp}
 set SourceFlags {sc {} c {{}}}
-set DirectiveFile {/home/zynq-fyp/Backsub_GMM/GMM_backsub_new/solution1/solution1.directive}
+set DirectiveFile {F:/maxi_latest/GMM_backsub_new/solution1/solution1.directive}
 set TBFiles {verilog {../cut_out.avi ../test.cpp} bc {../cut_out.avi ../test.cpp} sc {../cut_out.avi ../test.cpp} vhdl {../cut_out.avi ../test.cpp} c {} cas {../cut_out.avi ../test.cpp}}
 set SpecLanguage "C"
 set TVInFiles {bc {} c {} sc {} cas {} vhdl {} verilog {}}

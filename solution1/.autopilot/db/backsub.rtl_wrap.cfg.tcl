@@ -94,19 +94,19 @@ set DataType10 "float"
 set Port10 [list $PortName10 $Interface10 $DataType10 $Pointer10 $Dims10 $Const10 $Volatile10 $ArrayOpt10 $Initializer10 $External10 $NameSpace10]
 lappend globalVariable $Port10
 set PortList ""
-set PortName1 "data_array"
+set PortName1 "frame_in"
 set BitWidth1 "64"
 set ArrayOpt1 ""
 set Const1 "0"
 set Volatile1 "0"
 set Pointer1 "0"
 set Reference1 "0"
-set Dims1 [list 38400]
+set Dims1 [list 76800]
 set Interface1 "wire"
-set DataType1 "unsigned int"
+set DataType1 "unsigned char"
 set Port1 [list $PortName1 $Interface1 $DataType1 $Pointer1 $Dims1 $Const1 $Volatile1 $ArrayOpt1]
 lappend PortList $Port1
-set PortName2 "out_frame"
+set PortName2 "frame_out"
 set BitWidth2 "64"
 set ArrayOpt2 ""
 set Const2 "0"
@@ -130,7 +130,7 @@ set Interface3 "wire"
 set DataType3 "bool"
 set Port3 [list $PortName3 $Interface3 $DataType3 $Pointer3 $Dims3 $Const3 $Volatile3 $ArrayOpt3]
 lappend PortList $Port3
-set PortName4 "parameters"
+set PortName4 "para"
 set BitWidth4 "64"
 set ArrayOpt4 ""
 set Const4 "0"

@@ -3,21 +3,21 @@
 <directive functionLabel="" functionName="backsub" label="">
 <pragma name="INTERFACE">
 <option name="m_axi" positionalBoolean="mode" value=""/>
-<option name="port" positionalBoolean="4" value="out_frame"/>
+<option name="port" positionalBoolean="4" value="frame_out"/>
 <option name="offset" value="slave"/>
 </pragma>
 </directive>
 <directive functionLabel="" functionName="backsub" label="">
 <pragma name="INTERFACE">
 <option name="m_axi" positionalBoolean="mode" value=""/>
-<option name="port" positionalBoolean="4" value="data_array"/>
+<option name="port" positionalBoolean="4" value="frame_in"/>
 <option name="offset" value="slave"/>
 </pragma>
 </directive>
 <directive functionLabel="" functionName="backsub" label="">
 <pragma name="INTERFACE">
 <option name="m_axi" positionalBoolean="mode" value=""/>
-<option name="port" positionalBoolean="4" value="parameters"/>
+<option name="port" positionalBoolean="4" value="para"/>
 <option name="offset" value="slave"/>
 </pragma>
 </directive>
@@ -35,11 +35,26 @@
 <option name="bundle" value="CRTL_BUS"/>
 </pragma>
 </directive>
-<directive functionLabel="" functionName="tostruct" label="">
-<pragma name="INLINE"/>
+<directive functionLabel="" functionName="backsub" label="">
+<pragma name="PIPELINE"/>
+</directive>
+<directive functionLabel="" functionName="backsub" label="">
+<pragma name="PIPELINE"/>
 </directive>
 <directive functionLabel="" functionName="EM_ALGO" label="">
-<pragma name="INLINE"/>
+<pragma name="UNROLL"/>
+</directive>
+<directive functionLabel="" functionName="EM_ALGO" label="">
+<pragma name="UNROLL"/>
+</directive>
+<directive functionLabel="" functionName="EM_ALGO" label="">
+<pragma name="UNROLL"/>
+</directive>
+<directive functionLabel="" functionName="EM_ALGO" label="">
+<pragma name="UNROLL"/>
+</directive>
+<directive functionLabel="" functionName="EM_ALGO" label="">
+<pragma name="UNROLL"/>
 </directive>
 <directive functionLabel="" functionName="EM_ALGO" label="">
 <pragma name="LOOP_TRIPCOUNT">
@@ -47,6 +62,9 @@
 <option name="max" value="4"/>
 <option name="avg" value="2"/>
 </pragma>
+</directive>
+<directive functionLabel="" functionName="EM_ALGO" label="">
+<pragma name="UNROLL"/>
 </directive>
 </sourceFile>
 </AutoPilot:ProjectResources>

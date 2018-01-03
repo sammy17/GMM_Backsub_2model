@@ -1,115 +1,96 @@
 #include "core.h"
 #include <hls_math.h>
 
-float vinit = 18000;
-float F[MODELS];	//Fitness
-float akt[MODELS];	//learning rate of mean and variance
+data_t vinit = 18000;
+data_t F[MODELS];	//Fitness
+data_t akt[MODELS];	//learning rate of mean and variance
 
-float alpha_w = 0.004;
+data_t alpha_w = 0.004;
 
 uint8_t matchsum[76800][MODELS];
 bool back_gauss[76800][MODELS];
+data_t para[76800*MODELS*3];
 
-//int backsub(AXI_STREAM& inStream, AXI_STREAM_OUT& outStream, bool init,
-//		float mean[76800][MODELS], float sigma[76800][MODELS], float weight[76800][MODELS],
-//		uint8_t matchsum[76800][MODELS], bool back_gauss[76800][MODELS]) {
-
-int backsub(uint32_t data_array[IMG_H * IMG_W / 2], uint8_t out_frame[76800],
-		bool init, float parameters[76800*MODELS*3]){
+int backsub(uint8_t frame_in[IMG_SIZE], uint8_t frame_out[76800], bool init, data_t para[76800*MODELS*3]){
 //#pragma HLS DATAFLOW
-#pragma HLS INTERFACE m_axi port=out_frame offset=slave
-#pragma HLS INTERFACE m_axi port=data_array offset=slave
-
-#pragma HLS INTERFACE m_axi port=parameters offset=slave
+#pragma HLS INTERFACE m_axi port=frame_out offset=slave
+#pragma HLS INTERFACE m_axi port=frame_in offset=slave
+#pragma HLS INTERFACE m_axi port=para offset=slave
 #pragma HLS INTERFACE s_axilite port=init bundle=CRTL_BUS
-
 #pragma HLS INTERFACE s_axilite port=return bundle=CRTL_BUS
+#pragma HLS protocol fixed
+	static uint8_t data_array[IMG_SIZE/PARTS];
+	static uint8_t out_frame[IMG_SIZE/PARTS];
+	//uint8_t iterator = 0;
+	static data_t parameters[76800*MODELS*3/PARTS];
+
+	for (int x=0; x<PARTS;x++){
+#pragma HLS protocol fixed
+	static uint8_t data_array[IMG_SIZE/PARTS];
+	static uint8_t out_frame[IMG_SIZE/PARTS];
+	//uint8_t iterator = 0;
+	static data_t parameters[76800*MODELS*3/PARTS];
+	memcpy(parameters, &para[x*(IMG_SIZE*MODELS*3/PARTS)], IMG_SIZE*MODELS*3/PARTS);
+	memcpy(data_array, &frame_in[x*(IMG_SIZE/PARTS)], IMG_SIZE/PARTS);
 
 	loop1: {
 		if (init) {
-			for (int i = 0; i < IMG_SIZE; i = i + 1) {
-//#pragma HLS PIPELINE
-					matchsum[i][0] = 0;
-					matchsum[i][1] = 0;
-					//matchsum[i][2] = 0;
-					//matchsum[i][3] = 0;
+			for (int i = 0; i < IMG_SIZE/PARTS; i = i + 1) {
+#pragma HLS PIPELINE
+					matchsum[i+x*(IMG_SIZE/PARTS)][0] = 0;
+					matchsum[i+x*(IMG_SIZE/PARTS)][1] = 0;
 
-					back_gauss[i][0] = true;
-					back_gauss[i][1] = true;
-					//back_gauss[i][2] = true;
-					//back_gauss[i][3] = true;
-				}
+					back_gauss[i+x*(IMG_SIZE/PARTS)][0] = true;
+					back_gauss[i+x*(IMG_SIZE/PARTS)][1] = true;
 
-			for (int idxRow = 0; idxRow < IMG_H; idxRow++) {
-				for (int idxCols = 0; idxCols < IMG_W / 2; idxCols++) {
-//#pragma HLS UNROLL factor=8
-					int i = idxRow * IMG_W / 2 + idxCols;
-					uint32_t val = data_array[i];
-					yuv pix;
+					parameters[i * MODELS * 3 + 0] = 0;
+					parameters[i * MODELS * 3 + 1] = 0;
+					//parameters[i * MODELS * 3 + 2] = 0;
 
-					tostruct(val, &pix);
+					parameters[i * MODELS * 3 + 2] = 4900;
+					parameters[i * MODELS * 3 + 3] = 4900;
+					//parameters[i * MODELS * 3 + 5] = 2500;
 
-					if (!EM_ALGO(pix.y1, i * 2, parameters, matchsum, back_gauss))
-						out_frame[i * 2] = 0;
-					else
-						out_frame[i * 2] = 255;
+					parameters[i * MODELS * 3 + 4] = 0.09;
+					parameters[i * MODELS * 3 + 5] = 0.09;
 
-					if (!EM_ALGO(pix.y2, i * 2 + 1, parameters, matchsum, back_gauss))
-						out_frame[i * 2 + 1] = 0;
-					else
-						out_frame[i * 2 + 1] = 255;
+					out_frame[i] = EM_ALGO(data_array[i], i, parameters, x);
+//						out_frame[i] = 0;
+//					else
+//						out_frame[i] = 255;
+
 
 				}
-
-			}
 
 		} else {
-			for (int idxRow = 0; idxRow < IMG_H; idxRow++) {
-				for (int idxCols = 0; idxCols < IMG_W / 2; idxCols++) {
-//#pragma HLS UNROLL factor=8
-					int i = idxRow * IMG_W / 2 + idxCols;
-					uint32_t val = data_array[i];
-					yuv pix;
-
-					tostruct(val, &pix);
-
-					if (!EM_ALGO(pix.y1, i * 2, parameters, matchsum, back_gauss))
-						out_frame[i * 2] = 0;
-					else
-						out_frame[i * 2] = 255;
-
-					if (!EM_ALGO(pix.y2, i * 2 + 1, parameters, matchsum, back_gauss))
-						out_frame[i * 2 + 1] = 0;
-					else
-						out_frame[i * 2 + 1] = 255;
-
-				}
+			for (int j=0; j<IMG_SIZE/PARTS; j++){
+#pragma HLS PIPELINE
+//				if (!EM_ALGO(data_array[j], j, parameters, matchsum, back_gauss))
+//					out_frame[j] = 0;
+//				else
+//					out_frame[j] = 255;
+				out_frame[j] = EM_ALGO(data_array[j], j, &para[x*(IMG_SIZE*MODELS*3/PARTS)], x);
 			}
-
-
 		}
-		return 0;
 	}
+
+	memcpy(&frame_out[x*(IMG_SIZE/PARTS)], out_frame, IMG_SIZE/PARTS);
+//	memcpy(&para[x*((IMG_SIZE/PARTS)*MODELS*3)], parameters, (IMG_SIZE/PARTS)*MODELS*3);
+
+	}
+	return 0;
 }
 
-void tostruct(uint32_t val, yuv *yuv_struct) {
-#pragma HLS INLINE
-	yuv_struct->y1 = 255 & val;
-	yuv_struct->u = 255 & (val >> 8);
-	yuv_struct->y2 = 255 & (val >> 16);
-	yuv_struct->v = 255 & (val >> 24);
-}
+uint8_t EM_ALGO(uint8_t pixel, int pos, data_t parameters[(IMG_SIZE/PARTS)*MODELS*3],int x) {
 
-bool EM_ALGO(uint8_t pixel, int pos, float parameters[76800*MODELS*3],
-		uint8_t matchsum[76800][MODELS], bool back_gauss[76800][MODELS]) {
-#pragma HLS INLINE
+//#pragma HLS INLINE
 
 	bool M[MODELS] = {false};
 
 	//Checking whether the pixel is in 2.5sigma distance of every mean
 	for (int j = 0; j < MODELS; j++) {
 		if ((abs(pixel - parameters[pos* MODELS * 3 + j] ) < 2.5 * hls::sqrtf(parameters[pos* MODELS * 3 + 2 + j] ))
-				and (back_gauss[pos][j])) {
+				and (back_gauss[x*(IMG_SIZE/PARTS)+pos][j])) {
 			M[j] = true;
 		}
 		akt[j] = alpha_w / parameters[pos*MODELS * 3 + 4 + j] ;
@@ -117,10 +98,10 @@ bool EM_ALGO(uint8_t pixel, int pos, float parameters[76800*MODELS*3],
 	}
 
 	/*The Gaussian that matches with the pixel (M=1) and has the highest F value is
-	 considered as the “matched distribution” and its parameters are updated */
+	 considered as the “matched distribution�? and its parameters are updated */
 
-	float max_F = 0;
-	float min_F = 1000;
+	data_t max_F = 0;
+	data_t min_F = 1000;
 	int max_val = 10;
 	int min_val = 10;
 	for (int j = 0; j < MODELS; j++) {
@@ -151,9 +132,10 @@ bool EM_ALGO(uint8_t pixel, int pos, float parameters[76800*MODELS*3],
 		parameters[pos* MODELS * 3 + 4 + max_val] = parameters[pos* MODELS * 3 + 4 + max_val]
 		- alpha_w * parameters[pos* MODELS * 3 + 4 + max_val] + alpha_w;
 		//std::cout << 	"********"<<	weight[pos][max_val] << " " << pos<<std::endl;
-		matchsum[pos][max_val] = matchsum[pos][max_val] + 1;
+		matchsum[x*(IMG_SIZE/PARTS)+pos][max_val] = matchsum[x*(IMG_SIZE/PARTS)+pos][max_val] + 1;
 
 		for (int j = 0; j < 2; j++) {
+#pragma HLS UNROLL
 			//For the unmatched Gaussian distributions mean and variance are unchanged while the weights are updated
 
 			if (j != max_val) {
@@ -164,14 +146,15 @@ bool EM_ALGO(uint8_t pixel, int pos, float parameters[76800*MODELS*3],
 	} else { // no match procedure
 		parameters[pos* MODELS * 3 + min_val] = pixel; //mean
 		parameters[pos* MODELS * 3 + 2 + min_val] =vinit; // sigma
-		matchsum[pos][min_val] = 1;
+		matchsum[x*(IMG_SIZE/PARTS)+pos][min_val] = 1;
 
-		float matchsumtot = 0;
+		data_t matchsumtot = 0;
 		for (int j = 0; j < MODELS; j++) {
+#pragma HLS UNROLL
 			//For the unmatched Gaussian distributions mean and variance are unchanged while the weights are updated
 			if (j != min_val) {
 				parameters[ MODELS * 3*pos + 4 + j] = parameters[ MODELS * 3*pos + 4 + j] - alpha_w;
-				matchsumtot = matchsumtot + matchsum[pos][j]; // matchsumtot is the sum of the values of the matchsum of the K-1 Gaussians with highest F
+				matchsumtot = matchsumtot + matchsum[x*(IMG_SIZE/PARTS)+pos][j]; // matchsumtot is the sum of the values of the matchsum of the K-1 Gaussians with highest F
 			}
 		}
 		if (matchsumtot != 0) {
@@ -179,27 +162,27 @@ bool EM_ALGO(uint8_t pixel, int pos, float parameters[76800*MODELS*3],
 		} else {
 			parameters[ MODELS * 3*pos + 4 + min_val] = 0.2; //updating weight
 		}
-		return true; //not matched to any gaussian-> foreground
+		return 255; //not matched to any gaussian-> foreground
 	}
 
 	//creating a copy of weight and F to be sorted
-	float sorted_F[MODELS];
+	data_t sorted_F[MODELS];
 	for (int i = 0; i < MODELS; i++) {
-//#pragma HLS UNROLL
+#pragma HLS UNROLL
 		sorted_F[i] = F[i];
 	}
-	float sorted_weight[MODELS];
+	data_t sorted_weight[MODELS];
 	for (int i = 0; i < MODELS; i++) {
-//#pragma HLS UNROLL
+#pragma HLS UNROLL
 		sorted_weight[i] = parameters[ MODELS * 3*pos + 4 + i]; //weight
 	}
 
 	int index[MODELS] = {0, 1};
-	float temp_F, temp_W;
+	data_t temp_F, temp_W;
 	int temp_index, j;
 	//Sorting W according to F - descending order
 	for (int i = 1; i < MODELS; i++) {
-//#pragma HLS UNROLL
+#pragma HLS UNROLL
 		temp_F = sorted_F[i];
 		temp_W = sorted_weight[i];
 		temp_index = index[i];
@@ -218,22 +201,20 @@ bool EM_ALGO(uint8_t pixel, int pos, float parameters[76800*MODELS*3],
 		index[j + 1] = temp_index;
 	}
 
-	back_gauss[pos][0]=false;
-	back_gauss[pos][1]=false;
-	//back_gauss[pos][2]=false;
-	//back_gauss[pos][3]=false;
+	back_gauss[x*(IMG_SIZE/PARTS)+pos][0]=false;
+	back_gauss[x*(IMG_SIZE/PARTS)+pos][1]=false;
 
-	float T = 0.7;
-	float B = 0;
+	data_t T = 0.7;
+	data_t B = 0;
 
 	for (int ind = 0; ind < MODELS; ind++) {
-//#pragma HLS UNROLL
+#pragma HLS UNROLL
 		B = B + sorted_weight[ind];
-		back_gauss[pos][index[ind]]=true;
+		back_gauss[x*(IMG_SIZE/PARTS)+pos][index[ind]]=true;
 		if (B >= T) {
 			break;
 		}
 	}
 
-	return false; //Background
+	return 0; //Background
 }

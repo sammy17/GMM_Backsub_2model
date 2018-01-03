@@ -6,25 +6,32 @@
       <simLog/>
       <mgLog/>
       <packageLog/>
-      <csimLog/>
+      <csimLog>
+        <logs message="@E [SIM-1] 'csim_design' failed: compilation error(s).&#xD;&#xA;4&#xD;&#xA;    while executing&#xD;&#xA;&quot;source F:/maxi_latest/GMM_backsub_new/solution1/csim.tcl&quot;&#xD;&#xA;    invoked from within&#xD;&#xA;&quot;hls::main F:/maxi_latest/GMM_backsub_new/solution1/csim.tcl&quot;&#xD;&#xA;    (&quot;uplevel&quot; body line 1)&#xD;&#xA;    invoked from within&#xD;&#xA;&quot;uplevel 1 hls::main {*}$args&quot;&#xD;&#xA;    (procedure &quot;hls_proc&quot; line 5)&#xD;&#xA;    invoked from within&#xD;&#xA;&quot;hls_proc $argv&quot;&#xD;&#xA;" projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T12:54:03.209+0530"/>
+      </csimLog>
     </logs>
   </errorLogs>
   <warningLogs>
     <logs>
       <synLog>
-        <logs message="@W [RTGEN-101] Global scalar 'vinit' will not be exposed as RTL port." projectName="GMM_backsub_new" solutionName="solution1" date="2017-12-27T00:50:33.305+0530" type="Warning"/>
-        <logs message="@W [RTGEN-101] Register 'vinit' is power-on initialization." projectName="GMM_backsub_new" solutionName="solution1" date="2017-12-27T00:50:30.226+0530" type="Warning"/>
-        <logs message="@W [RTGEN-101] Global array 'F' will not be exposed as RTL port." projectName="GMM_backsub_new" solutionName="solution1" date="2017-12-27T00:50:30.221+0530" type="Warning"/>
-        <logs message="@W [RTGEN-101] Global array 'akt' will not be exposed as RTL port." projectName="GMM_backsub_new" solutionName="solution1" date="2017-12-27T00:50:30.216+0530" type="Warning"/>
-        <logs message="@W [RTGEN-101] Global scalar 'alpha_w' will not be exposed as RTL port." projectName="GMM_backsub_new" solutionName="solution1" date="2017-12-27T00:50:30.212+0530" type="Warning"/>
-        <logs message="@W [RTGEN-101] Register 'alpha_w' is power-on initialization." projectName="GMM_backsub_new" solutionName="solution1" date="2017-12-27T00:50:30.208+0530" type="Warning"/>
-        <logs message="@W [RTGEN-101] Global array 'back_gauss' will not be exposed as RTL port." projectName="GMM_backsub_new" solutionName="solution1" date="2017-12-27T00:50:30.204+0530" type="Warning"/>
-        <logs message="@W [RTGEN-101] Global array 'matchsum' will not be exposed as RTL port." projectName="GMM_backsub_new" solutionName="solution1" date="2017-12-27T00:50:30.199+0530" type="Warning"/>
-        <logs message="@W [SCHED-21] The critical path consists of the following:&#xA;&#x9;'sitodp' operation ('tmp_22', GMM_backsub_new/core.cpp:111->GMM_backsub_new/core.cpp:76) (6.56 ns)" projectName="GMM_backsub_new" solutionName="solution1" date="2017-12-27T00:50:24.151+0530" type="Warning"/>
-        <logs message="@W [SCHED-21] Estimated clock period (6.56ns) exceeds the target (target clock period: 5ns, clock uncertainty: 0.625ns, effective delay budget: 4.38ns)." projectName="GMM_backsub_new" solutionName="solution1" date="2017-12-27T00:50:24.147+0530" type="Warning"/>
-        <logs message="@W [SCHED-21] Estimated delay (6.56ns) of 'sitodp' operation ('tmp_22', GMM_backsub_new/core.cpp:111->GMM_backsub_new/core.cpp:76) exceeds the target cycle time (target cycle time: 5ns, clock uncertainty: 0.625ns, effective cycle time: 4.38ns)." projectName="GMM_backsub_new" solutionName="solution1" date="2017-12-27T00:50:24.142+0530" type="Warning"/>
+        <logs message="@W [RTGEN-101] Global array 'F' will not be exposed as RTL port." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T12:48:06.141+0530" type="Warning"/>
+        <logs message="@W [RTGEN-101] Global scalar 'vinit' will not be exposed as RTL port." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T12:48:06.038+0530" type="Warning"/>
+        <logs message="@W [RTGEN-101] Global array 'akt' will not be exposed as RTL port." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T12:48:06.002+0530" type="Warning"/>
+        <logs message="@W [RTGEN-101] Global scalar 'alpha_w' will not be exposed as RTL port." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T12:48:05.978+0530" type="Warning"/>
+        <logs message="@W [RTGEN-101] Global array 'back_gauss' will not be exposed as RTL port." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T12:48:05.942+0530" type="Warning"/>
+        <logs message="@W [RTGEN-101] Global array 'matchsum' will not be exposed as RTL port." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T12:48:05.910+0530" type="Warning"/>
+        <logs message="@W [RTGEN-101] Register 'vinit' is power-on initialization." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T12:48:04.119+0530" type="Warning"/>
+        <logs message="@W [RTGEN-101] Register 'alpha_w' is power-on initialization." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T12:48:03.900+0530" type="Warning"/>
+        <logs message="@W [SCHED-67] Unable to satisfy pipeline directive: subfunction 'backsub_EM_ALGO' is not pipelined." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T12:48:02.696+0530" type="Warning"/>
+        <logs message="@W [SCHED-67] Unable to satisfy pipeline directive: subfunction 'backsub_EM_ALGO' is not pipelined." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T12:48:02.677+0530" type="Warning"/>
+        <logs message="@W [SCHED-65] Unable to satisfy pipeline directive: Function contains subloop(s) not being unrolled." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T12:48:00.955+0530" type="Warning"/>
+        <logs message="@W [XFORM-503] Cannot unroll loop 'Loop-8' in function 'EM_ALGO' completely: variable loop bound." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T12:47:55.134+0530" type="Warning"/>
       </synLog>
-      <simLog/>
+      <simLog>
+        <logs message="@W [SIM-369] AXI_master port 'gmem_offset' has a depth of '460800'. Insufficient depth may result in simulation mismatch or freeze.&#xD;&#xA;" projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T12:52:58.821+0530" type="Warning"/>
+        <logs message="@W [SIM-369] AXI_master port 'frame_out' has a depth of '76800'. Insufficient depth may result in simulation mismatch or freeze." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T12:50:40.355+0530" type="Warning"/>
+        <logs message="@W [SIM-369] AXI_master port 'frame_in' has a depth of '76800'. Insufficient depth may result in simulation mismatch or freeze." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T12:50:40.341+0530" type="Warning"/>
+      </simLog>
       <mgLog/>
       <packageLog/>
       <csimLog/>

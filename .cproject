@@ -15,7 +15,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactName="a.out" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.debug.93271682" name="Debug" parent="cdt.managedbuild.config.gnu.exe.debug">
+				<configuration artifactName="a.exe" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.debug.93271682" name="Debug" parent="cdt.managedbuild.config.gnu.exe.debug">
 					<folderInfo id="cdt.managedbuild.config.gnu.exe.debug.93271682." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.exe.debug.906038185" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.exe.debug">
 							<targetPlatform binaryParser="org.eclipse.cdt.core.PE;org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.gnu.platform.exe.debug.1850332350" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.exe.debug"/>
@@ -25,12 +25,13 @@
 								<option id="gnu.cpp.compiler.exe.debug.option.optimization.level.566390125" name="Optimization Level" superClass="gnu.cpp.compiler.exe.debug.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.exe.debug.option.debugging.level.482748103" name="Debug Level" superClass="gnu.cpp.compiler.exe.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.579109378" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="/home/zynq-fyp/Xilinx/Vivado_HLS/2015.4/lnx64/tools/auto_cc/include"/>
-									<listOptionValue builtIn="false" value="/home/zynq-fyp/Xilinx/Vivado_HLS/2015.4/lnx64/tools/systemc/include"/>
+									<listOptionValue builtIn="false" value="F:/Xilinx/Vivado_HLS/2015.4/include/etc"/>
+									<listOptionValue builtIn="false" value="F:/Xilinx/Vivado_HLS/2015.4/include"/>
+									<listOptionValue builtIn="false" value="F:/Xilinx/Vivado_HLS/2015.4/win64/tools/auto_cc/include"/>
+									<listOptionValue builtIn="false" value="F:/Xilinx/Vivado_HLS/2015.4/win64/tools/systemc/include"/>
+									<listOptionValue builtIn="false" value="F:/maxi_latest"/>
+									<listOptionValue builtIn="false" value="F:/Xilinx/Vivado_HLS/2015.4/include/ap_sysc"/>
 									<listOptionValue builtIn="false" value="/home/zynq-fyp/Backsub_GMM"/>
-									<listOptionValue builtIn="false" value="/home/zynq-fyp/Xilinx/Vivado_HLS/2015.4/include/ap_sysc"/>
-									<listOptionValue builtIn="false" value="/home/zynq-fyp/Xilinx/Vivado_HLS/2015.4/include/etc"/>
-									<listOptionValue builtIn="false" value="/home/zynq-fyp/Xilinx/Vivado_HLS/2015.4/include"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.37818148" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="AESL_TB"/>
@@ -43,12 +44,13 @@
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.exe.debug.option.optimization.level.1007631325" name="Optimization Level" superClass="gnu.c.compiler.exe.debug.option.optimization.level" valueType="enumerated"/>
 								<option id="gnu.c.compiler.exe.debug.option.debugging.level.1875730777" name="Debug Level" superClass="gnu.c.compiler.exe.debug.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.281359220" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="/home/zynq-fyp/Xilinx/Vivado_HLS/2015.4/lnx64/tools/auto_cc/include"/>
-									<listOptionValue builtIn="false" value="/home/zynq-fyp/Xilinx/Vivado_HLS/2015.4/lnx64/tools/systemc/include"/>
+									<listOptionValue builtIn="false" value="F:/Xilinx/Vivado_HLS/2015.4/include/etc"/>
+									<listOptionValue builtIn="false" value="F:/Xilinx/Vivado_HLS/2015.4/include"/>
+									<listOptionValue builtIn="false" value="F:/Xilinx/Vivado_HLS/2015.4/win64/tools/auto_cc/include"/>
+									<listOptionValue builtIn="false" value="F:/Xilinx/Vivado_HLS/2015.4/win64/tools/systemc/include"/>
+									<listOptionValue builtIn="false" value="F:/maxi_latest"/>
+									<listOptionValue builtIn="false" value="F:/Xilinx/Vivado_HLS/2015.4/include/ap_sysc"/>
 									<listOptionValue builtIn="false" value="/home/zynq-fyp/Backsub_GMM"/>
-									<listOptionValue builtIn="false" value="/home/zynq-fyp/Xilinx/Vivado_HLS/2015.4/include/ap_sysc"/>
-									<listOptionValue builtIn="false" value="/home/zynq-fyp/Xilinx/Vivado_HLS/2015.4/include/etc"/>
-									<listOptionValue builtIn="false" value="/home/zynq-fyp/Xilinx/Vivado_HLS/2015.4/include"/>
 								</option>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1436163730" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="AESL_TB"/>
@@ -59,14 +61,14 @@
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.1990717239" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug">
 								<option id="gnu.c.link.option.paths.222805368" name="Library search path (-L)" superClass="gnu.c.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="/home/zynq-fyp/Xilinx/Vivado_HLS/2015.4/lnx64/tools/systemc/lib"/>
+									<listOptionValue builtIn="false" value="F:/Xilinx/Vivado_HLS/2015.4/win64/tools/systemc/lib"/>
 								</option>
 								<option id="gnu.c.link.option.libs.2078309922" name="Libraries (-l)" superClass="gnu.c.link.option.libs"/>
 								<option id="gnu.c.link.option.ldflags.1204005571" name="Linker flags" superClass="gnu.c.link.option.ldflags"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.708003258" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
 								<option id="gnu.cpp.link.option.paths.203659101" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="/home/zynq-fyp/Xilinx/Vivado_HLS/2015.4/lnx64/tools/systemc/lib"/>
+									<listOptionValue builtIn="false" value="F:/Xilinx/Vivado_HLS/2015.4/win64/tools/systemc/lib"/>
 								</option>
 								<option id="gnu.cpp.link.option.libs.2027656948" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs"/>
 								<option id="gnu.cpp.link.option.flags.899624028" name="Linker flags" superClass="gnu.cpp.link.option.flags"/>
@@ -101,7 +103,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactName="a.out" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.release.539453766" name="Release" parent="cdt.managedbuild.config.gnu.exe.release">
+				<configuration artifactName="a.exe" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.release.539453766" name="Release" parent="cdt.managedbuild.config.gnu.exe.release">
 					<folderInfo id="cdt.managedbuild.config.gnu.exe.release.539453766." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.exe.release.841514801" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.exe.release">
 							<targetPlatform binaryParser="org.eclipse.cdt.core.PE;org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.gnu.platform.exe.release.83809101" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.exe.release"/>
@@ -111,12 +113,13 @@
 								<option id="gnu.cpp.compiler.exe.release.option.optimization.level.1925530002" name="Optimization Level" superClass="gnu.cpp.compiler.exe.release.option.optimization.level" value="gnu.cpp.compiler.optimization.level.most" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.exe.release.option.debugging.level.198972176" name="Debug Level" superClass="gnu.cpp.compiler.exe.release.option.debugging.level" value="gnu.cpp.compiler.debugging.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.68811483" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="/home/zynq-fyp/Xilinx/Vivado_HLS/2015.4/lnx64/tools/auto_cc/include"/>
-									<listOptionValue builtIn="false" value="/home/zynq-fyp/Xilinx/Vivado_HLS/2015.4/lnx64/tools/systemc/include"/>
+									<listOptionValue builtIn="false" value="F:/Xilinx/Vivado_HLS/2015.4/include/etc"/>
+									<listOptionValue builtIn="false" value="F:/Xilinx/Vivado_HLS/2015.4/include"/>
+									<listOptionValue builtIn="false" value="F:/Xilinx/Vivado_HLS/2015.4/win64/tools/auto_cc/include"/>
+									<listOptionValue builtIn="false" value="F:/Xilinx/Vivado_HLS/2015.4/win64/tools/systemc/include"/>
+									<listOptionValue builtIn="false" value="F:/maxi_latest"/>
+									<listOptionValue builtIn="false" value="F:/Xilinx/Vivado_HLS/2015.4/include/ap_sysc"/>
 									<listOptionValue builtIn="false" value="/home/zynq-fyp/Backsub_GMM"/>
-									<listOptionValue builtIn="false" value="/home/zynq-fyp/Xilinx/Vivado_HLS/2015.4/include/ap_sysc"/>
-									<listOptionValue builtIn="false" value="/home/zynq-fyp/Xilinx/Vivado_HLS/2015.4/include/etc"/>
-									<listOptionValue builtIn="false" value="/home/zynq-fyp/Xilinx/Vivado_HLS/2015.4/include"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1358253584" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
@@ -124,25 +127,26 @@
 								<option defaultValue="gnu.c.optimization.level.most" id="gnu.c.compiler.exe.release.option.optimization.level.1354266682" name="Optimization Level" superClass="gnu.c.compiler.exe.release.option.optimization.level" valueType="enumerated"/>
 								<option id="gnu.c.compiler.exe.release.option.debugging.level.614159222" name="Debug Level" superClass="gnu.c.compiler.exe.release.option.debugging.level" value="gnu.c.debugging.level.none" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.1166121218" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="/home/zynq-fyp/Xilinx/Vivado_HLS/2015.4/lnx64/tools/auto_cc/include"/>
-									<listOptionValue builtIn="false" value="/home/zynq-fyp/Xilinx/Vivado_HLS/2015.4/lnx64/tools/systemc/include"/>
+									<listOptionValue builtIn="false" value="F:/Xilinx/Vivado_HLS/2015.4/include/etc"/>
+									<listOptionValue builtIn="false" value="F:/Xilinx/Vivado_HLS/2015.4/include"/>
+									<listOptionValue builtIn="false" value="F:/Xilinx/Vivado_HLS/2015.4/win64/tools/auto_cc/include"/>
+									<listOptionValue builtIn="false" value="F:/Xilinx/Vivado_HLS/2015.4/win64/tools/systemc/include"/>
+									<listOptionValue builtIn="false" value="F:/maxi_latest"/>
+									<listOptionValue builtIn="false" value="F:/Xilinx/Vivado_HLS/2015.4/include/ap_sysc"/>
 									<listOptionValue builtIn="false" value="/home/zynq-fyp/Backsub_GMM"/>
-									<listOptionValue builtIn="false" value="/home/zynq-fyp/Xilinx/Vivado_HLS/2015.4/include/ap_sysc"/>
-									<listOptionValue builtIn="false" value="/home/zynq-fyp/Xilinx/Vivado_HLS/2015.4/include/etc"/>
-									<listOptionValue builtIn="false" value="/home/zynq-fyp/Xilinx/Vivado_HLS/2015.4/include"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.185794801" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.exe.release.469948052" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.release">
 								<option id="gnu.c.link.option.paths.37762221" name="Library search path (-L)" superClass="gnu.c.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="/home/zynq-fyp/Xilinx/Vivado_HLS/2015.4/lnx64/tools/systemc/lib"/>
+									<listOptionValue builtIn="false" value="F:/Xilinx/Vivado_HLS/2015.4/win64/tools/systemc/lib"/>
 								</option>
 								<option id="gnu.c.link.option.libs.936761251" name="Libraries (-l)" superClass="gnu.c.link.option.libs"/>
 								<option id="gnu.c.link.option.ldflags.759742644" name="Linker flags" superClass="gnu.c.link.option.ldflags"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.exe.release.242801110" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.release">
 								<option id="gnu.cpp.link.option.paths.463713926" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="/home/zynq-fyp/Xilinx/Vivado_HLS/2015.4/lnx64/tools/systemc/lib"/>
+									<listOptionValue builtIn="false" value="F:/Xilinx/Vivado_HLS/2015.4/win64/tools/systemc/lib"/>
 								</option>
 								<option id="gnu.cpp.link.option.libs.1474901278" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs"/>
 								<option id="gnu.cpp.link.option.flags.1627156989" name="Linker flags" superClass="gnu.cpp.link.option.flags"/>

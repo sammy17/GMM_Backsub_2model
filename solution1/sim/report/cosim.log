@@ -1,0 +1,5 @@
+@I [SIM-47] Using XSIM for RTL simulation.
+@I [SIM-14] Instrumenting C test bench ...
+@W [SIM-369] AXI_master port 'frame_in' has a depth of '76800'. Insufficient depth may result in simulation mismatch or freeze.
+@W [SIM-369] AXI_master port 'frame_out' has a depth of '76800'. Insufficient depth may result in simulation mismatch or freeze.
+@W [SIM-369] AXI_master port 'gmem_offset' has a depth of '460800'. Insufficient depth may result in simulation mismatch or freeze.

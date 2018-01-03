@@ -1,13 +1,13 @@
 set C_TypeInfoList {{ 
-"backsub" : [[], {"return": [[], {"scalar": "int"}] }, [{"ExternC" : 0}], [ {"data_array": [[], {"array": ["0", [38400]]}] }, {"out_frame": [[], {"array": ["1", [76800]]}] }, {"init": [[], {"scalar": "bool"}] }, {"parameters": [[], {"array": [ {"scalar": "float"}, [460800]]}] }],["2","3","4","5","6","7"],""],
- "2": [ "vinit", [[], {"scalar": "float"}],""],
- "3": [ "matchsum", [[], {"array": ["1", [76800,2]]}],""],
+"backsub" : [[], {"return": [[], {"scalar": "int"}] }, [{"ExternC" : 0}], [ {"frame_in": [[], {"array": ["0", [76800]]}] }, {"frame_out": [[], {"array": ["0", [76800]]}] }, {"init": [[], {"scalar": "bool"}] }, {"para": [[], {"array": ["1", [460800]]}] }],["2","3","4","5","6","7"],""],
+ "2": [ "vinit", [[],"1"],""],
+ "3": [ "matchsum", [[], {"array": ["0", [76800,2]]}],""],
  "4": [ "back_gauss", [[], {"array": [ {"scalar": "bool"}, [76800,2]]}],""],
- "5": [ "alpha_w", [[], {"scalar": "float"}],""],
- "6": [ "akt", [[], {"array": [ {"scalar": "float"}, [2]]}],""],
- "7": [ "F", [[], {"array": [ {"scalar": "float"}, [2]]}],""], 
-"0": [ "uint32_t", {"typedef": [[[], {"scalar": "unsigned int"}],""]}], 
-"1": [ "uint8_t", {"typedef": [[[], {"scalar": "unsigned char"}],""]}]
+ "5": [ "alpha_w", [[],"1"],""],
+ "6": [ "akt", [[], {"array": ["1", [2]]}],""],
+ "7": [ "F", [[], {"array": ["1", [2]]}],""], 
+"0": [ "uint8_t", {"typedef": [[[], {"scalar": "unsigned char"}],""]}], 
+"1": [ "data_t", {"typedef": [[[], {"scalar": "float"}],""]}]
 }}
 set moduleName backsub
 set isCombinational 0
@@ -19,25 +19,23 @@ set isOneStateSeq 0
 set C_modelName {backsub}
 set C_modelType { int 32 }
 set C_modelArgList { 
-	{ gmem int 32 regular {axi_master 0}  }
-	{ gmem_offset int 8 regular {axi_master 1}  }
-	{ gmem_offset1 float 32 regular {axi_master 2}  }
-	{ data_array int 32 regular {axi_slave 0}  }
-	{ out_frame int 32 regular {axi_slave 0}  }
+	{ gmem int 8 regular {axi_master 2}  }
+	{ gmem_offset float 32 regular {axi_master 2}  }
+	{ frame_in int 32 regular {axi_slave 0}  }
+	{ frame_out int 32 regular {axi_slave 0}  }
 	{ init int 1 regular {axi_slave 0}  }
-	{ parameters int 32 regular {axi_slave 0}  }
+	{ para int 32 regular {axi_slave 0}  }
 }
 set C_modelArgMapList {[ 
-	{ "Name" : "gmem", "interface" : "axi_master", "bitwidth" : 32, "direction" : "READONLY", "bitSlice":[{"low":0,"up":31,"cElement": [{"cName": "data_array","cData": "unsigned int","bit_use": { "low": 0,"up": 31},"offset": { "type": "dynamic","port_name": "data_array","bundle": "AXILiteS"},"direction": "READONLY","cArray": [{"low" : 0,"up" : 38399,"step" : 1}]}]}]} , 
- 	{ "Name" : "gmem_offset", "interface" : "axi_master", "bitwidth" : 8, "direction" : "WRITEONLY", "bitSlice":[{"low":0,"up":7,"cElement": [{"cName": "out_frame","cData": "unsigned char","bit_use": { "low": 0,"up": 7},"offset": { "type": "dynamic","port_name": "out_frame","bundle": "AXILiteS"},"direction": "WRITEONLY","cArray": [{"low" : 0,"up" : 76799,"step" : 1}]}]}]} , 
- 	{ "Name" : "gmem_offset1", "interface" : "axi_master", "bitwidth" : 32, "direction" : "READWRITE", "bitSlice":[{"low":0,"up":31,"cElement": [{"cName": "parameters","cData": "float","bit_use": { "low": 0,"up": 31},"cArray": [{"low" : 0,"up" : 460799,"step" : 1}]}]}]} , 
- 	{ "Name" : "data_array", "interface" : "axi_slave", "bundle":"AXILiteS","type":"ap_none","bitwidth" : 32, "direction" : "READONLY", "offset" : {"in":16}, "offset_end" : {"in":23}} , 
- 	{ "Name" : "out_frame", "interface" : "axi_slave", "bundle":"AXILiteS","type":"ap_none","bitwidth" : 32, "direction" : "READONLY", "offset" : {"in":24}, "offset_end" : {"in":31}} , 
+	{ "Name" : "gmem", "interface" : "axi_master", "bitwidth" : 8, "direction" : "READWRITE", "bitSlice":[{"low":0,"up":7,"cElement": [{"cName": "frame_in","cData": "unsigned char","bit_use": { "low": 0,"up": 7},"offset": { "type": "dynamic","port_name": "frame_in","bundle": "AXILiteS"},"direction": "READONLY","cArray": [{"low" : 0,"up" : 76799,"step" : 1}]},{"cName": "frame_out","cData": "unsigned char","bit_use": { "low": 0,"up": 7},"offset": { "type": "dynamic","port_name": "frame_out","bundle": "AXILiteS"},"direction": "WRITEONLY","cArray": [{"low" : 0,"up" : 76799,"step" : 1}]}]}]} , 
+ 	{ "Name" : "gmem_offset", "interface" : "axi_master", "bitwidth" : 32, "direction" : "READWRITE", "bitSlice":[{"low":0,"up":31,"cElement": [{"cName": "para","cData": "float","bit_use": { "low": 0,"up": 31},"offset": { "type": "dynamic","port_name": "para","bundle": "AXILiteS"},"direction": "READWRITE","cArray": [{"low" : 0,"up" : 460799,"step" : 1}]}]}]} , 
+ 	{ "Name" : "frame_in", "interface" : "axi_slave", "bundle":"AXILiteS","type":"ap_none","bitwidth" : 32, "direction" : "READONLY", "offset" : {"in":16}, "offset_end" : {"in":23}} , 
+ 	{ "Name" : "frame_out", "interface" : "axi_slave", "bundle":"AXILiteS","type":"ap_none","bitwidth" : 32, "direction" : "READONLY", "offset" : {"in":24}, "offset_end" : {"in":31}} , 
  	{ "Name" : "init", "interface" : "axi_slave", "bundle":"CRTL_BUS","type":"ap_none","bitwidth" : 1, "direction" : "READONLY", "bitSlice":[{"low":0,"up":0,"cElement": [{"cName": "init","cData": "bool","bit_use": { "low": 0,"up": 0},"cArray": [{"low" : 0,"up" : 0,"step" : 0}]}]}], "offset" : {"in":24}, "offset_end" : {"in":31}} , 
- 	{ "Name" : "parameters", "interface" : "axi_slave", "bundle":"AXILiteS","type":"ap_none","bitwidth" : 32, "direction" : "READONLY", "offset" : {"in":32}, "offset_end" : {"in":39}} , 
+ 	{ "Name" : "para", "interface" : "axi_slave", "bundle":"AXILiteS","type":"ap_none","bitwidth" : 32, "direction" : "READONLY", "offset" : {"in":32}, "offset_end" : {"in":39}} , 
  	{ "Name" : "ap_return", "interface" : "axi_slave", "bundle":"CRTL_BUS","type":"ap_none","bitwidth" : 32,"bitSlice":[{"low":0,"up":31,"cElement": [{"cName": "return","cData": "int","bit_use": { "low": 0,"up": 31},"cArray": [{"low" : 0,"up" : 1,"step" : 0}]}]}], "offset" : {"out":16}} ]}
 # RTL Port declarations: 
-set portNum 172
+set portNum 127
 set portList { 
 	{ ap_clk sc_in sc_logic 1 clock -1 } 
 	{ ap_rst_n sc_in sc_logic 1 reset -1 active_low_sync } 
@@ -131,51 +129,6 @@ set portList {
 	{ m_axi_gmem_offset_BRESP sc_in sc_lv 2 signal 1 } 
 	{ m_axi_gmem_offset_BID sc_in sc_lv 1 signal 1 } 
 	{ m_axi_gmem_offset_BUSER sc_in sc_lv 1 signal 1 } 
-	{ m_axi_gmem_offset1_AWVALID sc_out sc_logic 1 signal 2 } 
-	{ m_axi_gmem_offset1_AWREADY sc_in sc_logic 1 signal 2 } 
-	{ m_axi_gmem_offset1_AWADDR sc_out sc_lv 32 signal 2 } 
-	{ m_axi_gmem_offset1_AWID sc_out sc_lv 1 signal 2 } 
-	{ m_axi_gmem_offset1_AWLEN sc_out sc_lv 8 signal 2 } 
-	{ m_axi_gmem_offset1_AWSIZE sc_out sc_lv 3 signal 2 } 
-	{ m_axi_gmem_offset1_AWBURST sc_out sc_lv 2 signal 2 } 
-	{ m_axi_gmem_offset1_AWLOCK sc_out sc_lv 2 signal 2 } 
-	{ m_axi_gmem_offset1_AWCACHE sc_out sc_lv 4 signal 2 } 
-	{ m_axi_gmem_offset1_AWPROT sc_out sc_lv 3 signal 2 } 
-	{ m_axi_gmem_offset1_AWQOS sc_out sc_lv 4 signal 2 } 
-	{ m_axi_gmem_offset1_AWREGION sc_out sc_lv 4 signal 2 } 
-	{ m_axi_gmem_offset1_AWUSER sc_out sc_lv 1 signal 2 } 
-	{ m_axi_gmem_offset1_WVALID sc_out sc_logic 1 signal 2 } 
-	{ m_axi_gmem_offset1_WREADY sc_in sc_logic 1 signal 2 } 
-	{ m_axi_gmem_offset1_WDATA sc_out sc_lv 32 signal 2 } 
-	{ m_axi_gmem_offset1_WSTRB sc_out sc_lv 4 signal 2 } 
-	{ m_axi_gmem_offset1_WLAST sc_out sc_logic 1 signal 2 } 
-	{ m_axi_gmem_offset1_WID sc_out sc_lv 1 signal 2 } 
-	{ m_axi_gmem_offset1_WUSER sc_out sc_lv 1 signal 2 } 
-	{ m_axi_gmem_offset1_ARVALID sc_out sc_logic 1 signal 2 } 
-	{ m_axi_gmem_offset1_ARREADY sc_in sc_logic 1 signal 2 } 
-	{ m_axi_gmem_offset1_ARADDR sc_out sc_lv 32 signal 2 } 
-	{ m_axi_gmem_offset1_ARID sc_out sc_lv 1 signal 2 } 
-	{ m_axi_gmem_offset1_ARLEN sc_out sc_lv 8 signal 2 } 
-	{ m_axi_gmem_offset1_ARSIZE sc_out sc_lv 3 signal 2 } 
-	{ m_axi_gmem_offset1_ARBURST sc_out sc_lv 2 signal 2 } 
-	{ m_axi_gmem_offset1_ARLOCK sc_out sc_lv 2 signal 2 } 
-	{ m_axi_gmem_offset1_ARCACHE sc_out sc_lv 4 signal 2 } 
-	{ m_axi_gmem_offset1_ARPROT sc_out sc_lv 3 signal 2 } 
-	{ m_axi_gmem_offset1_ARQOS sc_out sc_lv 4 signal 2 } 
-	{ m_axi_gmem_offset1_ARREGION sc_out sc_lv 4 signal 2 } 
-	{ m_axi_gmem_offset1_ARUSER sc_out sc_lv 1 signal 2 } 
-	{ m_axi_gmem_offset1_RVALID sc_in sc_logic 1 signal 2 } 
-	{ m_axi_gmem_offset1_RREADY sc_out sc_logic 1 signal 2 } 
-	{ m_axi_gmem_offset1_RDATA sc_in sc_lv 32 signal 2 } 
-	{ m_axi_gmem_offset1_RLAST sc_in sc_logic 1 signal 2 } 
-	{ m_axi_gmem_offset1_RID sc_in sc_lv 1 signal 2 } 
-	{ m_axi_gmem_offset1_RUSER sc_in sc_lv 1 signal 2 } 
-	{ m_axi_gmem_offset1_RRESP sc_in sc_lv 2 signal 2 } 
-	{ m_axi_gmem_offset1_BVALID sc_in sc_logic 1 signal 2 } 
-	{ m_axi_gmem_offset1_BREADY sc_out sc_logic 1 signal 2 } 
-	{ m_axi_gmem_offset1_BRESP sc_in sc_lv 2 signal 2 } 
-	{ m_axi_gmem_offset1_BID sc_in sc_lv 1 signal 2 } 
-	{ m_axi_gmem_offset1_BUSER sc_in sc_lv 1 signal 2 } 
 	{ s_axi_AXILiteS_AWVALID sc_in sc_logic 1 signal -1 } 
 	{ s_axi_AXILiteS_AWREADY sc_out sc_logic 1 signal -1 } 
 	{ s_axi_AXILiteS_AWADDR sc_in sc_lv 6 signal -1 } 
@@ -213,7 +166,7 @@ set portList {
 	{ interrupt sc_out sc_logic 1 signal -1 } 
 }
 set NewPortList {[ 
-	{ "name": "s_axi_AXILiteS_AWADDR", "direction": "in", "datatype": "sc_lv", "bitwidth":6, "type": "signal", "bundle":{"name": "AXILiteS", "role": "AWADDR" },"address":[{"name":"data_array","role":"data","value":"16"},{"name":"out_frame","role":"data","value":"24"},{"name":"parameters","role":"data","value":"32"}] },
+	{ "name": "s_axi_AXILiteS_AWADDR", "direction": "in", "datatype": "sc_lv", "bitwidth":6, "type": "signal", "bundle":{"name": "AXILiteS", "role": "AWADDR" },"address":[{"name":"frame_in","role":"data","value":"16"},{"name":"frame_out","role":"data","value":"24"},{"name":"para","role":"data","value":"32"}] },
 	{ "name": "s_axi_AXILiteS_AWVALID", "direction": "in", "datatype": "sc_logic", "bitwidth":1, "type": "signal", "bundle":{"name": "AXILiteS", "role": "AWVALID" } },
 	{ "name": "s_axi_AXILiteS_AWREADY", "direction": "out", "datatype": "sc_logic", "bitwidth":1, "type": "signal", "bundle":{"name": "AXILiteS", "role": "AWREADY" } },
 	{ "name": "s_axi_AXILiteS_WVALID", "direction": "in", "datatype": "sc_logic", "bitwidth":1, "type": "signal", "bundle":{"name": "AXILiteS", "role": "WVALID" } },
@@ -339,56 +292,10 @@ set NewPortList {[
  	{ "name": "m_axi_gmem_offset_BRESP", "direction": "in", "datatype": "sc_lv", "bitwidth":2, "type": "signal", "bundle":{"name": "gmem_offset", "role": "BRESP" }} , 
  	{ "name": "m_axi_gmem_offset_BID", "direction": "in", "datatype": "sc_lv", "bitwidth":1, "type": "signal", "bundle":{"name": "gmem_offset", "role": "BID" }} , 
  	{ "name": "m_axi_gmem_offset_BUSER", "direction": "in", "datatype": "sc_lv", "bitwidth":1, "type": "signal", "bundle":{"name": "gmem_offset", "role": "BUSER" }} , 
- 	{ "name": "m_axi_gmem_offset1_AWVALID", "direction": "out", "datatype": "sc_logic", "bitwidth":1, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "AWVALID" }} , 
- 	{ "name": "m_axi_gmem_offset1_AWREADY", "direction": "in", "datatype": "sc_logic", "bitwidth":1, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "AWREADY" }} , 
- 	{ "name": "m_axi_gmem_offset1_AWADDR", "direction": "out", "datatype": "sc_lv", "bitwidth":32, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "AWADDR" }} , 
- 	{ "name": "m_axi_gmem_offset1_AWID", "direction": "out", "datatype": "sc_lv", "bitwidth":1, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "AWID" }} , 
- 	{ "name": "m_axi_gmem_offset1_AWLEN", "direction": "out", "datatype": "sc_lv", "bitwidth":8, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "AWLEN" }} , 
- 	{ "name": "m_axi_gmem_offset1_AWSIZE", "direction": "out", "datatype": "sc_lv", "bitwidth":3, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "AWSIZE" }} , 
- 	{ "name": "m_axi_gmem_offset1_AWBURST", "direction": "out", "datatype": "sc_lv", "bitwidth":2, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "AWBURST" }} , 
- 	{ "name": "m_axi_gmem_offset1_AWLOCK", "direction": "out", "datatype": "sc_lv", "bitwidth":2, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "AWLOCK" }} , 
- 	{ "name": "m_axi_gmem_offset1_AWCACHE", "direction": "out", "datatype": "sc_lv", "bitwidth":4, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "AWCACHE" }} , 
- 	{ "name": "m_axi_gmem_offset1_AWPROT", "direction": "out", "datatype": "sc_lv", "bitwidth":3, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "AWPROT" }} , 
- 	{ "name": "m_axi_gmem_offset1_AWQOS", "direction": "out", "datatype": "sc_lv", "bitwidth":4, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "AWQOS" }} , 
- 	{ "name": "m_axi_gmem_offset1_AWREGION", "direction": "out", "datatype": "sc_lv", "bitwidth":4, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "AWREGION" }} , 
- 	{ "name": "m_axi_gmem_offset1_AWUSER", "direction": "out", "datatype": "sc_lv", "bitwidth":1, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "AWUSER" }} , 
- 	{ "name": "m_axi_gmem_offset1_WVALID", "direction": "out", "datatype": "sc_logic", "bitwidth":1, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "WVALID" }} , 
- 	{ "name": "m_axi_gmem_offset1_WREADY", "direction": "in", "datatype": "sc_logic", "bitwidth":1, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "WREADY" }} , 
- 	{ "name": "m_axi_gmem_offset1_WDATA", "direction": "out", "datatype": "sc_lv", "bitwidth":32, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "WDATA" }} , 
- 	{ "name": "m_axi_gmem_offset1_WSTRB", "direction": "out", "datatype": "sc_lv", "bitwidth":4, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "WSTRB" }} , 
- 	{ "name": "m_axi_gmem_offset1_WLAST", "direction": "out", "datatype": "sc_logic", "bitwidth":1, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "WLAST" }} , 
- 	{ "name": "m_axi_gmem_offset1_WID", "direction": "out", "datatype": "sc_lv", "bitwidth":1, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "WID" }} , 
- 	{ "name": "m_axi_gmem_offset1_WUSER", "direction": "out", "datatype": "sc_lv", "bitwidth":1, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "WUSER" }} , 
- 	{ "name": "m_axi_gmem_offset1_ARVALID", "direction": "out", "datatype": "sc_logic", "bitwidth":1, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "ARVALID" }} , 
- 	{ "name": "m_axi_gmem_offset1_ARREADY", "direction": "in", "datatype": "sc_logic", "bitwidth":1, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "ARREADY" }} , 
- 	{ "name": "m_axi_gmem_offset1_ARADDR", "direction": "out", "datatype": "sc_lv", "bitwidth":32, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "ARADDR" }} , 
- 	{ "name": "m_axi_gmem_offset1_ARID", "direction": "out", "datatype": "sc_lv", "bitwidth":1, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "ARID" }} , 
- 	{ "name": "m_axi_gmem_offset1_ARLEN", "direction": "out", "datatype": "sc_lv", "bitwidth":8, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "ARLEN" }} , 
- 	{ "name": "m_axi_gmem_offset1_ARSIZE", "direction": "out", "datatype": "sc_lv", "bitwidth":3, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "ARSIZE" }} , 
- 	{ "name": "m_axi_gmem_offset1_ARBURST", "direction": "out", "datatype": "sc_lv", "bitwidth":2, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "ARBURST" }} , 
- 	{ "name": "m_axi_gmem_offset1_ARLOCK", "direction": "out", "datatype": "sc_lv", "bitwidth":2, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "ARLOCK" }} , 
- 	{ "name": "m_axi_gmem_offset1_ARCACHE", "direction": "out", "datatype": "sc_lv", "bitwidth":4, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "ARCACHE" }} , 
- 	{ "name": "m_axi_gmem_offset1_ARPROT", "direction": "out", "datatype": "sc_lv", "bitwidth":3, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "ARPROT" }} , 
- 	{ "name": "m_axi_gmem_offset1_ARQOS", "direction": "out", "datatype": "sc_lv", "bitwidth":4, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "ARQOS" }} , 
- 	{ "name": "m_axi_gmem_offset1_ARREGION", "direction": "out", "datatype": "sc_lv", "bitwidth":4, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "ARREGION" }} , 
- 	{ "name": "m_axi_gmem_offset1_ARUSER", "direction": "out", "datatype": "sc_lv", "bitwidth":1, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "ARUSER" }} , 
- 	{ "name": "m_axi_gmem_offset1_RVALID", "direction": "in", "datatype": "sc_logic", "bitwidth":1, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "RVALID" }} , 
- 	{ "name": "m_axi_gmem_offset1_RREADY", "direction": "out", "datatype": "sc_logic", "bitwidth":1, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "RREADY" }} , 
- 	{ "name": "m_axi_gmem_offset1_RDATA", "direction": "in", "datatype": "sc_lv", "bitwidth":32, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "RDATA" }} , 
- 	{ "name": "m_axi_gmem_offset1_RLAST", "direction": "in", "datatype": "sc_logic", "bitwidth":1, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "RLAST" }} , 
- 	{ "name": "m_axi_gmem_offset1_RID", "direction": "in", "datatype": "sc_lv", "bitwidth":1, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "RID" }} , 
- 	{ "name": "m_axi_gmem_offset1_RUSER", "direction": "in", "datatype": "sc_lv", "bitwidth":1, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "RUSER" }} , 
- 	{ "name": "m_axi_gmem_offset1_RRESP", "direction": "in", "datatype": "sc_lv", "bitwidth":2, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "RRESP" }} , 
- 	{ "name": "m_axi_gmem_offset1_BVALID", "direction": "in", "datatype": "sc_logic", "bitwidth":1, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "BVALID" }} , 
- 	{ "name": "m_axi_gmem_offset1_BREADY", "direction": "out", "datatype": "sc_logic", "bitwidth":1, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "BREADY" }} , 
- 	{ "name": "m_axi_gmem_offset1_BRESP", "direction": "in", "datatype": "sc_lv", "bitwidth":2, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "BRESP" }} , 
- 	{ "name": "m_axi_gmem_offset1_BID", "direction": "in", "datatype": "sc_lv", "bitwidth":1, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "BID" }} , 
- 	{ "name": "m_axi_gmem_offset1_BUSER", "direction": "in", "datatype": "sc_lv", "bitwidth":1, "type": "signal", "bundle":{"name": "gmem_offset1", "role": "BUSER" }} , 
  	{ "name": "interrupt", "direction": "out", "datatype": "sc_logic", "bitwidth":1, "type": "signal", "bundle":{"name": "interrupt", "role": "default" }}  ]}
 set Spec2ImplPortList { 
 	gmem { m_axi {  { m_axi_gmem_AWVALID VALID 1 1 }  { m_axi_gmem_AWREADY READY 0 1 }  { m_axi_gmem_AWADDR ADDR 1 32 }  { m_axi_gmem_AWID ID 1 1 }  { m_axi_gmem_AWLEN LEN 1 8 }  { m_axi_gmem_AWSIZE SIZE 1 3 }  { m_axi_gmem_AWBURST BURST 1 2 }  { m_axi_gmem_AWLOCK LOCK 1 2 }  { m_axi_gmem_AWCACHE CACHE 1 4 }  { m_axi_gmem_AWPROT PROT 1 3 }  { m_axi_gmem_AWQOS QOS 1 4 }  { m_axi_gmem_AWREGION REGION 1 4 }  { m_axi_gmem_AWUSER USER 1 1 }  { m_axi_gmem_WVALID VALID 1 1 }  { m_axi_gmem_WREADY READY 0 1 }  { m_axi_gmem_WDATA DATA 1 32 }  { m_axi_gmem_WSTRB STRB 1 4 }  { m_axi_gmem_WLAST LAST 1 1 }  { m_axi_gmem_WID ID 1 1 }  { m_axi_gmem_WUSER USER 1 1 }  { m_axi_gmem_ARVALID VALID 1 1 }  { m_axi_gmem_ARREADY READY 0 1 }  { m_axi_gmem_ARADDR ADDR 1 32 }  { m_axi_gmem_ARID ID 1 1 }  { m_axi_gmem_ARLEN LEN 1 8 }  { m_axi_gmem_ARSIZE SIZE 1 3 }  { m_axi_gmem_ARBURST BURST 1 2 }  { m_axi_gmem_ARLOCK LOCK 1 2 }  { m_axi_gmem_ARCACHE CACHE 1 4 }  { m_axi_gmem_ARPROT PROT 1 3 }  { m_axi_gmem_ARQOS QOS 1 4 }  { m_axi_gmem_ARREGION REGION 1 4 }  { m_axi_gmem_ARUSER USER 1 1 }  { m_axi_gmem_RVALID VALID 0 1 }  { m_axi_gmem_RREADY READY 1 1 }  { m_axi_gmem_RDATA DATA 0 32 }  { m_axi_gmem_RLAST LAST 0 1 }  { m_axi_gmem_RID ID 0 1 }  { m_axi_gmem_RUSER USER 0 1 }  { m_axi_gmem_RRESP RESP 0 2 }  { m_axi_gmem_BVALID VALID 0 1 }  { m_axi_gmem_BREADY READY 1 1 }  { m_axi_gmem_BRESP RESP 0 2 }  { m_axi_gmem_BID ID 0 1 }  { m_axi_gmem_BUSER USER 0 1 } } }
 	gmem_offset { m_axi {  { m_axi_gmem_offset_AWVALID VALID 1 1 }  { m_axi_gmem_offset_AWREADY READY 0 1 }  { m_axi_gmem_offset_AWADDR ADDR 1 32 }  { m_axi_gmem_offset_AWID ID 1 1 }  { m_axi_gmem_offset_AWLEN LEN 1 8 }  { m_axi_gmem_offset_AWSIZE SIZE 1 3 }  { m_axi_gmem_offset_AWBURST BURST 1 2 }  { m_axi_gmem_offset_AWLOCK LOCK 1 2 }  { m_axi_gmem_offset_AWCACHE CACHE 1 4 }  { m_axi_gmem_offset_AWPROT PROT 1 3 }  { m_axi_gmem_offset_AWQOS QOS 1 4 }  { m_axi_gmem_offset_AWREGION REGION 1 4 }  { m_axi_gmem_offset_AWUSER USER 1 1 }  { m_axi_gmem_offset_WVALID VALID 1 1 }  { m_axi_gmem_offset_WREADY READY 0 1 }  { m_axi_gmem_offset_WDATA DATA 1 32 }  { m_axi_gmem_offset_WSTRB STRB 1 4 }  { m_axi_gmem_offset_WLAST LAST 1 1 }  { m_axi_gmem_offset_WID ID 1 1 }  { m_axi_gmem_offset_WUSER USER 1 1 }  { m_axi_gmem_offset_ARVALID VALID 1 1 }  { m_axi_gmem_offset_ARREADY READY 0 1 }  { m_axi_gmem_offset_ARADDR ADDR 1 32 }  { m_axi_gmem_offset_ARID ID 1 1 }  { m_axi_gmem_offset_ARLEN LEN 1 8 }  { m_axi_gmem_offset_ARSIZE SIZE 1 3 }  { m_axi_gmem_offset_ARBURST BURST 1 2 }  { m_axi_gmem_offset_ARLOCK LOCK 1 2 }  { m_axi_gmem_offset_ARCACHE CACHE 1 4 }  { m_axi_gmem_offset_ARPROT PROT 1 3 }  { m_axi_gmem_offset_ARQOS QOS 1 4 }  { m_axi_gmem_offset_ARREGION REGION 1 4 }  { m_axi_gmem_offset_ARUSER USER 1 1 }  { m_axi_gmem_offset_RVALID VALID 0 1 }  { m_axi_gmem_offset_RREADY READY 1 1 }  { m_axi_gmem_offset_RDATA DATA 0 32 }  { m_axi_gmem_offset_RLAST LAST 0 1 }  { m_axi_gmem_offset_RID ID 0 1 }  { m_axi_gmem_offset_RUSER USER 0 1 }  { m_axi_gmem_offset_RRESP RESP 0 2 }  { m_axi_gmem_offset_BVALID VALID 0 1 }  { m_axi_gmem_offset_BREADY READY 1 1 }  { m_axi_gmem_offset_BRESP RESP 0 2 }  { m_axi_gmem_offset_BID ID 0 1 }  { m_axi_gmem_offset_BUSER USER 0 1 } } }
-	gmem_offset1 { m_axi {  { m_axi_gmem_offset1_AWVALID VALID 1 1 }  { m_axi_gmem_offset1_AWREADY READY 0 1 }  { m_axi_gmem_offset1_AWADDR ADDR 1 32 }  { m_axi_gmem_offset1_AWID ID 1 1 }  { m_axi_gmem_offset1_AWLEN LEN 1 8 }  { m_axi_gmem_offset1_AWSIZE SIZE 1 3 }  { m_axi_gmem_offset1_AWBURST BURST 1 2 }  { m_axi_gmem_offset1_AWLOCK LOCK 1 2 }  { m_axi_gmem_offset1_AWCACHE CACHE 1 4 }  { m_axi_gmem_offset1_AWPROT PROT 1 3 }  { m_axi_gmem_offset1_AWQOS QOS 1 4 }  { m_axi_gmem_offset1_AWREGION REGION 1 4 }  { m_axi_gmem_offset1_AWUSER USER 1 1 }  { m_axi_gmem_offset1_WVALID VALID 1 1 }  { m_axi_gmem_offset1_WREADY READY 0 1 }  { m_axi_gmem_offset1_WDATA DATA 1 32 }  { m_axi_gmem_offset1_WSTRB STRB 1 4 }  { m_axi_gmem_offset1_WLAST LAST 1 1 }  { m_axi_gmem_offset1_WID ID 1 1 }  { m_axi_gmem_offset1_WUSER USER 1 1 }  { m_axi_gmem_offset1_ARVALID VALID 1 1 }  { m_axi_gmem_offset1_ARREADY READY 0 1 }  { m_axi_gmem_offset1_ARADDR ADDR 1 32 }  { m_axi_gmem_offset1_ARID ID 1 1 }  { m_axi_gmem_offset1_ARLEN LEN 1 8 }  { m_axi_gmem_offset1_ARSIZE SIZE 1 3 }  { m_axi_gmem_offset1_ARBURST BURST 1 2 }  { m_axi_gmem_offset1_ARLOCK LOCK 1 2 }  { m_axi_gmem_offset1_ARCACHE CACHE 1 4 }  { m_axi_gmem_offset1_ARPROT PROT 1 3 }  { m_axi_gmem_offset1_ARQOS QOS 1 4 }  { m_axi_gmem_offset1_ARREGION REGION 1 4 }  { m_axi_gmem_offset1_ARUSER USER 1 1 }  { m_axi_gmem_offset1_RVALID VALID 0 1 }  { m_axi_gmem_offset1_RREADY READY 1 1 }  { m_axi_gmem_offset1_RDATA DATA 0 32 }  { m_axi_gmem_offset1_RLAST LAST 0 1 }  { m_axi_gmem_offset1_RID ID 0 1 }  { m_axi_gmem_offset1_RUSER USER 0 1 }  { m_axi_gmem_offset1_RRESP RESP 0 2 }  { m_axi_gmem_offset1_BVALID VALID 0 1 }  { m_axi_gmem_offset1_BREADY READY 1 1 }  { m_axi_gmem_offset1_BRESP RESP 0 2 }  { m_axi_gmem_offset1_BID ID 0 1 }  { m_axi_gmem_offset1_BUSER USER 0 1 } } }
 }
 
 # RTL port scheduling information:
@@ -398,15 +305,13 @@ set fifoSchedulingInfoList {
 # RTL bus port read request latency information:
 set busReadReqLatencyList { 
 	{ gmem 6 }
-	{ gmem_offset 1 }
-	{ gmem_offset1 6 }
+	{ gmem_offset 6 }
 }
 
 # RTL bus port write response latency information:
 set busWriteResLatencyList { 
 	{ gmem 6 }
-	{ gmem_offset 1 }
-	{ gmem_offset1 6 }
+	{ gmem_offset 6 }
 }
 
 # RTL array port load latency information:

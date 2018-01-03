@@ -1,7 +1,7 @@
 <profile>
 
 <section name = "Vivado HLS Report for 'backsub'" level="0">
-<item name = "Date">Wed Dec 27 00:50:24 2017
+<item name = "Date">Wed Jan 03 12:48:02 2018
 </item>
 <item name = "Version">2015.4 (Build 1412921 on Wed Nov 18 09:58:55 AM 2015)</item>
 <item name = "Project">GMM_backsub_new</item>
@@ -15,7 +15,7 @@
 <section name = "" level="1">
 <item name = "Summary"><table name="" hasTotal="0">
 <keys size="4">Clock, Target, Estimated, Uncertainty</keys>
-<column name="ap_clk">5.00, 6.56, 0.62</column>
+<column name="ap_clk">10.00, 9.79, 1.25</column>
 </table>
 </item>
 </section>
@@ -24,7 +24,7 @@
 <section name = "" level="1">
 <item name = "Summary"><table name="" hasTotal="0">
 <keys size="6">, min, max, min, max, Type</keys>
-<column name="">13557602, 31260002, 13557603, 31260003, none</column>
+<column name="">2841897, 9753897, 2841898, 9753898, none</column>
 </table>
 </item>
 <item name = "Detail">
@@ -35,51 +35,13 @@
 </item>
 <item name = "Loop"><table name="" hasTotal="0">
 <keys size="8">Loop Name, min, max, Latency, achieved, target, Count, Pipelined</keys>
-<column name="- Loop 1">76800, 76800, 1, -, -, 76800, no</column>
-<column name="- Loop 2">13557600, 31183200, 56490 ~ 129930, -, -, 240, no</column>
-<column name=" + Loop 2.1">56480, 129920, 353 ~ 812, -, -, 160, no</column>
-<column name="  ++ memset_M">1, 1, 1, -, -, 2, no</column>
-<column name="  ++ Loop 2.1.2">114, 114, 57, -, -, 2, no</column>
-<column name="  ++ Loop 2.1.3">14, 14, 7, -, -, 2, no</column>
-<column name="  ++ Loop 2.1.4">4, 48, 2 ~ 24, -, -, 2, no</column>
-<column name="  ++ Loop 2.1.5">2, 48, 1 ~ 24, -, -, 2, no</column>
-<column name="  ++ Loop 2.1.6">4, 4, 2, -, -, 2, no</column>
-<column name="  ++ Loop 2.1.7">20, 20, 10, -, -, 2, no</column>
-<column name="  ++ Loop 2.1.8">13, 31, 13 ~ 31, -, -, 1, no</column>
-<column name="   +++ Loop 2.1.8.1">11, 29, 6, -, -, 1 ~ 4, no</column>
-<column name="  ++ Loop 2.1.9">14, 41, 14, -, -, 1 ~ 2, no</column>
-<column name="  ++ memset_M">1, 1, 1, -, -, 2, no</column>
-<column name="  ++ Loop 2.1.11">116, 116, 58, -, -, 2, no</column>
-<column name="  ++ Loop 2.1.12">14, 14, 7, -, -, 2, no</column>
-<column name="  ++ Loop 2.1.13">4, 50, 2 ~ 25, -, -, 2, no</column>
-<column name="  ++ Loop 2.1.14">2, 50, 1 ~ 25, -, -, 2, no</column>
-<column name="  ++ Loop 2.1.15">4, 4, 2, -, -, 2, no</column>
-<column name="  ++ Loop 2.1.16">4, 4, 2, -, -, 2, no</column>
-<column name="  ++ Loop 2.1.17">13, 31, 13 ~ 31, -, -, 1, no</column>
-<column name="   +++ Loop 2.1.17.1">11, 29, 6, -, -, 1 ~ 4, no</column>
-<column name="  ++ Loop 2.1.18">14, 41, 14, -, -, 1 ~ 2, no</column>
-<column name="- Loop 3">13557600, 31183200, 56490 ~ 129930, -, -, 240, no</column>
-<column name=" + Loop 3.1">56480, 129920, 353 ~ 812, -, -, 160, no</column>
-<column name="  ++ memset_M">1, 1, 1, -, -, 2, no</column>
-<column name="  ++ Loop 3.1.2">114, 114, 57, -, -, 2, no</column>
-<column name="  ++ Loop 3.1.3">14, 14, 7, -, -, 2, no</column>
-<column name="  ++ Loop 3.1.4">4, 48, 2 ~ 24, -, -, 2, no</column>
-<column name="  ++ Loop 3.1.5">2, 48, 1 ~ 24, -, -, 2, no</column>
-<column name="  ++ Loop 3.1.6">4, 4, 2, -, -, 2, no</column>
-<column name="  ++ Loop 3.1.7">20, 20, 10, -, -, 2, no</column>
-<column name="  ++ Loop 3.1.8">13, 31, 13 ~ 31, -, -, 1, no</column>
-<column name="   +++ Loop 3.1.8.1">11, 29, 6, -, -, 1 ~ 4, no</column>
-<column name="  ++ Loop 3.1.9">14, 41, 14, -, -, 1 ~ 2, no</column>
-<column name="  ++ memset_M">1, 1, 1, -, -, 2, no</column>
-<column name="  ++ Loop 3.1.11">116, 116, 58, -, -, 2, no</column>
-<column name="  ++ Loop 3.1.12">14, 14, 7, -, -, 2, no</column>
-<column name="  ++ Loop 3.1.13">4, 50, 2 ~ 25, -, -, 2, no</column>
-<column name="  ++ Loop 3.1.14">2, 50, 1 ~ 25, -, -, 2, no</column>
-<column name="  ++ Loop 3.1.15">4, 4, 2, -, -, 2, no</column>
-<column name="  ++ Loop 3.1.16">4, 4, 2, -, -, 2, no</column>
-<column name="  ++ Loop 3.1.17">13, 31, 13 ~ 31, -, -, 1, no</column>
-<column name="   +++ Loop 3.1.17.1">11, 29, 6, -, -, 1 ~ 4, no</column>
-<column name="  ++ Loop 3.1.18">14, 41, 14, -, -, 1 ~ 2, no</column>
+<column name="- Loop 1">2841896, 9753896, 355237 ~ 1219237, -, -, 8, no</column>
+<column name=" + memcpy.backsub(unsigned char*, unsigned char*, bool, float*)::parameters.para">14401, 14401, 3, 1, 1, 14400, yes</column>
+<column name=" + memcpy..frame_in">9601, 9601, 3, 1, 1, 9600, yes</column>
+<column name=" + Loop 1.3">326400, 1171200, 34 ~ 122, -, -, 9600, no</column>
+<column name=" + Loop 1.4">307200, 1152000, 32 ~ 120, -, -, 9600, no</column>
+<column name=" + memcpy.frame_out.backsub(unsigned char*, unsigned char*, bool, float*)::out_frame.gep">9601, 9601, 3, 1, 1, 9600, yes</column>
+<column name=" + memcpy.para.backsub(unsigned char*, unsigned char*, bool, float*)::parameters.gep">14401, 14401, 3, 1, 1, 14400, yes</column>
 </table>
 </item>
 </section>

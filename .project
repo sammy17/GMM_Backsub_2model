@@ -29,52 +29,52 @@
 		<link>
 			<name>source</name>
 			<type>2</type>
-			<location>/home/zynq-fyp/Backsub_GMM/GMM_backsub_new/.apc/.src</location>
+			<location>F:/maxi_latest/GMM_backsub_new/.apc/.src</location>
 		</link>
 		<link>
 			<name>testbench</name>
 			<type>2</type>
-			<location>/home/zynq-fyp/Backsub_GMM/GMM_backsub_new/.apc/.tb</location>
+			<location>F:/maxi_latest/GMM_backsub_new/.apc/.tb</location>
 		</link>
 		<link>
 			<name>solution1/constraints</name>
 			<type>2</type>
-			<location>/home/zynq-fyp/Backsub_GMM/GMM_backsub_new/solution1/.tcls</location>
+			<location>F:/maxi_latest/GMM_backsub_new/solution1/.tcls</location>
 		</link>
 		<link>
 			<name>source/core.cpp</name>
 			<type>1</type>
-			<location>/home/zynq-fyp/Backsub_GMM/GMM_backsub_new/core.cpp</location>
+			<location>F:/maxi_latest/GMM_backsub_new/core.cpp</location>
 		</link>
 		<link>
 			<name>source/core.h</name>
 			<type>1</type>
-			<location>/home/zynq-fyp/Backsub_GMM/GMM_backsub_new/core.h</location>
+			<location>F:/maxi_latest/GMM_backsub_new/core.h</location>
 		</link>
 		<link>
 			<name>testbench/cut_out.avi</name>
 			<type>1</type>
-			<location>/home/zynq-fyp/Backsub_GMM/GMM_backsub_new/cut_out.avi</location>
+			<location>F:/maxi_latest/GMM_backsub_new/cut_out.avi</location>
 		</link>
 		<link>
 			<name>testbench/test.cpp</name>
 			<type>1</type>
-			<location>/home/zynq-fyp/Backsub_GMM/GMM_backsub_new/test.cpp</location>
+			<location>F:/maxi_latest/GMM_backsub_new/test.cpp</location>
 		</link>
 		<link>
 			<name>solution1/constraints/.xml.directive</name>
 			<type>1</type>
-			<location>/home/zynq-fyp/Backsub_GMM/GMM_backsub_new/solution1/solution1.directive</location>
+			<location>F:/maxi_latest/GMM_backsub_new/solution1/solution1.directive</location>
 		</link>
 		<link>
 			<name>solution1/constraints/directives.tcl</name>
 			<type>1</type>
-			<location>/home/zynq-fyp/Backsub_GMM/GMM_backsub_new/solution1/directives.tcl</location>
+			<location>F:/maxi_latest/GMM_backsub_new/solution1/directives.tcl</location>
 		</link>
 		<link>
 			<name>solution1/constraints/script.tcl</name>
 			<type>1</type>
-			<location>/home/zynq-fyp/Backsub_GMM/GMM_backsub_new/solution1/script.tcl</location>
+			<location>F:/maxi_latest/GMM_backsub_new/solution1/script.tcl</location>
 		</link>
 	</linkedResources>
 </projectDescription>

@@ -36,9 +36,9 @@ port (
     RVALID                :out  STD_LOGIC;
     RREADY                :in   STD_LOGIC;
     -- user signals
-    data_array            :out  STD_LOGIC_VECTOR(31 downto 0);
-    out_frame             :out  STD_LOGIC_VECTOR(31 downto 0);
-    parameters            :out  STD_LOGIC_VECTOR(31 downto 0)
+    frame_in              :out  STD_LOGIC_VECTOR(31 downto 0);
+    frame_out             :out  STD_LOGIC_VECTOR(31 downto 0);
+    para                  :out  STD_LOGIC_VECTOR(31 downto 0)
 );
 end entity backsub_AXILiteS_s_axi;
 
@@ -47,26 +47,26 @@ end entity backsub_AXILiteS_s_axi;
 -- 0x04 : reserved
 -- 0x08 : reserved
 -- 0x0c : reserved
--- 0x10 : Data signal of data_array
---        bit 31~0 - data_array[31:0] (Read/Write)
+-- 0x10 : Data signal of frame_in
+--        bit 31~0 - frame_in[31:0] (Read/Write)
 -- 0x14 : reserved
--- 0x18 : Data signal of out_frame
---        bit 31~0 - out_frame[31:0] (Read/Write)
+-- 0x18 : Data signal of frame_out
+--        bit 31~0 - frame_out[31:0] (Read/Write)
 -- 0x1c : reserved
--- 0x20 : Data signal of parameters
---        bit 31~0 - parameters[31:0] (Read/Write)
+-- 0x20 : Data signal of para
+--        bit 31~0 - para[31:0] (Read/Write)
 -- 0x24 : reserved
 -- (SC = Self Clear, COR = Clear on Read, TOW = Toggle on Write, COH = Clear on Handshake)
 
 architecture behave of backsub_AXILiteS_s_axi is
     type states is (wridle, wrdata, wrresp, rdidle, rddata);  -- read and write fsm states
     signal wstate, wnext, rstate, rnext: states;
-    constant ADDR_DATA_ARRAY_DATA_0 : INTEGER := 16#10#;
-    constant ADDR_DATA_ARRAY_CTRL   : INTEGER := 16#14#;
-    constant ADDR_OUT_FRAME_DATA_0  : INTEGER := 16#18#;
-    constant ADDR_OUT_FRAME_CTRL    : INTEGER := 16#1c#;
-    constant ADDR_PARAMETERS_DATA_0 : INTEGER := 16#20#;
-    constant ADDR_PARAMETERS_CTRL   : INTEGER := 16#24#;
+    constant ADDR_FRAME_IN_DATA_0  : INTEGER := 16#10#;
+    constant ADDR_FRAME_IN_CTRL    : INTEGER := 16#14#;
+    constant ADDR_FRAME_OUT_DATA_0 : INTEGER := 16#18#;
+    constant ADDR_FRAME_OUT_CTRL   : INTEGER := 16#1c#;
+    constant ADDR_PARA_DATA_0      : INTEGER := 16#20#;
+    constant ADDR_PARA_CTRL        : INTEGER := 16#24#;
     constant ADDR_BITS         : INTEGER := 6;
 
     signal waddr               : UNSIGNED(ADDR_BITS-1 downto 0);
@@ -81,9 +81,9 @@ architecture behave of backsub_AXILiteS_s_axi is
     signal ARREADY_t           : STD_LOGIC;
     signal RVALID_t            : STD_LOGIC;
     -- internal registers
-    signal int_data_array      : UNSIGNED(31 downto 0);
-    signal int_out_frame       : UNSIGNED(31 downto 0);
-    signal int_parameters      : UNSIGNED(31 downto 0);
+    signal int_frame_in        : UNSIGNED(31 downto 0);
+    signal int_frame_out       : UNSIGNED(31 downto 0);
+    signal int_para            : UNSIGNED(31 downto 0);
 
 
 begin
@@ -194,12 +194,12 @@ begin
         if (ACLK'event and ACLK = '1') and ACLK_EN = '1' then
             if (ar_hs = '1') then
                 case (TO_INTEGER(raddr)) is
-                when ADDR_DATA_ARRAY_DATA_0 =>
-                    rdata_data <= RESIZE(int_data_array(31 downto 0), 32);
-                when ADDR_OUT_FRAME_DATA_0 =>
-                    rdata_data <= RESIZE(int_out_frame(31 downto 0), 32);
-                when ADDR_PARAMETERS_DATA_0 =>
-                    rdata_data <= RESIZE(int_parameters(31 downto 0), 32);
+                when ADDR_FRAME_IN_DATA_0 =>
+                    rdata_data <= RESIZE(int_frame_in(31 downto 0), 32);
+                when ADDR_FRAME_OUT_DATA_0 =>
+                    rdata_data <= RESIZE(int_frame_out(31 downto 0), 32);
+                when ADDR_PARA_DATA_0 =>
+                    rdata_data <= RESIZE(int_para(31 downto 0), 32);
                 when others =>
                     rdata_data <= (others => '0');
                 end case;
@@ -208,16 +208,16 @@ begin
     end process;
 
 -- ----------------------- Register logic ----------------
-    data_array           <= STD_LOGIC_VECTOR(int_data_array);
-    out_frame            <= STD_LOGIC_VECTOR(int_out_frame);
-    parameters           <= STD_LOGIC_VECTOR(int_parameters);
+    frame_in             <= STD_LOGIC_VECTOR(int_frame_in);
+    frame_out            <= STD_LOGIC_VECTOR(int_frame_out);
+    para                 <= STD_LOGIC_VECTOR(int_para);
 
     process (ACLK)
     begin
         if (ACLK'event and ACLK = '1') then
             if (ACLK_EN = '1') then
-                if (w_hs = '1' and waddr = ADDR_DATA_ARRAY_DATA_0) then
-                    int_data_array(31 downto 0) <= (UNSIGNED(WDATA(31 downto 0)) and wmask(31 downto 0)) or ((not wmask(31 downto 0)) and int_data_array(31 downto 0));
+                if (w_hs = '1' and waddr = ADDR_FRAME_IN_DATA_0) then
+                    int_frame_in(31 downto 0) <= (UNSIGNED(WDATA(31 downto 0)) and wmask(31 downto 0)) or ((not wmask(31 downto 0)) and int_frame_in(31 downto 0));
                 end if;
             end if;
         end if;
@@ -227,8 +227,8 @@ begin
     begin
         if (ACLK'event and ACLK = '1') then
             if (ACLK_EN = '1') then
-                if (w_hs = '1' and waddr = ADDR_OUT_FRAME_DATA_0) then
-                    int_out_frame(31 downto 0) <= (UNSIGNED(WDATA(31 downto 0)) and wmask(31 downto 0)) or ((not wmask(31 downto 0)) and int_out_frame(31 downto 0));
+                if (w_hs = '1' and waddr = ADDR_FRAME_OUT_DATA_0) then
+                    int_frame_out(31 downto 0) <= (UNSIGNED(WDATA(31 downto 0)) and wmask(31 downto 0)) or ((not wmask(31 downto 0)) and int_frame_out(31 downto 0));
                 end if;
             end if;
         end if;
@@ -238,8 +238,8 @@ begin
     begin
         if (ACLK'event and ACLK = '1') then
             if (ACLK_EN = '1') then
-                if (w_hs = '1' and waddr = ADDR_PARAMETERS_DATA_0) then
-                    int_parameters(31 downto 0) <= (UNSIGNED(WDATA(31 downto 0)) and wmask(31 downto 0)) or ((not wmask(31 downto 0)) and int_parameters(31 downto 0));
+                if (w_hs = '1' and waddr = ADDR_PARA_DATA_0) then
+                    int_para(31 downto 0) <= (UNSIGNED(WDATA(31 downto 0)) and wmask(31 downto 0)) or ((not wmask(31 downto 0)) and int_para(31 downto 0));
                 end if;
             end if;
         end if;

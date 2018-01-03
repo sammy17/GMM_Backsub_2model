@@ -86,54 +86,54 @@ u32 XBacksub_Get_return(XBacksub *InstancePtr) {
     Data = XBacksub_ReadReg(InstancePtr->Crtl_bus_BaseAddress, XBACKSUB_CRTL_BUS_ADDR_AP_RETURN);
     return Data;
 }
-void XBacksub_Set_data_array(XBacksub *InstancePtr, u32 Data) {
+void XBacksub_Set_frame_in(XBacksub *InstancePtr, u32 Data) {
     Xil_AssertVoid(InstancePtr != NULL);
     Xil_AssertVoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
 
-    XBacksub_WriteReg(InstancePtr->Axilites_BaseAddress, XBACKSUB_AXILITES_ADDR_DATA_ARRAY_DATA, Data);
+    XBacksub_WriteReg(InstancePtr->Axilites_BaseAddress, XBACKSUB_AXILITES_ADDR_FRAME_IN_DATA, Data);
 }
 
-u32 XBacksub_Get_data_array(XBacksub *InstancePtr) {
+u32 XBacksub_Get_frame_in(XBacksub *InstancePtr) {
     u32 Data;
 
     Xil_AssertNonvoid(InstancePtr != NULL);
     Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
 
-    Data = XBacksub_ReadReg(InstancePtr->Axilites_BaseAddress, XBACKSUB_AXILITES_ADDR_DATA_ARRAY_DATA);
+    Data = XBacksub_ReadReg(InstancePtr->Axilites_BaseAddress, XBACKSUB_AXILITES_ADDR_FRAME_IN_DATA);
     return Data;
 }
 
-void XBacksub_Set_out_frame(XBacksub *InstancePtr, u32 Data) {
+void XBacksub_Set_frame_out(XBacksub *InstancePtr, u32 Data) {
     Xil_AssertVoid(InstancePtr != NULL);
     Xil_AssertVoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
 
-    XBacksub_WriteReg(InstancePtr->Axilites_BaseAddress, XBACKSUB_AXILITES_ADDR_OUT_FRAME_DATA, Data);
+    XBacksub_WriteReg(InstancePtr->Axilites_BaseAddress, XBACKSUB_AXILITES_ADDR_FRAME_OUT_DATA, Data);
 }
 
-u32 XBacksub_Get_out_frame(XBacksub *InstancePtr) {
+u32 XBacksub_Get_frame_out(XBacksub *InstancePtr) {
     u32 Data;
 
     Xil_AssertNonvoid(InstancePtr != NULL);
     Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
 
-    Data = XBacksub_ReadReg(InstancePtr->Axilites_BaseAddress, XBACKSUB_AXILITES_ADDR_OUT_FRAME_DATA);
+    Data = XBacksub_ReadReg(InstancePtr->Axilites_BaseAddress, XBACKSUB_AXILITES_ADDR_FRAME_OUT_DATA);
     return Data;
 }
 
-void XBacksub_Set_parameters(XBacksub *InstancePtr, u32 Data) {
+void XBacksub_Set_para(XBacksub *InstancePtr, u32 Data) {
     Xil_AssertVoid(InstancePtr != NULL);
     Xil_AssertVoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
 
-    XBacksub_WriteReg(InstancePtr->Axilites_BaseAddress, XBACKSUB_AXILITES_ADDR_PARAMETERS_DATA, Data);
+    XBacksub_WriteReg(InstancePtr->Axilites_BaseAddress, XBACKSUB_AXILITES_ADDR_PARA_DATA, Data);
 }
 
-u32 XBacksub_Get_parameters(XBacksub *InstancePtr) {
+u32 XBacksub_Get_para(XBacksub *InstancePtr) {
     u32 Data;
 
     Xil_AssertNonvoid(InstancePtr != NULL);
     Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
 
-    Data = XBacksub_ReadReg(InstancePtr->Axilites_BaseAddress, XBACKSUB_AXILITES_ADDR_PARAMETERS_DATA);
+    Data = XBacksub_ReadReg(InstancePtr->Axilites_BaseAddress, XBACKSUB_AXILITES_ADDR_PARA_DATA);
     return Data;
 }
 

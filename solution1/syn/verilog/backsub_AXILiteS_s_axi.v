@@ -33,39 +33,39 @@ module backsub_AXILiteS_s_axi
     output wire                          RVALID,
     input  wire                          RREADY,
     // user signals
-    output wire [31:0]                   data_array,
-    output wire [31:0]                   out_frame,
-    output wire [31:0]                   parameters
+    output wire [31:0]                   frame_in,
+    output wire [31:0]                   frame_out,
+    output wire [31:0]                   para
 );
 //------------------------Address Info-------------------
 // 0x00 : reserved
 // 0x04 : reserved
 // 0x08 : reserved
 // 0x0c : reserved
-// 0x10 : Data signal of data_array
-//        bit 31~0 - data_array[31:0] (Read/Write)
+// 0x10 : Data signal of frame_in
+//        bit 31~0 - frame_in[31:0] (Read/Write)
 // 0x14 : reserved
-// 0x18 : Data signal of out_frame
-//        bit 31~0 - out_frame[31:0] (Read/Write)
+// 0x18 : Data signal of frame_out
+//        bit 31~0 - frame_out[31:0] (Read/Write)
 // 0x1c : reserved
-// 0x20 : Data signal of parameters
-//        bit 31~0 - parameters[31:0] (Read/Write)
+// 0x20 : Data signal of para
+//        bit 31~0 - para[31:0] (Read/Write)
 // 0x24 : reserved
 // (SC = Self Clear, COR = Clear on Read, TOW = Toggle on Write, COH = Clear on Handshake)
 
 //------------------------Parameter----------------------
 localparam
-    ADDR_DATA_ARRAY_DATA_0 = 6'h10,
-    ADDR_DATA_ARRAY_CTRL   = 6'h14,
-    ADDR_OUT_FRAME_DATA_0  = 6'h18,
-    ADDR_OUT_FRAME_CTRL    = 6'h1c,
-    ADDR_PARAMETERS_DATA_0 = 6'h20,
-    ADDR_PARAMETERS_CTRL   = 6'h24,
-    WRIDLE                 = 2'd0,
-    WRDATA                 = 2'd1,
-    WRRESP                 = 2'd2,
-    RDIDLE                 = 2'd0,
-    RDDATA                 = 2'd1,
+    ADDR_FRAME_IN_DATA_0  = 6'h10,
+    ADDR_FRAME_IN_CTRL    = 6'h14,
+    ADDR_FRAME_OUT_DATA_0 = 6'h18,
+    ADDR_FRAME_OUT_CTRL   = 6'h1c,
+    ADDR_PARA_DATA_0      = 6'h20,
+    ADDR_PARA_CTRL        = 6'h24,
+    WRIDLE                = 2'd0,
+    WRDATA                = 2'd1,
+    WRRESP                = 2'd2,
+    RDIDLE                = 2'd0,
+    RDDATA                = 2'd1,
     ADDR_BITS         = 6;
 
 //------------------------Local signal-------------------
@@ -81,9 +81,9 @@ localparam
     wire                          ar_hs;
     wire [ADDR_BITS-1:0]          raddr;
     // internal registers
-    reg  [31:0]                   int_data_array;
-    reg  [31:0]                   int_out_frame;
-    reg  [31:0]                   int_parameters;
+    reg  [31:0]                   int_frame_in;
+    reg  [31:0]                   int_frame_out;
+    reg  [31:0]                   int_para;
 
 //------------------------Instantiation------------------
 
@@ -175,14 +175,14 @@ always @(posedge ACLK) begin
         if (ar_hs) begin
             rdata <= 1'b0;
             case (raddr)
-                ADDR_DATA_ARRAY_DATA_0: begin
-                    rdata <= int_data_array[31:0];
+                ADDR_FRAME_IN_DATA_0: begin
+                    rdata <= int_frame_in[31:0];
                 end
-                ADDR_OUT_FRAME_DATA_0: begin
-                    rdata <= int_out_frame[31:0];
+                ADDR_FRAME_OUT_DATA_0: begin
+                    rdata <= int_frame_out[31:0];
                 end
-                ADDR_PARAMETERS_DATA_0: begin
-                    rdata <= int_parameters[31:0];
+                ADDR_PARA_DATA_0: begin
+                    rdata <= int_para[31:0];
                 end
             endcase
         end
@@ -191,36 +191,36 @@ end
 
 
 //------------------------Register logic-----------------
-assign data_array = int_data_array;
-assign out_frame  = int_out_frame;
-assign parameters = int_parameters;
-// int_data_array[31:0]
+assign frame_in  = int_frame_in;
+assign frame_out = int_frame_out;
+assign para      = int_para;
+// int_frame_in[31:0]
 always @(posedge ACLK) begin
     if (ARESET)
-        int_data_array[31:0] <= 0;
+        int_frame_in[31:0] <= 0;
     else if (ACLK_EN) begin
-        if (w_hs && waddr == ADDR_DATA_ARRAY_DATA_0)
-            int_data_array[31:0] <= (WDATA[31:0] & wmask) | (int_data_array[31:0] & ~wmask);
+        if (w_hs && waddr == ADDR_FRAME_IN_DATA_0)
+            int_frame_in[31:0] <= (WDATA[31:0] & wmask) | (int_frame_in[31:0] & ~wmask);
     end
 end
 
-// int_out_frame[31:0]
+// int_frame_out[31:0]
 always @(posedge ACLK) begin
     if (ARESET)
-        int_out_frame[31:0] <= 0;
+        int_frame_out[31:0] <= 0;
     else if (ACLK_EN) begin
-        if (w_hs && waddr == ADDR_OUT_FRAME_DATA_0)
-            int_out_frame[31:0] <= (WDATA[31:0] & wmask) | (int_out_frame[31:0] & ~wmask);
+        if (w_hs && waddr == ADDR_FRAME_OUT_DATA_0)
+            int_frame_out[31:0] <= (WDATA[31:0] & wmask) | (int_frame_out[31:0] & ~wmask);
     end
 end
 
-// int_parameters[31:0]
+// int_para[31:0]
 always @(posedge ACLK) begin
     if (ARESET)
-        int_parameters[31:0] <= 0;
+        int_para[31:0] <= 0;
     else if (ACLK_EN) begin
-        if (w_hs && waddr == ADDR_PARAMETERS_DATA_0)
-            int_parameters[31:0] <= (WDATA[31:0] & wmask) | (int_parameters[31:0] & ~wmask);
+        if (w_hs && waddr == ADDR_PARA_DATA_0)
+            int_para[31:0] <= (WDATA[31:0] & wmask) | (int_para[31:0] & ~wmask);
     end
 end
 

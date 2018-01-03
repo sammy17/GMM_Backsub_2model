@@ -4,18 +4,19 @@
 #include <climits>
 #include <iostream>
 #include "core.h"
+#include <ap_fixed.h>
 
-float parameters[76800 * MODELS * 3];
+data_t parameters[76800 * MODELS * 3];
 
 cv::Mat outImg1(IMG_H, IMG_W, CV_8UC1);
 
 cv::Mat IMG1(IMG_H, IMG_W, CV_8UC1);
 
-uint32_t data_array[IMG_H * IMG_W / 2];
+uint8_t data_array[IMG_SIZE];
 uint8_t out_frame[76800] = { 0 };
 
 //void execute(cv::Mat img1, bool init);
-void execute(uint32_t *data_array, bool init);
+void execute(uint8_t *data_array, bool init);
 
 int main() {
 
@@ -54,19 +55,22 @@ int main() {
 	bool init = 1;
 //execute(IMG1, init);
 
-	uint32_t f;
+//	uint32_t f;
+//
+//	for (int idxRows = 0; idxRows < IMG_H; idxRows++) {
+//		for (int idxCols = 0; idxCols < IMG_W; idxCols = idxCols + 2) {
+//			uint8_t val1 = IMG1.at<uint8_t>(idxRows, idxCols);
+//			uint8_t val2 = IMG1.at<uint8_t>(idxRows, idxCols + 1);
+//			f = val1;
+//			f = f | (val1 << 8);
+//			f = f | (val2 << 16);
+//			f = f | (val2 << 24);
+//			data_array[IMG_W / 2 * idxRows + idxCols / 2] = f;
+//		}
+//	}
 
-	for (int idxRows = 0; idxRows < IMG_H; idxRows++) {
-		for (int idxCols = 0; idxCols < IMG_W; idxCols = idxCols + 2) {
-			uint8_t val1 = IMG1.at<uint8_t>(idxRows, idxCols);
-			uint8_t val2 = IMG1.at<uint8_t>(idxRows, idxCols + 1);
-			f = val1;
-			f = f | (val1 << 8);
-			f = f | (val2 << 16);
-			f = f | (val2 << 24);
-			data_array[IMG_W / 2 * idxRows + idxCols / 2] = f;
-		}
-	}
+	memcpy(data_array, IMG1.data, IMG_SIZE);
+
 	execute(data_array, init);
 
 	init = 0;
@@ -89,17 +93,19 @@ int main() {
 		cv::cvtColor(frame, IMG1, CV_BGR2GRAY);
 		//execute(IMG1, false);
 
-		for (int idxRows = 0; idxRows < IMG_H; idxRows++) {
-			for (int idxCols = 0; idxCols < IMG_W; idxCols = idxCols + 2) {
-				uint8_t val1 = IMG1.at<uint8_t>(idxRows, idxCols);
-				uint8_t val2 = IMG1.at<uint8_t>(idxRows, idxCols + 1);
-				f = val1;
-				f = f | (val1 << 8);
-				f = f | (val2 << 16);
-				f = f | (val2 << 24);
-				data_array[IMG_W / 2 * idxRows + idxCols / 2] = f;
-			}
-		}
+//		for (int idxRows = 0; idxRows < IMG_H; idxRows++) {
+//			for (int idxCols = 0; idxCols < IMG_W; idxCols = idxCols + 2) {
+//				uint8_t val1 = IMG1.at<uint8_t>(idxRows, idxCols);
+//				uint8_t val2 = IMG1.at<uint8_t>(idxRows, idxCols + 1);
+//				f = val1;
+//				f = f | (val1 << 8);
+//				f = f | (val2 << 16);
+//				f = f | (val2 << 24);
+//				data_array[IMG_W / 2 * idxRows + idxCols / 2] = f;
+//			}
+//		}
+
+		memcpy(data_array, IMG1.data, IMG_SIZE);
 
 		execute(data_array, init);
 
@@ -118,9 +124,10 @@ int main() {
 
 }
 
-void execute(uint32_t *data_array, bool init) {
+void execute(uint8_t *data_array, bool init) {
 
 	backsub(data_array, out_frame, init, parameters);
+//	backsub(data_array, out_frame, init);
 	for (int idxRows = 0; idxRows < IMG_H; idxRows++) {
 		for (int idxCols = 0; idxCols < IMG_W; idxCols = idxCols + 1) {
 			outImg1.at<unsigned char>(idxRows, idxCols) = out_frame[idxRows
