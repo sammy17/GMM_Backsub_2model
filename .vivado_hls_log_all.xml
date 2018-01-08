@@ -12,25 +12,25 @@
   <warningLogs>
     <logs>
       <synLog>
-        <logs message="@W [RTGEN-101] Global array 'F' will not be exposed as RTL port." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T16:29:18.888+0530" type="Warning"/>
-        <logs message="@W [RTGEN-101] Global scalar 'vinit' will not be exposed as RTL port." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T16:29:18.781+0530" type="Warning"/>
-        <logs message="@W [RTGEN-101] Global array 'akt' will not be exposed as RTL port." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T16:29:18.752+0530" type="Warning"/>
-        <logs message="@W [RTGEN-101] Global scalar 'alpha_w' will not be exposed as RTL port." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T16:29:18.723+0530" type="Warning"/>
-        <logs message="@W [RTGEN-101] Global array 'back_gauss' will not be exposed as RTL port." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T16:29:18.691+0530" type="Warning"/>
-        <logs message="@W [RTGEN-101] Global array 'matchsum' will not be exposed as RTL port." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T16:29:18.667+0530" type="Warning"/>
-        <logs message="@W [RTGEN-101] Register 'vinit' is power-on initialization." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T16:29:16.711+0530" type="Warning"/>
-        <logs message="@W [RTGEN-101] Register 'alpha_w' is power-on initialization." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T16:29:16.262+0530" type="Warning"/>
-        <logs message="@W [SCHED-67] Unable to satisfy pipeline directive: subfunction 'backsub_EM_ALGO' is not pipelined." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T16:29:15.135+0530" type="Warning"/>
-        <logs message="@W [SCHED-67] Unable to satisfy pipeline directive: subfunction 'backsub_EM_ALGO' is not pipelined." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T16:29:15.109+0530" type="Warning"/>
-        <logs message="@W [SCHED-32] Invalid protocol: Cannot embed pipeline region inside protocol 'hls_label_1'." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T16:29:15.093+0530" type="Warning"/>
-        <logs message="@W [SCHED-31] Invalid protocol: Begin anchor missing in region 'backsub'." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T16:29:15.069+0530" type="Warning"/>
-        <logs message="@W [SCHED-65] Unable to satisfy pipeline directive: Function contains subloop(s) not being unrolled." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T16:29:12.959+0530" type="Warning"/>
-        <logs message="@W [XFORM-503] Cannot unroll loop 'Loop-8' in function 'EM_ALGO' completely: variable loop bound." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T16:29:05.410+0530" type="Warning"/>
+        <logs message="@W [RTGEN-101] Global array 'F' will not be exposed as RTL port." projectName="GMM_Backsub_2model_edited" solutionName="solution1" date="2018-01-04T17:52:47.337+0530" type="Warning"/>
+        <logs message="@W [RTGEN-101] Global scalar 'vinit' will not be exposed as RTL port." projectName="GMM_Backsub_2model_edited" solutionName="solution1" date="2018-01-04T17:52:47.300+0530" type="Warning"/>
+        <logs message="@W [RTGEN-101] Global array 'akt' will not be exposed as RTL port." projectName="GMM_Backsub_2model_edited" solutionName="solution1" date="2018-01-04T17:52:47.297+0530" type="Warning"/>
+        <logs message="@W [RTGEN-101] Global scalar 'alpha_w' will not be exposed as RTL port." projectName="GMM_Backsub_2model_edited" solutionName="solution1" date="2018-01-04T17:52:47.295+0530" type="Warning"/>
+        <logs message="@W [RTGEN-101] Global array 'back_gauss' will not be exposed as RTL port." projectName="GMM_Backsub_2model_edited" solutionName="solution1" date="2018-01-04T17:52:47.292+0530" type="Warning"/>
+        <logs message="@W [RTGEN-101] Global array 'matchsum' will not be exposed as RTL port." projectName="GMM_Backsub_2model_edited" solutionName="solution1" date="2018-01-04T17:52:47.288+0530" type="Warning"/>
+        <logs message="@W [RTGEN-101] Register 'vinit' is power-on initialization." projectName="GMM_Backsub_2model_edited" solutionName="solution1" date="2018-01-04T17:52:46.918+0530" type="Warning"/>
+        <logs message="@W [RTGEN-101] Register 'alpha_w' is power-on initialization." projectName="GMM_Backsub_2model_edited" solutionName="solution1" date="2018-01-04T17:52:46.825+0530" type="Warning"/>
+        <logs message="@W [SCHED-67] Unable to satisfy pipeline directive: subfunction 'backsub_EM_ALGO' is not pipelined." projectName="GMM_Backsub_2model_edited" solutionName="solution1" date="2018-01-04T17:52:46.606+0530" type="Warning"/>
+        <logs message="@W [SCHED-67] Unable to satisfy pipeline directive: subfunction 'backsub_EM_ALGO' is not pipelined." projectName="GMM_Backsub_2model_edited" solutionName="solution1" date="2018-01-04T17:52:46.603+0530" type="Warning"/>
+        <logs message="@W [SCHED-32] Invalid protocol: Cannot embed pipeline region inside protocol 'hls_label_0'." projectName="GMM_Backsub_2model_edited" solutionName="solution1" date="2018-01-04T17:52:46.601+0530" type="Warning"/>
+        <logs message="@W [SCHED-31] Invalid protocol: Begin anchor missing in region 'backsub'." projectName="GMM_Backsub_2model_edited" solutionName="solution1" date="2018-01-04T17:52:46.599+0530" type="Warning"/>
+        <logs message="@W [SCHED-65] Unable to satisfy pipeline directive: Function contains subloop(s) not being unrolled." projectName="GMM_Backsub_2model_edited" solutionName="solution1" date="2018-01-04T17:52:46.284+0530" type="Warning"/>
+        <logs message="@W [XFORM-503] Cannot unroll loop 'Loop-8' in function 'EM_ALGO' completely: variable loop bound." projectName="GMM_Backsub_2model_edited" solutionName="solution1" date="2018-01-04T17:52:43.498+0530" type="Warning"/>
       </synLog>
       <simLog>
-        <logs message="@W [SIM-369] AXI_master port 'gmem_offset' has a depth of '460800'. Insufficient depth may result in simulation mismatch or freeze.&#xD;&#xA;   Build using &quot;F:/Xilinx/Vivado_HLS/2015.4/msys/bin/g++.exe&quot;&#xD;&#xA;   Compiling apatb_backsub.cpp&#xD;&#xA;   Compiling core.cpp_pre.cpp.tb.cpp&#xD;&#xA;   Compiling test.cpp_pre.cpp.tb.cpp&#xD;&#xA;   Generating cosim.tv.exe" projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T17:04:07.730+0530" type="Warning"/>
-        <logs message="@W [SIM-369] AXI_master port 'frame_out' has a depth of '76800'. Insufficient depth may result in simulation mismatch or freeze." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T16:58:46.858+0530" type="Warning"/>
-        <logs message="@W [SIM-369] AXI_master port 'frame_in' has a depth of '76800'. Insufficient depth may result in simulation mismatch or freeze." projectName="GMM_backsub_new" solutionName="solution1" date="2018-01-03T16:58:46.840+0530" type="Warning"/>
+        <logs message="@W [SIM-369] AXI_master port 'gmem_offset' has a depth of '460800'. Insufficient depth may result in simulation mismatch or freeze.&#xA;   Build using &quot;/home/zynq-fyp/Xilinx/Vivado_HLS/2015.4/lnx64/tools/gcc/bin/g++&quot;&#xA;   Compiling core.cpp_pre.cpp.tb.cpp&#xA;   Compiling apatb_backsub.cpp&#xA;   Compiling test.cpp_pre.cpp.tb.cpp&#xA;   Generating cosim.tv.exe" projectName="GMM_Backsub_2model_edited" solutionName="solution1" date="2018-01-04T19:16:57.210+0530" type="Warning"/>
+        <logs message="@W [SIM-369] AXI_master port 'frame_out' has a depth of '76800'. Insufficient depth may result in simulation mismatch or freeze." projectName="GMM_Backsub_2model_edited" solutionName="solution1" date="2018-01-04T19:15:45.559+0530" type="Warning"/>
+        <logs message="@W [SIM-369] AXI_master port 'frame_in' has a depth of '76800'. Insufficient depth may result in simulation mismatch or freeze." projectName="GMM_Backsub_2model_edited" solutionName="solution1" date="2018-01-04T19:15:45.554+0530" type="Warning"/>
       </simLog>
       <mgLog/>
       <packageLog/>

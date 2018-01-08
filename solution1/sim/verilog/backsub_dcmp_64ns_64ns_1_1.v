@@ -10,7 +10,7 @@
 
 module backsub_dcmp_64ns_64ns_1_1
 #(parameter
-    ID         = 11,
+    ID         = 13,
     NUM_STAGE  = 1,
     din0_WIDTH = 64,
     din1_WIDTH = 64,

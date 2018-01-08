@@ -1,6 +1,6 @@
 # This script segment is generated automatically by AutoPilot
 
-set id 0
+set id 1
 set name backsub_faddfsub_32ns_32ns_32_5_full_dsp
 set corename simcore_faddfsub
 set op faddfsub
@@ -70,7 +70,77 @@ puts "@W \[IMPL-101\] Cannot find ::AESL_LIB_XILINX_FPV6::fpv6_gen, check your p
 }
 
 
-set id 1
+set id 2
+set name backsub_fadd_32ns_32ns_32_5_full_dsp
+set corename simcore_fadd
+set op fadd
+set stage_num 5
+set max_latency -1
+set registered_input 1
+set impl_style full_dsp
+set in0_width 32
+set in0_signed 0
+set in1_width 32
+set in1_signed 0
+set out_width 32
+if {${::AESL::PGuard_simmodel_gen}} {
+if {[info proc ap_gen_simcore_fadd] == "ap_gen_simcore_fadd"} {
+eval "ap_gen_simcore_fadd { \
+    id ${id} \
+    name ${name} \
+    corename ${corename} \
+    op ${op} \
+    reset_level 1 \
+    sync_rst true \
+    stage_num ${stage_num} \
+    max_latency ${max_latency} \
+    registered_input ${registered_input} \
+    style ${impl_style} \
+    in0_width ${in0_width} \
+    in0_signed ${in0_signed} \
+    in1_width ${in1_width} \
+    in1_signed ${in1_signed} \
+    out_width ${out_width} \
+}"
+} else {
+puts "@W \[IMPL-100\] Cannot find ap_gen_simcore_fadd, check your AutoPilot builtin lib"
+}
+}
+
+
+if {${::AESL::PGuard_rtl_comp_handler}} {
+	::AP::rtl_comp_handler ${name}
+}
+
+
+set op fadd
+set corename FAddSub
+if {${::AESL::PGuard_autocg_gen} && (${::AESL::PGuard_autocg_fpip} || ${::AESL::PGuard_autocg_fpv6en} || ${::AESL::PGuard_autocg_hpen})} {
+if {[info proc ::AESL_LIB_XILINX_FPV6::fpv6_gen] == "::AESL_LIB_XILINX_FPV6::fpv6_gen"} {
+eval "::AESL_LIB_XILINX_FPV6::fpv6_gen { \
+    id ${id} \
+    name ${name} \
+    corename ${corename} \
+    op ${op} \
+    reset_level 1 \
+    sync_rst true \
+    stage_num ${stage_num} \
+    max_latency ${max_latency} \
+    registered_input ${registered_input} \
+    style ${impl_style} \
+    in0_width ${in0_width} \
+    in0_signed ${in0_signed} \
+    in1_width ${in1_width} \
+    in1_signed ${in1_signed} \
+    out_width ${out_width} \
+}"
+} else {
+puts "@W \[IMPL-101\] Cannot find ::AESL_LIB_XILINX_FPV6::fpv6_gen, check your platform lib"
+}
+}
+
+
+set id 3
 set name backsub_fmul_32ns_32ns_32_4_max_dsp
 set corename simcore_fmul
 set op fmul
@@ -140,7 +210,7 @@ puts "@W \[IMPL-101\] Cannot find ::AESL_LIB_XILINX_FPV6::fpv6_gen, check your p
 }
 
 
-set id 2
+set id 4
 set name backsub_fdiv_32ns_32ns_32_16
 set corename simcore_fdiv
 set op fdiv
@@ -207,7 +277,7 @@ puts "@W \[IMPL-101\] Cannot find ::AESL_LIB_XILINX_FPV6::fpv6_gen, check your p
 }
 
 
-set id 5
+set id 7
 set name backsub_sitofp_32ns_32_6
 set corename simcore_sitofp
 set op sitofp
@@ -268,7 +338,7 @@ puts "@W \[IMPL-101\] Cannot find ::AESL_LIB_XILINX_FPV6::fpv6_gen, check your p
 }
 
 
-set id 6
+set id 8
 set name backsub_fpext_32ns_64_1
 set corename simcore_fpext
 set op fpext
@@ -329,7 +399,7 @@ puts "@W \[IMPL-101\] Cannot find ::AESL_LIB_XILINX_FPV6::fpv6_gen, check your p
 }
 
 
-set id 7
+set id 9
 set name backsub_fcmp_32ns_32ns_1_1
 set corename simcore_fcmp
 set op fcmp
@@ -396,7 +466,7 @@ puts "@W \[IMPL-101\] Cannot find ::AESL_LIB_XILINX_FPV6::fpv6_gen, check your p
 }
 
 
-set id 9
+set id 11
 set name backsub_fsqrt_32ns_32ns_32_12
 set corename simcore_fsqrt
 set op fsqrt
@@ -463,7 +533,7 @@ puts "@W \[IMPL-101\] Cannot find ::AESL_LIB_XILINX_FPV6::fpv6_gen, check your p
 }
 
 
-set id 10
+set id 12
 set name backsub_dmul_64ns_64ns_64_6_max_dsp
 set corename simcore_dmul
 set op dmul
@@ -533,7 +603,7 @@ puts "@W \[IMPL-101\] Cannot find ::AESL_LIB_XILINX_FPV6::fpv6_gen, check your p
 }
 
 
-set id 11
+set id 13
 set name backsub_dcmp_64ns_64ns_1_1
 set corename simcore_dcmp
 set op dcmp
@@ -600,7 +670,7 @@ puts "@W \[IMPL-101\] Cannot find ::AESL_LIB_XILINX_FPV6::fpv6_gen, check your p
 }
 
 
-set id 12
+set id 14
 set name backsub_sitodp_32ns_64_6
 set corename simcore_sitodp
 set op sitodp
@@ -662,7 +732,7 @@ puts "@W \[IMPL-101\] Cannot find ::AESL_LIB_XILINX_FPV6::fpv6_gen, check your p
 
 
 # Memory (RAM/ROM)  definition:
-set ID 13
+set ID 15
 set MemName backsub_EM_ALGO_akt
 set CoreName ap_simcore_mem
 set PortList { 2 0 }
@@ -745,7 +815,7 @@ if {[info proc ::AESL_LIB_VIRTEX::xil_gen_RAM] == "::AESL_LIB_VIRTEX::xil_gen_RA
 
 
 # Memory (RAM/ROM)  definition:
-set ID 14
+set ID 16
 set MemName backsub_EM_ALGO_F
 set CoreName ap_simcore_mem
 set PortList { 0 0 }
@@ -838,6 +908,25 @@ if {${::AESL::PGuard_autoexp_gen}} {
 if {${::AESL::PGuard_autoexp_gen}} {
 if {[info proc ::AESL_LIB_XILADAPTER::xil_bram_gen] == "::AESL_LIB_XILADAPTER::xil_bram_gen"} {
 eval "::AESL_LIB_XILADAPTER::xil_bram_gen { \
+    id 19 \
+    name parameters \
+    reset_level 1 \
+    sync_rst true \
+    dir IO \
+    corename parameters \
+    op interface \
+    ports { parameters_address0 { O 11 vector } parameters_ce0 { O 1 bit } parameters_we0 { O 1 bit } parameters_d0 { O 32 vector } parameters_q0 { I 32 vector } parameters_address1 { O 11 vector } parameters_ce1 { O 1 bit } parameters_we1 { O 1 bit } parameters_d1 { O 32 vector } parameters_q1 { I 32 vector } } \
+} "
+} else {
+puts "@W \[IMPL-110\] Cannot find bus interface model in the library. Ignored generation of bus interface for 'parameters'"
+}
+}
+
+
+# XIL_BRAM:
+if {${::AESL::PGuard_autoexp_gen}} {
+if {[info proc ::AESL_LIB_XILADAPTER::xil_bram_gen] == "::AESL_LIB_XILADAPTER::xil_bram_gen"} {
+eval "::AESL_LIB_XILADAPTER::xil_bram_gen { \
     id 21 \
     name back_gauss \
     reset_level 1 \
@@ -875,7 +964,7 @@ puts "@W \[IMPL-110\] Cannot find bus interface model in the library. Ignored ge
 # Direct connection:
 if {${::AESL::PGuard_autoexp_gen}} {
 eval "cg_default_interface_gen_dc { \
-    id 15 \
+    id 17 \
     name pixel \
     type other \
     dir I \
@@ -890,7 +979,7 @@ eval "cg_default_interface_gen_dc { \
 # Direct connection:
 if {${::AESL::PGuard_autoexp_gen}} {
 eval "cg_default_interface_gen_dc { \
-    id 16 \
+    id 18 \
     name pos_r \
     type other \
     dir I \
@@ -898,52 +987,7 @@ eval "cg_default_interface_gen_dc { \
     sync_rst true \
     corename dc_pos_r \
     op interface \
-    ports { pos_r { I 10 vector } } \
-} "
-}
-
-# Direct connection:
-if {${::AESL::PGuard_autoexp_gen}} {
-eval "cg_default_interface_gen_dc { \
-    id 17 \
-    name parameters \
-    type other \
-    dir IO \
-    reset_level 1 \
-    sync_rst true \
-    corename dc_parameters \
-    op interface \
-    ports { m_axi_parameters_AWVALID { O 1 bit } m_axi_parameters_AWREADY { I 1 bit } m_axi_parameters_AWADDR { O 32 vector } m_axi_parameters_AWID { O 1 vector } m_axi_parameters_AWLEN { O 32 vector } m_axi_parameters_AWSIZE { O 3 vector } m_axi_parameters_AWBURST { O 2 vector } m_axi_parameters_AWLOCK { O 2 vector } m_axi_parameters_AWCACHE { O 4 vector } m_axi_parameters_AWPROT { O 3 vector } m_axi_parameters_AWQOS { O 4 vector } m_axi_parameters_AWREGION { O 4 vector } m_axi_parameters_AWUSER { O 1 vector } m_axi_parameters_WVALID { O 1 bit } m_axi_parameters_WREADY { I 1 bit } m_axi_parameters_WDATA { O 32 vector } m_axi_parameters_WSTRB { O 4 vector } m_axi_parameters_WLAST { O 1 bit } m_axi_parameters_WID { O 1 vector } m_axi_parameters_WUSER { O 1 vector } m_axi_parameters_ARVALID { O 1 bit } m_axi_parameters_ARREADY { I 1 bit } m_axi_parameters_ARADDR { O 32 vector } m_axi_parameters_ARID { O 1 vector } m_axi_parameters_ARLEN { O 32 vector } m_axi_parameters_ARSIZE { O 3 vector } m_axi_parameters_ARBURST { O 2 vector } m_axi_parameters_ARLOCK { O 2 vector } m_axi_parameters_ARCACHE { O 4 vector } m_axi_parameters_ARPROT { O 3 vector } m_axi_parameters_ARQOS { O 4 vector } m_axi_parameters_ARREGION { O 4 vector } m_axi_parameters_ARUSER { O 1 vector } m_axi_parameters_RVALID { I 1 bit } m_axi_parameters_RREADY { O 1 bit } m_axi_parameters_RDATA { I 32 vector } m_axi_parameters_RLAST { I 1 bit } m_axi_parameters_RID { I 1 vector } m_axi_parameters_RUSER { I 1 vector } m_axi_parameters_RRESP { I 2 vector } m_axi_parameters_BVALID { I 1 bit } m_axi_parameters_BREADY { O 1 bit } m_axi_parameters_BRESP { I 2 vector } m_axi_parameters_BID { I 1 vector } m_axi_parameters_BUSER { I 1 vector } } \
-} "
-}
-
-# Direct connection:
-if {${::AESL::PGuard_autoexp_gen}} {
-eval "cg_default_interface_gen_dc { \
-    id 18 \
-    name para5 \
-    type other \
-    dir I \
-    reset_level 1 \
-    sync_rst true \
-    corename dc_para5 \
-    op interface \
-    ports { para5 { I 30 vector } } \
-} "
-}
-
-# Direct connection:
-if {${::AESL::PGuard_autoexp_gen}} {
-eval "cg_default_interface_gen_dc { \
-    id 19 \
-    name tmp_25 \
-    type other \
-    dir I \
-    reset_level 1 \
-    sync_rst true \
-    corename dc_tmp_25 \
-    op interface \
-    ports { tmp_25 { I 19 vector } } \
+    ports { pos_r { I 9 vector } } \
 } "
 }
 
@@ -958,7 +1002,7 @@ eval "cg_default_interface_gen_dc { \
     sync_rst true \
     corename dc_x \
     op interface \
-    ports { x { I 8 vector } } \
+    ports { x { I 9 vector } } \
 } "
 }
 

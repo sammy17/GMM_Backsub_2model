@@ -7,4 +7,4 @@ set depth_list {
 {para 1}
 {ap_return 1}
 }
-set trans_num 9
+set trans_num 13

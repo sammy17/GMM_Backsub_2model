@@ -15,7 +15,7 @@
 `define AUTOTB_PER_RESULT_TRANS_FILE "backsub.performance.result.transaction.xml"
 `define AUTOTB_TOP_INST AESL_inst_apatb_backsub_top
 `define AUTOTB_MAX_ALLOW_LATENCY  15000000
-`define AUTOTB_TRANSACTION_NUM  9
+`define AUTOTB_TRANSACTION_NUM  13
 `define AUTOTB_CLOCK_PERIOD_DIV2 5.00
 `define LENGTH_gmem 153600
 `define LENGTH_gmem_offset 460800

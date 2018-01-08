@@ -10,7 +10,7 @@
 
 module backsub_fsqrt_32ns_32ns_32_12
 #(parameter
-    ID         = 9,
+    ID         = 11,
     NUM_STAGE  = 12,
     din0_WIDTH = 32,
     din1_WIDTH = 32,

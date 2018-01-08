@@ -10,7 +10,7 @@
 
 module backsub_sitodp_32ns_64_6
 #(parameter
-    ID         = 12,
+    ID         = 14,
     NUM_STAGE  = 6,
     din0_WIDTH = 32,
     dout_WIDTH = 64

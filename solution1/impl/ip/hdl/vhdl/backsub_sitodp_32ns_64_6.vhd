@@ -10,7 +10,7 @@ use ieee.std_logic_1164.all;
 
 entity backsub_sitodp_32ns_64_6 is
     generic (
-        ID         : integer := 12;
+        ID         : integer := 14;
         NUM_STAGE  : integer := 6;
         din0_WIDTH : integer := 32;
         dout_WIDTH : integer := 64

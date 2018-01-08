@@ -1,4 +1,5 @@
 backsub_faddfsub_32ns_32ns_32_5_full_dsp
+backsub_fadd_32ns_32ns_32_5_full_dsp
 backsub_fmul_32ns_32ns_32_4_max_dsp
 backsub_fdiv_32ns_32ns_32_16
 backsub_sitofp_32ns_32_6
@@ -10,6 +11,7 @@ backsub_dcmp_64ns_64ns_1_1
 backsub_sitodp_32ns_64_6
 backsub_EM_ALGO_akt
 backsub_EM_ALGO_F
+backsub_parameters
 backsub_data_array
 backsub_matchsum
 backsub_back_gauss

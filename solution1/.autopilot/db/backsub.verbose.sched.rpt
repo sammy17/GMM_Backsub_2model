@@ -3,10 +3,10 @@
 ================================================================
 == Vivado HLS Report for 'backsub'
 ================================================================
-* Date:           Wed Jan 03 16:29:15 2018
+* Date:           Thu Jan  4 17:52:46 2018
 
 * Version:        2015.4 (Build 1412921 on Wed Nov 18 09:58:55 AM 2015)
-* Project:        GMM_backsub_new
+* Project:        GMM_Backsub_2model_edited
 * Solution:       solution1
 * Product family: zynq
 * Target device:  xc7z020clg484-1
@@ -29,7 +29,7 @@
     |       Latency      |      Interval      | Pipeline|
     |   min   |    max   |   min   |    max   |   Type  |
     +---------+----------+---------+----------+---------+
-    |  4533761|  15746561|  4533762|  15746562|   none  |
+    |  3619073|  10454273|  3619074|  10454274|   none  |
     +---------+----------+---------+----------+---------+
 
     + Detail: 
@@ -37,16 +37,18 @@
         N/A
 
         * Loop: 
-        +------------------------------------------------------------------------------------------+---------+----------+----------------+-----------+-----------+------+----------+
-        |                                                                                          |       Latency      |    Iteration   |  Initiation Interval  | Trip |          |
-        |                                         Loop Name                                        |   min   |    max   |     Latency    |  achieved |   target  | Count| Pipelined|
-        +------------------------------------------------------------------------------------------+---------+----------+----------------+-----------+-----------+------+----------+
-        |- Loop 1                                                                                  |  4533760|  15746560| 35420 ~ 123020 |          -|          -|   128|    no    |
-        | + memcpy..frame_in                                                                       |      601|       601|               3|          1|          1|   600|    yes   |
-        | + Loop 1.2                                                                               |    42600|    121800|    71 ~ 203    |          -|          -|   600|    no    |
-        | + Loop 1.3                                                                               |    34200|    113400|    57 ~ 189    |          -|          -|   600|    no    |
-        | + memcpy.frame_out.backsub(unsigned char*, unsigned char*, bool, float*)::out_frame.gep  |      601|       601|               3|          1|          1|   600|    yes   |
-        +------------------------------------------------------------------------------------------+---------+----------+----------------+-----------+-----------+------+----------+
+        +------------------------------------------------------------------------------------------+---------+----------+---------------+-----------+-----------+------+----------+
+        |                                                                                          |       Latency      |   Iteration   |  Initiation Interval  | Trip |          |
+        |                                         Loop Name                                        |   min   |    max   |    Latency    |  achieved |   target  | Count| Pipelined|
+        +------------------------------------------------------------------------------------------+---------+----------+---------------+-----------+-----------+------+----------+
+        |- Loop 1                                                                                  |  3619072|  10454272| 14137 ~ 40837 |          -|          -|   256|    no    |
+        | + memcpy.backsub(unsigned char*, unsigned char*, bool, float*)::parameters.para          |     1801|      1801|              3|          1|          1|  1800|    yes   |
+        | + memcpy..frame_in                                                                       |      301|       301|              3|          1|          1|   300|    yes   |
+        | + Loop 1.3                                                                               |    10200|     36600|    34 ~ 122   |          -|          -|   300|    no    |
+        | + Loop 1.4                                                                               |     9900|     36300|    33 ~ 121   |          -|          -|   300|    no    |
+        | + memcpy.frame_out.backsub(unsigned char*, unsigned char*, bool, float*)::out_frame.gep  |      301|       301|              3|          1|          1|   300|    yes   |
+        | + memcpy.para.backsub(unsigned char*, unsigned char*, bool, float*)::parameters.gep      |     1801|      1801|              3|          1|          1|  1800|    yes   |
+        +------------------------------------------------------------------------------------------+---------+----------+---------------+-----------+-----------+------+----------+
 
 ============================================================
 + Verbose Summary: Synthesis Manager
@@ -73,15 +75,19 @@ IsGatedGlobalClock: 0
 + Individual pipeline summary: 
   * Pipeline-0: initiation interval (II) = 1, depth = 3
   * Pipeline-1: initiation interval (II) = 1, depth = 3
+  * Pipeline-2: initiation interval (II) = 1, depth = 3
+  * Pipeline-3: initiation interval (II) = 1, depth = 3
 
 
 ============================================================
 + Verbose Summary: Schedule
 ============================================================
-* Number of FSM states: 43
-* Pipeline: 2
+* Number of FSM states: 49
+* Pipeline: 4
   Pipeline-0: II = 1, D = 3, States = { 10 11 12 }
-  Pipeline-1: II = 1, D = 3, States = { 36 37 38 }
+  Pipeline-1: II = 1, D = 3, States = { 21 22 23 }
+  Pipeline-2: II = 1, D = 3, States = { 34 35 36 }
+  Pipeline-3: II = 1, D = 3, States = { 42 43 44 }
 * Dataflow Pipeline: 0
 
 * FSM state transitions: 
@@ -113,15 +119,13 @@ IsGatedGlobalClock: 0
 13 --> 
 	14  / true
 14 --> 
-	15  / (!init_read & !exitcond)
-	35  / (!init_read & exitcond) | (init_read & exitcond1)
-	18  / (init_read & !exitcond1)
+	15  / true
 15 --> 
 	16  / true
 16 --> 
 	17  / true
 17 --> 
-	14  / true
+	18  / true
 18 --> 
 	19  / true
 19 --> 
@@ -129,21 +133,24 @@ IsGatedGlobalClock: 0
 20 --> 
 	21  / true
 21 --> 
-	22  / true
+	24  / (exitcond3)
+	22  / (!exitcond3)
 22 --> 
 	23  / true
 23 --> 
-	24  / true
+	21  / true
 24 --> 
 	25  / true
 25 --> 
-	26  / true
+	26  / (!init_read & !exitcond)
+	33  / (!init_read & exitcond) | (init_read & exitcond1)
+	29  / (init_read & !exitcond1)
 26 --> 
 	27  / true
 27 --> 
 	28  / true
 28 --> 
-	29  / true
+	25  / true
 29 --> 
 	30  / true
 30 --> 
@@ -151,20 +158,20 @@ IsGatedGlobalClock: 0
 31 --> 
 	32  / true
 32 --> 
-	33  / true
+	25  / true
 33 --> 
 	34  / true
 34 --> 
-	14  / true
+	37  / (exitcond4)
+	35  / (!exitcond4)
 35 --> 
 	36  / true
 36 --> 
-	39  / (exitcond3)
-	37  / (!exitcond3)
+	34  / true
 37 --> 
 	38  / true
 38 --> 
-	36  / true
+	39  / true
 39 --> 
 	40  / true
 40 --> 
@@ -172,8 +179,21 @@ IsGatedGlobalClock: 0
 41 --> 
 	42  / true
 42 --> 
-	43  / true
+	45  / (exitcond5)
+	43  / (!exitcond5)
 43 --> 
+	44  / true
+44 --> 
+	42  / true
+45 --> 
+	46  / true
+46 --> 
+	47  / true
+47 --> 
+	48  / true
+48 --> 
+	49  / true
+49 --> 
 	2  / true
 * FSM state operations: 
 
@@ -190,821 +210,764 @@ ST_1: frame_out_read [1/1] 1.00ns
 ST_1: frame_in_read [1/1] 1.00ns
 :3  %frame_in_read = call i32 @_ssdm_op_Read.s_axilite.i32(i32 %frame_in)
 
-ST_1: para5 [1/1] 0.00ns
-:4  %para5 = call i30 @_ssdm_op_PartSelect.i30.i32.i32.i32(i32 %para_read, i32 2, i32 31)
+ST_1: tmp_4 [1/1] 0.00ns
+:4  %tmp_4 = call i30 @_ssdm_op_PartSelect.i30.i32.i32.i32(i32 %para_read, i32 2, i32 31)
 
-ST_1: tmp_12_cast [1/1] 0.00ns
-:5  %tmp_12_cast = zext i30 %para5 to i33
+ST_1: tmp_10_cast [1/1] 0.00ns
+:5  %tmp_10_cast = zext i30 %tmp_4 to i31
 
-ST_1: tmp_15_cast [1/1] 0.00ns
-:6  %tmp_15_cast = sext i32 %frame_out_read to i33
+ST_1: tmp_30_cast [1/1] 0.00ns
+:6  %tmp_30_cast = sext i32 %frame_out_read to i33
 
-ST_1: tmp_32_cast [1/1] 0.00ns
-:7  %tmp_32_cast = sext i32 %frame_in_read to i33
-
-ST_1: stg_52 [1/1] 0.00ns
-:8  call void (...)* @_ssdm_op_SpecBitsMap(float* %gmem_offset), !map !8
-
-ST_1: stg_53 [1/1] 0.00ns
-:9  call void (...)* @_ssdm_op_SpecBitsMap(i8* %gmem), !map !55
-
-ST_1: stg_54 [1/1] 0.00ns
-:10  call void (...)* @_ssdm_op_SpecBitsMap(i1 %init) nounwind, !map !61
-
-ST_1: stg_55 [1/1] 0.00ns
-:11  call void (...)* @_ssdm_op_SpecBitsMap(i32 0) nounwind, !map !67
-
-ST_1: stg_56 [1/1] 0.00ns
-:12  call void (...)* @_ssdm_op_SpecTopModule([8 x i8]* @backsub_str) nounwind
-
-ST_1: stg_57 [1/1] 0.00ns
-:13  call void (...)* @_ssdm_op_SpecInterface(i32 %frame_out, [10 x i8]* @mode5, i32 0, i32 0, i32 0, i32 0, [1 x i8]* @bundle6, [6 x i8]* @p_str1807, [1 x i8]* @p_str1806, [1 x i8]* @p_str1806)
+ST_1: tmp_31_cast [1/1] 0.00ns
+:7  %tmp_31_cast = sext i32 %frame_in_read to i33
 
 ST_1: stg_58 [1/1] 0.00ns
-:14  call void (...)* @_ssdm_op_SpecInterface(i8* %gmem, [6 x i8]* @p_str1805, i32 0, i32 0, i32 0, i32 0, [1 x i8]* @p_str1806, [6 x i8]* @p_str1807, [1 x i8]* @p_str1806, [1 x i8]* @p_str1806)
+:8  call void (...)* @_ssdm_op_SpecBitsMap(float* %gmem_offset), !map !48
 
 ST_1: stg_59 [1/1] 0.00ns
-:15  call void (...)* @_ssdm_op_SpecInterface(i32 %frame_in, [10 x i8]* @mode, i32 0, i32 0, i32 0, i32 0, [1 x i8]* @bundle, [6 x i8]* @p_str1807, [1 x i8]* @p_str1806, [1 x i8]* @p_str1806)
+:9  call void (...)* @_ssdm_op_SpecBitsMap(i8* %gmem), !map !54
 
 ST_1: stg_60 [1/1] 0.00ns
-:16  call void (...)* @_ssdm_op_SpecInterface(float* %gmem_offset, [6 x i8]* @p_str1805, i32 0, i32 0, i32 0, i32 0, [1 x i8]* @p_str1806, [6 x i8]* @p_str1807, [1 x i8]* @p_str1806, [1 x i8]* @p_str1806)
+:10  call void (...)* @_ssdm_op_SpecBitsMap(i1 %init) nounwind, !map !60
 
 ST_1: stg_61 [1/1] 0.00ns
-:17  call void (...)* @_ssdm_op_SpecInterface(i32 %para, [10 x i8]* @mode7, i32 0, i32 0, i32 0, i32 0, [1 x i8]* @bundle8, [6 x i8]* @p_str1807, [1 x i8]* @p_str1806, [1 x i8]* @p_str1806)
+:11  call void (...)* @_ssdm_op_SpecBitsMap(i32 0) nounwind, !map !66
 
 ST_1: stg_62 [1/1] 0.00ns
-:18  call void (...)* @_ssdm_op_SpecInterface(i1 %init, [10 x i8]* @p_str1808, i32 0, i32 0, i32 0, i32 0, [9 x i8]* @p_str1809, [1 x i8]* @p_str1806, [1 x i8]* @p_str1806, [1 x i8]* @p_str1806) nounwind
+:12  call void (...)* @_ssdm_op_SpecTopModule([8 x i8]* @backsub_str) nounwind
 
 ST_1: stg_63 [1/1] 0.00ns
-:19  call void (...)* @_ssdm_op_SpecInterface(i32 0, [10 x i8]* @p_str1808, i32 0, i32 0, i32 0, i32 0, [9 x i8]* @p_str1809, [1 x i8]* @p_str1806, [1 x i8]* @p_str1806, [1 x i8]* @p_str1806) nounwind
+:13  call void (...)* @_ssdm_op_SpecInterface(i32 %frame_out, [10 x i8]* @mode3, i32 0, i32 0, i32 0, i32 0, [1 x i8]* @bundle4, [6 x i8]* @p_str1807, [1 x i8]* @p_str1806, [1 x i8]* @p_str1806)
 
 ST_1: stg_64 [1/1] 0.00ns
+:14  call void (...)* @_ssdm_op_SpecInterface(i8* %gmem, [6 x i8]* @p_str1805, i32 0, i32 0, i32 0, i32 0, [1 x i8]* @p_str1806, [6 x i8]* @p_str1807, [1 x i8]* @p_str1806, [1 x i8]* @p_str1806)
+
+ST_1: stg_65 [1/1] 0.00ns
+:15  call void (...)* @_ssdm_op_SpecInterface(i32 %frame_in, [10 x i8]* @mode, i32 0, i32 0, i32 0, i32 0, [1 x i8]* @bundle, [6 x i8]* @p_str1807, [1 x i8]* @p_str1806, [1 x i8]* @p_str1806)
+
+ST_1: stg_66 [1/1] 0.00ns
+:16  call void (...)* @_ssdm_op_SpecInterface(float* %gmem_offset, [6 x i8]* @p_str1805, i32 0, i32 0, i32 0, i32 0, [1 x i8]* @p_str1806, [6 x i8]* @p_str1807, [1 x i8]* @p_str1806, [1 x i8]* @p_str1806)
+
+ST_1: stg_67 [1/1] 0.00ns
+:17  call void (...)* @_ssdm_op_SpecInterface(i32 %para, [10 x i8]* @mode5, i32 0, i32 0, i32 0, i32 0, [1 x i8]* @bundle6, [6 x i8]* @p_str1807, [1 x i8]* @p_str1806, [1 x i8]* @p_str1806)
+
+ST_1: stg_68 [1/1] 0.00ns
+:18  call void (...)* @_ssdm_op_SpecInterface(i1 %init, [10 x i8]* @p_str1808, i32 0, i32 0, i32 0, i32 0, [9 x i8]* @p_str1809, [1 x i8]* @p_str1806, [1 x i8]* @p_str1806, [1 x i8]* @p_str1806) nounwind
+
+ST_1: stg_69 [1/1] 0.00ns
+:19  call void (...)* @_ssdm_op_SpecInterface(i32 0, [10 x i8]* @p_str1808, i32 0, i32 0, i32 0, i32 0, [9 x i8]* @p_str1809, [1 x i8]* @p_str1806, [1 x i8]* @p_str1806, [1 x i8]* @p_str1806) nounwind
+
+ST_1: stg_70 [1/1] 0.00ns
 :20  call void (...)* @_ssdm_op_SpecProtocol(i32 1, [1 x i8]* @p_str1806) nounwind
 
-ST_1: stg_65 [1/1] 1.57ns
+ST_1: stg_71 [1/1] 1.57ns
 :21  br label %1
 
 
- <State 2>: 3.37ns
+ <State 2>: 3.40ns
 ST_2: x [1/1] 0.00ns
-:0  %x = phi i8 [ 0, %0 ], [ %x_1, %burst.wr.end ]
+:0  %x = phi i9 [ 0, %0 ], [ %x_1, %burst.wr.end33 ]
 
 ST_2: phi_mul [1/1] 0.00ns
-:1  %phi_mul = phi i19 [ 0, %0 ], [ %next_mul, %burst.wr.end ]
+:1  %phi_mul = phi i17 [ 0, %0 ], [ %next_mul, %burst.wr.end33 ]
 
-ST_2: phi_mul1 [1/1] 0.00ns
-:2  %phi_mul1 = phi i17 [ 0, %0 ], [ %next_mul1, %burst.wr.end ]
+ST_2: phi_mul9 [1/1] 0.00ns
+:2  %phi_mul9 = phi i19 [ 0, %0 ], [ %next_mul1, %burst.wr.end33 ]
 
 ST_2: next_mul1 [1/1] 2.08ns
-:3  %next_mul1 = add i17 %phi_mul1, 600
+:3  %next_mul1 = add i19 %phi_mul9, 1800
 
 ST_2: next_mul [1/1] 2.08ns
-:4  %next_mul = add i19 %phi_mul, 3600
+:4  %next_mul = add i17 %phi_mul, 300
 
-ST_2: exitcond2 [1/1] 2.00ns
-:5  %exitcond2 = icmp eq i8 %x, -128
+ST_2: exitcond2 [1/1] 2.03ns
+:5  %exitcond2 = icmp eq i9 %x, -256
 
-ST_2: stg_72 [1/1] 0.00ns
-:6  call void (...)* @_ssdm_op_SpecLoopTripCount(i64 128, i64 128, i64 128)
+ST_2: stg_78 [1/1] 0.00ns
+:6  call void (...)* @_ssdm_op_SpecLoopTripCount(i64 256, i64 256, i64 256)
 
-ST_2: x_1 [1/1] 1.72ns
-:7  %x_1 = add i8 %x, 1
+ST_2: x_1 [1/1] 1.84ns
+:7  %x_1 = add i9 %x, 1
 
-ST_2: stg_74 [1/1] 0.00ns
+ST_2: stg_80 [1/1] 0.00ns
 :8  br i1 %exitcond2, label %5, label %2
 
-ST_2: tmp_3 [1/1] 0.00ns
-:2  %tmp_3 = zext i17 %phi_mul1 to i33
+ST_2: tmp_5 [1/1] 0.00ns
+:2  %tmp_5 = zext i19 %phi_mul9 to i31
 
-ST_2: tmp_4 [1/1] 2.44ns
-:3  %tmp_4 = add i33 %tmp_3, %tmp_32_cast
+ST_2: tmp_7 [1/1] 2.44ns
+:3  %tmp_7 = add i31 %tmp_5, %tmp_10_cast
 
-ST_2: stg_77 [1/1] 0.00ns
+ST_2: stg_83 [1/1] 0.00ns
 :0  ret i32 0
 
 
  <State 3>: 8.75ns
-ST_3: tmp_6 [1/1] 0.00ns
-:4  %tmp_6 = sext i33 %tmp_4 to i64
+ST_3: tmp_10 [1/1] 0.00ns
+:4  %tmp_10 = zext i31 %tmp_7 to i64
 
-ST_3: gmem_addr [1/1] 0.00ns
-:5  %gmem_addr = getelementptr i8* %gmem, i64 %tmp_6
+ST_3: gmem_offset_addr [1/1] 0.00ns
+:5  %gmem_offset_addr = getelementptr float* %gmem_offset, i64 %tmp_10
 
 ST_3: p_rd_req [7/7] 8.75ns
-:6  %p_rd_req = call i1 @_ssdm_op_ReadReq.m_axi.i8P(i8* %gmem_addr, i32 600)
+:6  %p_rd_req = call i1 @_ssdm_op_ReadReq.m_axi.floatP(float* %gmem_offset_addr, i32 1800)
 
 
  <State 4>: 8.75ns
 ST_4: p_rd_req [6/7] 8.75ns
-:6  %p_rd_req = call i1 @_ssdm_op_ReadReq.m_axi.i8P(i8* %gmem_addr, i32 600)
+:6  %p_rd_req = call i1 @_ssdm_op_ReadReq.m_axi.floatP(float* %gmem_offset_addr, i32 1800)
 
 
  <State 5>: 8.75ns
 ST_5: p_rd_req [5/7] 8.75ns
-:6  %p_rd_req = call i1 @_ssdm_op_ReadReq.m_axi.i8P(i8* %gmem_addr, i32 600)
+:6  %p_rd_req = call i1 @_ssdm_op_ReadReq.m_axi.floatP(float* %gmem_offset_addr, i32 1800)
 
 
  <State 6>: 8.75ns
 ST_6: p_rd_req [4/7] 8.75ns
-:6  %p_rd_req = call i1 @_ssdm_op_ReadReq.m_axi.i8P(i8* %gmem_addr, i32 600)
+:6  %p_rd_req = call i1 @_ssdm_op_ReadReq.m_axi.floatP(float* %gmem_offset_addr, i32 1800)
 
 
  <State 7>: 8.75ns
 ST_7: p_rd_req [3/7] 8.75ns
-:6  %p_rd_req = call i1 @_ssdm_op_ReadReq.m_axi.i8P(i8* %gmem_addr, i32 600)
+:6  %p_rd_req = call i1 @_ssdm_op_ReadReq.m_axi.floatP(float* %gmem_offset_addr, i32 1800)
 
 
  <State 8>: 8.75ns
 ST_8: p_rd_req [2/7] 8.75ns
-:6  %p_rd_req = call i1 @_ssdm_op_ReadReq.m_axi.i8P(i8* %gmem_addr, i32 600)
+:6  %p_rd_req = call i1 @_ssdm_op_ReadReq.m_axi.floatP(float* %gmem_offset_addr, i32 1800)
 
 
  <State 9>: 8.75ns
 ST_9: tmp [1/1] 0.00ns
 :0  %tmp = call i32 (...)* @_ssdm_op_SpecRegionBegin([12 x i8]* @p_str1810) nounwind
 
-ST_9: stg_87 [1/1] 0.00ns
+ST_9: stg_93 [1/1] 0.00ns
 :1  call void (...)* @_ssdm_op_SpecProtocol(i32 1, [1 x i8]* @p_str1806) nounwind
 
 ST_9: p_rd_req [1/7] 8.75ns
-:6  %p_rd_req = call i1 @_ssdm_op_ReadReq.m_axi.i8P(i8* %gmem_addr, i32 600)
+:6  %p_rd_req = call i1 @_ssdm_op_ReadReq.m_axi.floatP(float* %gmem_offset_addr, i32 1800)
 
-ST_9: stg_89 [1/1] 1.57ns
+ST_9: stg_95 [1/1] 1.57ns
 :7  br label %burst.rd.header
 
 
- <State 10>: 2.07ns
+ <State 10>: 2.11ns
 ST_10: indvar [1/1] 0.00ns
-burst.rd.header:0  %indvar = phi i10 [ 0, %2 ], [ %indvar_next, %burst.rd.body ]
+burst.rd.header:0  %indvar = phi i11 [ 0, %2 ], [ %indvar_next, %burst.rd.body ]
 
-ST_10: exitcond9 [1/1] 2.07ns
-burst.rd.header:1  %exitcond9 = icmp eq i10 %indvar, -424
+ST_10: exitcond9 [1/1] 2.11ns
+burst.rd.header:1  %exitcond9 = icmp eq i11 %indvar, -248
 
-ST_10: stg_92 [1/1] 0.00ns
-burst.rd.header:2  call void (...)* @_ssdm_op_SpecLoopTripCount(i64 600, i64 600, i64 600)
+ST_10: stg_98 [1/1] 0.00ns
+burst.rd.header:2  call void (...)* @_ssdm_op_SpecLoopTripCount(i64 1800, i64 1800, i64 1800)
 
 ST_10: indvar_next [1/1] 1.84ns
-burst.rd.header:3  %indvar_next = add i10 %indvar, 1
+burst.rd.header:3  %indvar_next = add i11 %indvar, 1
 
-ST_10: stg_94 [1/1] 0.00ns
+ST_10: stg_100 [1/1] 0.00ns
 burst.rd.header:4  br i1 %exitcond9, label %burst.rd.end, label %burst.rd.body
 
 
  <State 11>: 8.75ns
-ST_11: gmem_addr_1 [1/1] 0.00ns
-burst.rd.body:3  %gmem_addr_1 = getelementptr i8* %gmem, i64 %tmp_6
+ST_11: gmem_offset_addr_1 [1/1] 0.00ns
+burst.rd.body:3  %gmem_offset_addr_1 = getelementptr float* %gmem_offset, i64 %tmp_10
 
-ST_11: gmem_addr_1_read [1/1] 8.75ns
-burst.rd.body:4  %gmem_addr_1_read = call i8 @_ssdm_op_Read.m_axi.i8P(i8* %gmem_addr_1)
+ST_11: gmem_offset_addr_1_read [1/1] 8.75ns
+burst.rd.body:4  %gmem_offset_addr_1_read = call float @_ssdm_op_Read.m_axi.floatP(float* %gmem_offset_addr_1)
 
 
  <State 12>: 2.71ns
 ST_12: burstread_rbegin [1/1] 0.00ns
 burst.rd.body:0  %burstread_rbegin = call i32 (...)* @_ssdm_op_SpecRegionBegin([17 x i8]* @burstread_OC_region_str) nounwind
 
-ST_12: stg_98 [1/1] 0.00ns
+ST_12: stg_104 [1/1] 0.00ns
 burst.rd.body:1  call void (...)* @_ssdm_op_SpecPipeline(i32 1, i32 1, i32 1, i32 0, [1 x i8]* @p_str1)
 
 ST_12: empty [1/1] 0.00ns
-burst.rd.body:2  %empty = call i32 (...)* @_ssdm_op_SpecLoopName([17 x i8]* @memcpy_OC_OC_frame_in_str) nounwind
+burst.rd.body:2  %empty = call i32 (...)* @_ssdm_op_SpecLoopName([78 x i8]* @memcpy_OC_backsub_IC_unsigned_s) nounwind
 
-ST_12: tmp_5 [1/1] 0.00ns
-burst.rd.body:5  %tmp_5 = zext i10 %indvar to i64
+ST_12: tmp_6 [1/1] 0.00ns
+burst.rd.body:5  %tmp_6 = zext i11 %indvar to i64
 
-ST_12: data_array_addr [1/1] 0.00ns
-burst.rd.body:6  %data_array_addr = getelementptr [600 x i8]* @data_array, i64 0, i64 %tmp_5
+ST_12: parameters_addr [1/1] 0.00ns
+burst.rd.body:6  %parameters_addr = getelementptr [1800 x float]* @parameters, i64 0, i64 %tmp_6
 
-ST_12: stg_102 [1/1] 2.71ns
-burst.rd.body:7  store i8 %gmem_addr_1_read, i8* %data_array_addr, align 1
+ST_12: stg_108 [1/1] 2.71ns
+burst.rd.body:7  store float %gmem_offset_addr_1_read, float* %parameters_addr, align 4
 
 ST_12: burstread_rend [1/1] 0.00ns
 burst.rd.body:8  %burstread_rend = call i32 (...)* @_ssdm_op_SpecRegionEnd([17 x i8]* @burstread_OC_region_str, i32 %burstread_rbegin) nounwind
 
-ST_12: stg_104 [1/1] 0.00ns
+ST_12: stg_110 [1/1] 0.00ns
 burst.rd.body:9  br label %burst.rd.header
 
 
- <State 13>: 1.57ns
-ST_13: tmp_1 [1/1] 0.00ns
-burst.rd.end:0  %tmp_1 = call i32 (...)* @_ssdm_op_SpecRegionBegin([6 x i8]* @p_str1811) nounwind
+ <State 13>: 2.44ns
+ST_13: tmp_27 [1/1] 0.00ns
+burst.rd.end:0  %tmp_27 = zext i17 %phi_mul to i33
 
-ST_13: stg_106 [1/1] 1.57ns
-burst.rd.end:1  br i1 %init_read, label %.preheader3.preheader, label %.preheader
+ST_13: tmp_29 [1/1] 2.44ns
+burst.rd.end:1  %tmp_29 = add i33 %tmp_27, %tmp_31_cast
 
-ST_13: tmp_6_cast9 [1/1] 0.00ns
-.preheader3.preheader:0  %tmp_6_cast9 = zext i19 %phi_mul to i20
 
-ST_13: tmp_7 [1/1] 0.00ns
-.preheader3.preheader:1  %tmp_7 = or i19 %phi_mul, 2
+ <State 14>: 8.75ns
+ST_14: tmp_30 [1/1] 0.00ns
+burst.rd.end:2  %tmp_30 = sext i33 %tmp_29 to i64
 
-ST_13: tmp_7_cast [1/1] 0.00ns
-.preheader3.preheader:2  %tmp_7_cast = zext i19 %tmp_7 to i21
+ST_14: gmem_addr [1/1] 0.00ns
+burst.rd.end:3  %gmem_addr = getelementptr i8* %gmem, i64 %tmp_30
 
-ST_13: tmp_8 [1/1] 0.00ns
-.preheader3.preheader:3  %tmp_8 = or i19 %phi_mul, 3
+ST_14: p_rd_req11 [7/7] 8.75ns
+burst.rd.end:4  %p_rd_req11 = call i1 @_ssdm_op_ReadReq.m_axi.i8P(i8* %gmem_addr, i32 300)
 
-ST_13: tmp_8_cast [1/1] 0.00ns
-.preheader3.preheader:4  %tmp_8_cast = zext i19 %tmp_8 to i21
 
-ST_13: tmp_9 [1/1] 0.00ns
-.preheader3.preheader:5  %tmp_9 = or i19 %phi_mul, 4
+ <State 15>: 8.75ns
+ST_15: p_rd_req11 [6/7] 8.75ns
+burst.rd.end:4  %p_rd_req11 = call i1 @_ssdm_op_ReadReq.m_axi.i8P(i8* %gmem_addr, i32 300)
 
-ST_13: tmp_9_cast [1/1] 0.00ns
-.preheader3.preheader:6  %tmp_9_cast = zext i19 %tmp_9 to i21
 
-ST_13: tmp_s [1/1] 0.00ns
-.preheader3.preheader:7  %tmp_s = or i19 %phi_mul, 5
+ <State 16>: 8.75ns
+ST_16: p_rd_req11 [5/7] 8.75ns
+burst.rd.end:4  %p_rd_req11 = call i1 @_ssdm_op_ReadReq.m_axi.i8P(i8* %gmem_addr, i32 300)
 
-ST_13: tmp_10_cast [1/1] 0.00ns
-.preheader3.preheader:8  %tmp_10_cast = zext i19 %tmp_s to i21
 
-ST_13: stg_116 [1/1] 1.57ns
-.preheader3.preheader:9  br label %.preheader3
-
-
- <State 14>: 6.48ns
-ST_14: j [1/1] 0.00ns
-.preheader:0  %j = phi i10 [ %j_1, %4 ], [ 0, %burst.rd.end ]
-
-ST_14: exitcond [1/1] 2.07ns
-.preheader:1  %exitcond = icmp eq i10 %j, -424
-
-ST_14: j_1 [1/1] 1.84ns
-.preheader:2  %j_1 = add i10 %j, 1
-
-ST_14: stg_120 [1/1] 0.00ns
-.preheader:3  br i1 %exitcond, label %.loopexit, label %4
-
-ST_14: tmp_13 [1/1] 0.00ns
-:3  %tmp_13 = zext i10 %j to i64
-
-ST_14: data_array_addr_1 [1/1] 0.00ns
-:4  %data_array_addr_1 = getelementptr inbounds [600 x i8]* @data_array, i64 0, i64 %tmp_13
-
-ST_14: data_array_load_1 [2/2] 2.71ns
-:5  %data_array_load_1 = load i8* %data_array_addr_1, align 1
-
-ST_14: i [1/1] 0.00ns
-.preheader3:0  %i = phi i10 [ %i_1, %3 ], [ 0, %.preheader3.preheader ]
-
-ST_14: exitcond1 [1/1] 2.07ns
-.preheader3:1  %exitcond1 = icmp eq i10 %i, -424
-
-ST_14: i_1 [1/1] 1.84ns
-.preheader3:2  %i_1 = add i10 %i, 1
-
-ST_14: stg_127 [1/1] 0.00ns
-.preheader3:3  br i1 %exitcond1, label %.loopexit, label %3
-
-ST_14: i_cast7 [1/1] 0.00ns
-:0  %i_cast7 = zext i10 %i to i17
-
-ST_14: tmp_14 [1/1] 2.08ns
-:4  %tmp_14 = add i17 %phi_mul1, %i_cast7
-
-ST_14: tmp_18 [1/1] 0.00ns
-:5  %tmp_18 = call i18 @_ssdm_op_BitConcatenate.i18.i17.i1(i17 %tmp_14, i1 false)
-
-ST_14: tmp_20 [1/1] 0.00ns
-:6  %tmp_20 = zext i18 %tmp_18 to i64
-
-ST_14: tmp_22 [1/1] 0.00ns
-:7  %tmp_22 = or i18 %tmp_18, 1
-
-ST_14: tmp_24 [1/1] 0.00ns
-:8  %tmp_24 = call i64 @_ssdm_op_BitConcatenate.i64.i46.i18(i46 0, i18 %tmp_22)
-
-ST_14: matchsum_addr [1/1] 0.00ns
-:9  %matchsum_addr = getelementptr [153600 x i8]* @matchsum, i64 0, i64 %tmp_20
-
-ST_14: stg_135 [1/1] 2.71ns
-:10  store i8 0, i8* %matchsum_addr, align 2
-
-ST_14: matchsum_addr_1 [1/1] 0.00ns
-:11  %matchsum_addr_1 = getelementptr [153600 x i8]* @matchsum, i64 0, i64 %tmp_24
-
-ST_14: stg_137 [1/1] 2.71ns
-:12  store i8 0, i8* %matchsum_addr_1, align 1
-
-ST_14: back_gauss_addr [1/1] 0.00ns
-:13  %back_gauss_addr = getelementptr [153600 x i1]* @back_gauss, i64 0, i64 %tmp_20
-
-ST_14: stg_139 [1/1] 2.71ns
-:14  store i1 true, i1* %back_gauss_addr, align 2
-
-ST_14: back_gauss_addr_1 [1/1] 0.00ns
-:15  %back_gauss_addr_1 = getelementptr [153600 x i1]* @back_gauss, i64 0, i64 %tmp_24
-
-ST_14: stg_141 [1/1] 2.71ns
-:16  store i1 true, i1* %back_gauss_addr_1, align 1
-
-ST_14: p_shl [1/1] 0.00ns
-:17  %p_shl = call i13 @_ssdm_op_BitConcatenate.i13.i10.i3(i10 %i, i3 0)
-
-ST_14: p_shl_cast [1/1] 0.00ns
-:18  %p_shl_cast = zext i13 %p_shl to i14
-
-ST_14: p_shl1 [1/1] 0.00ns
-:19  %p_shl1 = call i11 @_ssdm_op_BitConcatenate.i11.i10.i1(i10 %i, i1 false)
-
-ST_14: p_shl1_cast [1/1] 0.00ns
-:20  %p_shl1_cast = zext i11 %p_shl1 to i14
-
-ST_14: tmp_16 [1/1] 1.96ns
-:21  %tmp_16 = sub i14 %p_shl_cast, %p_shl1_cast
-
-ST_14: tmp_16_cast4 [1/1] 0.00ns
-:22  %tmp_16_cast4 = sext i14 %tmp_16 to i21
-
-ST_14: tmp_16_cast [1/1] 0.00ns
-:23  %tmp_16_cast = sext i14 %tmp_16 to i20
-
-ST_14: tmp_17 [1/1] 2.08ns
-:24  %tmp_17 = add i20 %tmp_6_cast9, %tmp_16_cast
-
-ST_14: tmp_17_cast [1/1] 0.00ns
-:25  %tmp_17_cast = sext i20 %tmp_17 to i32
-
-ST_14: tmp_18_cast [1/1] 0.00ns
-:26  %tmp_18_cast = zext i32 %tmp_17_cast to i33
-
-ST_14: para6_sum [1/1] 2.44ns
-:27  %para6_sum = add i33 %tmp_18_cast, %tmp_12_cast
-
-ST_14: tmp_21 [1/1] 2.08ns
-:45  %tmp_21 = add i21 %tmp_7_cast, %tmp_16_cast4
-
-ST_14: tmp_23 [1/1] 2.08ns
-:56  %tmp_23 = add i21 %tmp_8_cast, %tmp_16_cast4
-
-ST_14: tmp_25 [1/1] 2.08ns
-:67  %tmp_25 = add i21 %tmp_9_cast, %tmp_16_cast4
-
-ST_14: tmp_26 [1/1] 2.08ns
-:78  %tmp_26 = add i21 %tmp_10_cast, %tmp_16_cast4
-
-ST_14: tmp_10 [1/1] 2.44ns
-.loopexit:1  %tmp_10 = add i33 %tmp_3, %tmp_15_cast
-
-
- <State 15>: 2.71ns
-ST_15: data_array_load_1 [1/2] 2.71ns
-:5  %data_array_load_1 = load i8* %data_array_addr_1, align 1
-
-
- <State 16>: 7.52ns
-ST_16: tmp_15 [2/2] 7.52ns
-:6  %tmp_15 = call fastcc zeroext i1 @backsub_EM_ALGO(i8 zeroext %data_array_load_1, i10 %j, float* %gmem_offset, i30 %para5, i19 %phi_mul, i8 %x)
-
-
- <State 17>: 3.96ns
-ST_17: stg_160 [1/1] 0.00ns
-:0  call void (...)* @_ssdm_op_SpecLoopTripCount(i64 600, i64 600, i64 600)
-
-ST_17: tmp_12 [1/1] 0.00ns
-:1  %tmp_12 = call i32 (...)* @_ssdm_op_SpecRegionBegin([12 x i8]* @p_str1813) nounwind
-
-ST_17: stg_162 [1/1] 0.00ns
-:2  call void (...)* @_ssdm_op_SpecPipeline(i32 1, i32 1, i32 1, i32 0, [1 x i8]* @p_str1806) nounwind
-
-ST_17: tmp_15 [1/2] 1.57ns
-:6  %tmp_15 = call fastcc zeroext i1 @backsub_EM_ALGO(i8 zeroext %data_array_load_1, i10 %j, float* %gmem_offset, i30 %para5, i19 %phi_mul, i8 %x)
-
-ST_17: out_frame_addr [1/1] 0.00ns
-:7  %out_frame_addr = getelementptr [600 x i1]* @out_frame, i64 0, i64 %tmp_13
-
-ST_17: stg_165 [1/1] 2.39ns
-:8  store i1 %tmp_15, i1* %out_frame_addr, align 1
-
-ST_17: empty_9 [1/1] 0.00ns
-:9  %empty_9 = call i32 (...)* @_ssdm_op_SpecRegionEnd([12 x i8]* @p_str1813, i32 %tmp_12) nounwind
-
-ST_17: stg_167 [1/1] 0.00ns
-:10  br label %.preheader
+ <State 17>: 8.75ns
+ST_17: p_rd_req11 [4/7] 8.75ns
+burst.rd.end:4  %p_rd_req11 = call i1 @_ssdm_op_ReadReq.m_axi.i8P(i8* %gmem_addr, i32 300)
 
 
  <State 18>: 8.75ns
-ST_18: para6_sum_cast [1/1] 0.00ns
-:28  %para6_sum_cast = zext i33 %para6_sum to i64
-
-ST_18: gmem_offset_addr [1/1] 0.00ns
-:29  %gmem_offset_addr = getelementptr float* %gmem_offset, i64 %para6_sum_cast
-
-ST_18: gmem_offset_addr_req [1/1] 8.75ns
-:30  %gmem_offset_addr_req = call i1 @_ssdm_op_WriteReq.m_axi.floatP(float* %gmem_offset_addr, i32 1)
+ST_18: p_rd_req11 [3/7] 8.75ns
+burst.rd.end:4  %p_rd_req11 = call i1 @_ssdm_op_ReadReq.m_axi.i8P(i8* %gmem_addr, i32 300)
 
 
  <State 19>: 8.75ns
-ST_19: gmem_offset_addr_1 [1/1] 0.00ns
-:31  %gmem_offset_addr_1 = getelementptr float* %gmem_offset, i64 %para6_sum_cast
-
-ST_19: stg_172 [1/1] 8.75ns
-:32  call void @_ssdm_op_Write.m_axi.floatP(float* %gmem_offset_addr_1, float 0.000000e+00, i4 -1)
-
-ST_19: gmem_offset_addr_2 [1/1] 0.00ns
-:33  %gmem_offset_addr_2 = getelementptr float* %gmem_offset, i64 %para6_sum_cast
-
-ST_19: tmp_19 [1/1] 0.00ns
-:35  %tmp_19 = or i32 %tmp_17_cast, 1
-
-ST_19: tmp_20_cast [1/1] 0.00ns
-:36  %tmp_20_cast = zext i32 %tmp_19 to i33
-
-ST_19: para6_sum7 [1/1] 2.44ns
-:37  %para6_sum7 = add i33 %tmp_20_cast, %tmp_12_cast
+ST_19: p_rd_req11 [2/7] 8.75ns
+burst.rd.end:4  %p_rd_req11 = call i1 @_ssdm_op_ReadReq.m_axi.i8P(i8* %gmem_addr, i32 300)
 
 
  <State 20>: 8.75ns
-ST_20: gmem_offset_addr_resp [5/5] 8.75ns
-:34  %gmem_offset_addr_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_2)
+ST_20: p_rd_req11 [1/7] 8.75ns
+burst.rd.end:4  %p_rd_req11 = call i1 @_ssdm_op_ReadReq.m_axi.i8P(i8* %gmem_addr, i32 300)
 
-ST_20: para6_sum7_cast [1/1] 0.00ns
-:38  %para6_sum7_cast = zext i33 %para6_sum7 to i64
-
-ST_20: gmem_offset_addr_3 [1/1] 0.00ns
-:39  %gmem_offset_addr_3 = getelementptr float* %gmem_offset, i64 %para6_sum7_cast
-
-ST_20: gmem_offset_addr_1_req [1/1] 8.75ns
-:40  %gmem_offset_addr_1_req = call i1 @_ssdm_op_WriteReq.m_axi.floatP(float* %gmem_offset_addr_3, i32 1)
+ST_20: stg_122 [1/1] 1.57ns
+burst.rd.end:5  br label %burst.rd.header14
 
 
- <State 21>: 8.75ns
-ST_21: gmem_offset_addr_resp [4/5] 8.75ns
-:34  %gmem_offset_addr_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_2)
+ <State 21>: 2.03ns
+ST_21: indvar1 [1/1] 0.00ns
+burst.rd.header14:0  %indvar1 = phi i9 [ 0, %burst.rd.end ], [ %indvar_next1, %burst.rd.body15 ]
 
-ST_21: gmem_offset_addr_4 [1/1] 0.00ns
-:41  %gmem_offset_addr_4 = getelementptr float* %gmem_offset, i64 %para6_sum7_cast
+ST_21: exitcond3 [1/1] 2.03ns
+burst.rd.header14:1  %exitcond3 = icmp eq i9 %indvar1, -212
 
-ST_21: stg_183 [1/1] 8.75ns
-:42  call void @_ssdm_op_Write.m_axi.floatP(float* %gmem_offset_addr_4, float 0.000000e+00, i4 -1)
+ST_21: stg_125 [1/1] 0.00ns
+burst.rd.header14:2  call void (...)* @_ssdm_op_SpecLoopTripCount(i64 300, i64 300, i64 300)
 
-ST_21: gmem_offset_addr_5 [1/1] 0.00ns
-:43  %gmem_offset_addr_5 = getelementptr float* %gmem_offset, i64 %para6_sum7_cast
+ST_21: indvar_next1 [1/1] 1.84ns
+burst.rd.header14:3  %indvar_next1 = add i9 %indvar1, 1
 
-ST_21: tmp_21_cast [1/1] 0.00ns
-:46  %tmp_21_cast = sext i21 %tmp_21 to i32
-
-ST_21: tmp_22_cast [1/1] 0.00ns
-:47  %tmp_22_cast = zext i32 %tmp_21_cast to i33
-
-ST_21: para6_sum8 [1/1] 2.44ns
-:48  %para6_sum8 = add i33 %tmp_22_cast, %tmp_12_cast
+ST_21: stg_127 [1/1] 0.00ns
+burst.rd.header14:4  br i1 %exitcond3, label %burst.rd.end13, label %burst.rd.body15
 
 
  <State 22>: 8.75ns
-ST_22: gmem_offset_addr_resp [3/5] 8.75ns
-:34  %gmem_offset_addr_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_2)
+ST_22: gmem_addr_1 [1/1] 0.00ns
+burst.rd.body15:3  %gmem_addr_1 = getelementptr i8* %gmem, i64 %tmp_30
 
-ST_22: gmem_offset_addr_1_resp [5/5] 8.75ns
-:44  %gmem_offset_addr_1_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_5)
+ST_22: gmem_addr_1_read [1/1] 8.75ns
+burst.rd.body15:4  %gmem_addr_1_read = call i8 @_ssdm_op_Read.m_axi.i8P(i8* %gmem_addr_1)
 
-ST_22: para6_sum8_cast [1/1] 0.00ns
-:49  %para6_sum8_cast = zext i33 %para6_sum8 to i64
 
-ST_22: gmem_offset_addr_6 [1/1] 0.00ns
-:50  %gmem_offset_addr_6 = getelementptr float* %gmem_offset, i64 %para6_sum8_cast
+ <State 23>: 2.71ns
+ST_23: burstread_rbegin1 [1/1] 0.00ns
+burst.rd.body15:0  %burstread_rbegin1 = call i32 (...)* @_ssdm_op_SpecRegionBegin([17 x i8]* @burstread_OC_region_str) nounwind
 
-ST_22: gmem_offset_addr_2_req [1/1] 8.75ns
-:51  %gmem_offset_addr_2_req = call i1 @_ssdm_op_WriteReq.m_axi.floatP(float* %gmem_offset_addr_6, i32 1)
+ST_23: stg_131 [1/1] 0.00ns
+burst.rd.body15:1  call void (...)* @_ssdm_op_SpecPipeline(i32 1, i32 1, i32 1, i32 0, [1 x i8]* @p_str2)
 
+ST_23: empty_8 [1/1] 0.00ns
+burst.rd.body15:2  %empty_8 = call i32 (...)* @_ssdm_op_SpecLoopName([17 x i8]* @memcpy_OC_OC_frame_in_str) nounwind
 
- <State 23>: 8.75ns
-ST_23: gmem_offset_addr_resp [2/5] 8.75ns
-:34  %gmem_offset_addr_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_2)
+ST_23: tmp_8 [1/1] 0.00ns
+burst.rd.body15:5  %tmp_8 = zext i9 %indvar1 to i64
 
-ST_23: gmem_offset_addr_1_resp [4/5] 8.75ns
-:44  %gmem_offset_addr_1_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_5)
+ST_23: data_array_addr [1/1] 0.00ns
+burst.rd.body15:6  %data_array_addr = getelementptr [300 x i8]* @data_array, i64 0, i64 %tmp_8
 
-ST_23: gmem_offset_addr_7 [1/1] 0.00ns
-:52  %gmem_offset_addr_7 = getelementptr float* %gmem_offset, i64 %para6_sum8_cast
+ST_23: stg_135 [1/1] 2.71ns
+burst.rd.body15:7  store i8 %gmem_addr_1_read, i8* %data_array_addr, align 1
 
-ST_23: stg_196 [1/1] 8.75ns
-:53  call void @_ssdm_op_Write.m_axi.floatP(float* %gmem_offset_addr_7, float 4.900000e+03, i4 -1)
+ST_23: burstread_rend24 [1/1] 0.00ns
+burst.rd.body15:8  %burstread_rend24 = call i32 (...)* @_ssdm_op_SpecRegionEnd([17 x i8]* @burstread_OC_region_str, i32 %burstread_rbegin1) nounwind
 
-ST_23: gmem_offset_addr_8 [1/1] 0.00ns
-:54  %gmem_offset_addr_8 = getelementptr float* %gmem_offset, i64 %para6_sum8_cast
+ST_23: stg_137 [1/1] 0.00ns
+burst.rd.body15:9  br label %burst.rd.header14
 
-ST_23: tmp_23_cast [1/1] 0.00ns
-:57  %tmp_23_cast = sext i21 %tmp_23 to i32
 
-ST_23: tmp_24_cast [1/1] 0.00ns
-:58  %tmp_24_cast = zext i32 %tmp_23_cast to i33
+ <State 24>: 1.57ns
+ST_24: stg_138 [1/1] 1.57ns
+burst.rd.end13:0  br i1 %init_read, label %.preheader3, label %.preheader
 
-ST_23: para6_sum9 [1/1] 2.44ns
-:59  %para6_sum9 = add i33 %tmp_24_cast, %tmp_12_cast
 
-ST_23: tmp_25_cast [1/1] 0.00ns
-:68  %tmp_25_cast = sext i21 %tmp_25 to i32
+ <State 25>: 4.79ns
+ST_25: j [1/1] 0.00ns
+.preheader:0  %j = phi i9 [ %j_1, %4 ], [ 0, %burst.rd.end13 ]
 
-ST_23: tmp_26_cast [1/1] 0.00ns
-:69  %tmp_26_cast = zext i32 %tmp_25_cast to i33
+ST_25: exitcond [1/1] 2.03ns
+.preheader:1  %exitcond = icmp eq i9 %j, -212
 
-ST_23: para6_sum1 [1/1] 2.44ns
-:70  %para6_sum1 = add i33 %tmp_26_cast, %tmp_12_cast
+ST_25: j_1 [1/1] 1.84ns
+.preheader:2  %j_1 = add i9 %j, 1
 
-ST_23: tmp_27_cast [1/1] 0.00ns
-:79  %tmp_27_cast = sext i21 %tmp_26 to i32
+ST_25: stg_142 [1/1] 0.00ns
+.preheader:3  br i1 %exitcond, label %.loopexit, label %4
 
-ST_23: tmp_28_cast [1/1] 0.00ns
-:80  %tmp_28_cast = zext i32 %tmp_27_cast to i33
+ST_25: tmp_24 [1/1] 0.00ns
+:3  %tmp_24 = zext i9 %j to i64
 
-ST_23: para6_sum2 [1/1] 2.44ns
-:81  %para6_sum2 = add i33 %tmp_28_cast, %tmp_12_cast
+ST_25: data_array_addr_2 [1/1] 0.00ns
+:4  %data_array_addr_2 = getelementptr inbounds [300 x i8]* @data_array, i64 0, i64 %tmp_24
 
+ST_25: data_array_load_1 [2/2] 2.71ns
+:5  %data_array_load_1 = load i8* %data_array_addr_2, align 1
 
- <State 24>: 8.75ns
-ST_24: gmem_offset_addr_resp [1/5] 8.75ns
-:34  %gmem_offset_addr_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_2)
+ST_25: i [1/1] 0.00ns
+.preheader3:0  %i = phi i9 [ %i_1, %3 ], [ 0, %burst.rd.end13 ]
 
-ST_24: gmem_offset_addr_1_resp [3/5] 8.75ns
-:44  %gmem_offset_addr_1_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_5)
+ST_25: exitcond1 [1/1] 2.03ns
+.preheader3:1  %exitcond1 = icmp eq i9 %i, -212
 
-ST_24: gmem_offset_addr_2_resp [5/5] 8.75ns
-:55  %gmem_offset_addr_2_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_8)
+ST_25: i_1 [1/1] 1.84ns
+.preheader3:2  %i_1 = add i9 %i, 1
 
-ST_24: para6_sum9_cast [1/1] 0.00ns
-:60  %para6_sum9_cast = zext i33 %para6_sum9 to i64
+ST_25: stg_149 [1/1] 0.00ns
+.preheader3:3  br i1 %exitcond1, label %.loopexit, label %3
 
-ST_24: gmem_offset_addr_9 [1/1] 0.00ns
-:61  %gmem_offset_addr_9 = getelementptr float* %gmem_offset, i64 %para6_sum9_cast
+ST_25: i_cast8 [1/1] 0.00ns
+:0  %i_cast8 = zext i9 %i to i17
 
-ST_24: gmem_offset_addr_3_req [1/1] 8.75ns
-:62  %gmem_offset_addr_3_req = call i1 @_ssdm_op_WriteReq.m_axi.floatP(float* %gmem_offset_addr_9, i32 1)
+ST_25: tmp_9 [1/1] 2.08ns
+:4  %tmp_9 = add i17 %i_cast8, %phi_mul
 
+ST_25: tmp_s [1/1] 0.00ns
+:5  %tmp_s = call i18 @_ssdm_op_BitConcatenate.i18.i17.i1(i17 %tmp_9, i1 false)
 
- <State 25>: 8.75ns
-ST_25: gmem_offset_addr_1_resp [2/5] 8.75ns
-:44  %gmem_offset_addr_1_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_5)
+ST_25: tmp_32 [1/1] 0.00ns
+:6  %tmp_32 = zext i18 %tmp_s to i64
 
-ST_25: gmem_offset_addr_2_resp [4/5] 8.75ns
-:55  %gmem_offset_addr_2_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_8)
+ST_25: tmp_33 [1/1] 0.00ns
+:7  %tmp_33 = or i18 %tmp_s, 1
 
-ST_25: gmem_offset_addr_10 [1/1] 0.00ns
-:63  %gmem_offset_addr_10 = getelementptr float* %gmem_offset, i64 %para6_sum9_cast
+ST_25: tmp_34 [1/1] 0.00ns
+:8  %tmp_34 = call i64 @_ssdm_op_BitConcatenate.i64.i46.i18(i46 0, i18 %tmp_33)
 
-ST_25: stg_216 [1/1] 8.75ns
-:64  call void @_ssdm_op_Write.m_axi.floatP(float* %gmem_offset_addr_10, float 4.900000e+03, i4 -1)
+ST_25: matchsum_addr [1/1] 0.00ns
+:9  %matchsum_addr = getelementptr [153600 x i8]* @matchsum, i64 0, i64 %tmp_32
 
-ST_25: gmem_offset_addr_11 [1/1] 0.00ns
-:65  %gmem_offset_addr_11 = getelementptr float* %gmem_offset, i64 %para6_sum9_cast
+ST_25: stg_157 [1/1] 2.71ns
+:10  store i8 0, i8* %matchsum_addr, align 2
 
+ST_25: matchsum_addr_1 [1/1] 0.00ns
+:11  %matchsum_addr_1 = getelementptr [153600 x i8]* @matchsum, i64 0, i64 %tmp_34
 
- <State 26>: 8.75ns
-ST_26: gmem_offset_addr_1_resp [1/5] 8.75ns
-:44  %gmem_offset_addr_1_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_5)
+ST_25: stg_159 [1/1] 2.71ns
+:12  store i8 0, i8* %matchsum_addr_1, align 1
 
-ST_26: gmem_offset_addr_2_resp [3/5] 8.75ns
-:55  %gmem_offset_addr_2_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_8)
+ST_25: back_gauss_addr [1/1] 0.00ns
+:13  %back_gauss_addr = getelementptr [153600 x i1]* @back_gauss, i64 0, i64 %tmp_32
 
-ST_26: gmem_offset_addr_3_resp [5/5] 8.75ns
-:66  %gmem_offset_addr_3_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_11)
+ST_25: stg_161 [1/1] 2.71ns
+:14  store i1 true, i1* %back_gauss_addr, align 2
 
-ST_26: para6_sum1_cast [1/1] 0.00ns
-:71  %para6_sum1_cast = zext i33 %para6_sum1 to i64
+ST_25: back_gauss_addr_1 [1/1] 0.00ns
+:15  %back_gauss_addr_1 = getelementptr [153600 x i1]* @back_gauss, i64 0, i64 %tmp_34
 
-ST_26: gmem_offset_addr_12 [1/1] 0.00ns
-:72  %gmem_offset_addr_12 = getelementptr float* %gmem_offset, i64 %para6_sum1_cast
+ST_25: stg_163 [1/1] 2.71ns
+:16  store i1 true, i1* %back_gauss_addr_1, align 1
 
-ST_26: gmem_offset_addr_4_req [1/1] 8.75ns
-:73  %gmem_offset_addr_4_req = call i1 @_ssdm_op_WriteReq.m_axi.floatP(float* %gmem_offset_addr_12, i32 1)
+ST_25: p_shl [1/1] 0.00ns
+:17  %p_shl = call i12 @_ssdm_op_BitConcatenate.i12.i9.i3(i9 %i, i3 0)
 
+ST_25: p_shl_cast [1/1] 0.00ns
+:18  %p_shl_cast = zext i12 %p_shl to i13
 
- <State 27>: 8.75ns
-ST_27: gmem_offset_addr_2_resp [2/5] 8.75ns
-:55  %gmem_offset_addr_2_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_8)
+ST_25: p_shl1 [1/1] 0.00ns
+:19  %p_shl1 = call i10 @_ssdm_op_BitConcatenate.i10.i9.i1(i9 %i, i1 false)
 
-ST_27: gmem_offset_addr_3_resp [4/5] 8.75ns
-:66  %gmem_offset_addr_3_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_11)
+ST_25: p_shl1_cast [1/1] 0.00ns
+:20  %p_shl1_cast = zext i10 %p_shl1 to i13
 
-ST_27: gmem_offset_addr_13 [1/1] 0.00ns
-:74  %gmem_offset_addr_13 = getelementptr float* %gmem_offset, i64 %para6_sum1_cast
+ST_25: tmp_11 [1/1] 1.84ns
+:21  %tmp_11 = sub i13 %p_shl_cast, %p_shl1_cast
 
-ST_27: stg_227 [1/1] 8.75ns
-:75  call void @_ssdm_op_Write.m_axi.floatP(float* %gmem_offset_addr_13, float 0x3FB70A3D80000000, i4 -1)
+ST_25: tmp_11_cast [1/1] 0.00ns
+:22  %tmp_11_cast = sext i13 %tmp_11 to i32
 
-ST_27: gmem_offset_addr_14 [1/1] 0.00ns
-:76  %gmem_offset_addr_14 = getelementptr float* %gmem_offset, i64 %para6_sum1_cast
+ST_25: tmp_12 [1/1] 0.00ns
+:23  %tmp_12 = zext i32 %tmp_11_cast to i64
 
+ST_25: parameters_addr_1 [1/1] 0.00ns
+:24  %parameters_addr_1 = getelementptr inbounds [1800 x float]* @parameters, i64 0, i64 %tmp_12
 
- <State 28>: 8.75ns
-ST_28: gmem_offset_addr_2_resp [1/5] 8.75ns
-:55  %gmem_offset_addr_2_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_8)
+ST_25: stg_172 [1/1] 2.71ns
+:25  store float 0.000000e+00, float* %parameters_addr_1, align 8
 
-ST_28: gmem_offset_addr_3_resp [3/5] 8.75ns
-:66  %gmem_offset_addr_3_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_11)
+ST_25: tmp_13 [1/1] 0.00ns
+:26  %tmp_13 = or i32 %tmp_11_cast, 1
 
-ST_28: gmem_offset_addr_4_resp [5/5] 8.75ns
-:77  %gmem_offset_addr_4_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_14)
+ST_25: tmp_14 [1/1] 0.00ns
+:27  %tmp_14 = zext i32 %tmp_13 to i64
 
-ST_28: para6_sum2_cast [1/1] 0.00ns
-:82  %para6_sum2_cast = zext i33 %para6_sum2 to i64
+ST_25: parameters_addr_2 [1/1] 0.00ns
+:28  %parameters_addr_2 = getelementptr inbounds [1800 x float]* @parameters, i64 0, i64 %tmp_14
 
-ST_28: gmem_offset_addr_15 [1/1] 0.00ns
-:83  %gmem_offset_addr_15 = getelementptr float* %gmem_offset, i64 %para6_sum2_cast
+ST_25: stg_176 [1/1] 2.71ns
+:29  store float 0.000000e+00, float* %parameters_addr_2, align 4
 
-ST_28: gmem_offset_addr_5_req [1/1] 8.75ns
-:84  %gmem_offset_addr_5_req = call i1 @_ssdm_op_WriteReq.m_axi.floatP(float* %gmem_offset_addr_15, i32 1)
+ST_25: tmp_31 [1/1] 2.44ns
+.loopexit:0  %tmp_31 = add i33 %tmp_27, %tmp_30_cast
 
-ST_28: tmp_27 [1/1] 0.00ns
-:89  %tmp_27 = zext i10 %i to i64
 
-ST_28: data_array_addr_2 [1/1] 0.00ns
-:90  %data_array_addr_2 = getelementptr inbounds [600 x i8]* @data_array, i64 0, i64 %tmp_27
+ <State 26>: 2.71ns
+ST_26: data_array_load_1 [1/2] 2.71ns
+:5  %data_array_load_1 = load i8* %data_array_addr_2, align 1
 
-ST_28: data_array_load [2/2] 2.71ns
-:91  %data_array_load = load i8* %data_array_addr_2, align 1
 
+ <State 27>: 7.42ns
+ST_27: tmp_25 [2/2] 7.42ns
+:6  %tmp_25 = call fastcc zeroext i1 @backsub_EM_ALGO(i8 zeroext %data_array_load_1, i9 %j, [1800 x float]* @parameters, i9 %x) nounwind
 
- <State 29>: 8.75ns
-ST_29: gmem_offset_addr_3_resp [2/5] 8.75ns
-:66  %gmem_offset_addr_3_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_11)
 
-ST_29: gmem_offset_addr_4_resp [4/5] 8.75ns
-:77  %gmem_offset_addr_4_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_14)
+ <State 28>: 3.96ns
+ST_28: stg_180 [1/1] 0.00ns
+:0  call void (...)* @_ssdm_op_SpecLoopTripCount(i64 300, i64 300, i64 300)
 
-ST_29: gmem_offset_addr_16 [1/1] 0.00ns
-:85  %gmem_offset_addr_16 = getelementptr float* %gmem_offset, i64 %para6_sum2_cast
+ST_28: tmp_3 [1/1] 0.00ns
+:1  %tmp_3 = call i32 (...)* @_ssdm_op_SpecRegionBegin([12 x i8]* @p_str1812) nounwind
 
-ST_29: stg_241 [1/1] 8.75ns
-:86  call void @_ssdm_op_Write.m_axi.floatP(float* %gmem_offset_addr_16, float 0x3FB70A3D80000000, i4 -1)
+ST_28: stg_182 [1/1] 0.00ns
+:2  call void (...)* @_ssdm_op_SpecPipeline(i32 1, i32 1, i32 1, i32 0, [1 x i8]* @p_str1806) nounwind
 
-ST_29: gmem_offset_addr_17 [1/1] 0.00ns
-:87  %gmem_offset_addr_17 = getelementptr float* %gmem_offset, i64 %para6_sum2_cast
+ST_28: tmp_25 [1/2] 1.57ns
+:6  %tmp_25 = call fastcc zeroext i1 @backsub_EM_ALGO(i8 zeroext %data_array_load_1, i9 %j, [1800 x float]* @parameters, i9 %x) nounwind
 
-ST_29: data_array_load [1/2] 2.71ns
-:91  %data_array_load = load i8* %data_array_addr_2, align 1
+ST_28: out_frame_addr_1 [1/1] 0.00ns
+:7  %out_frame_addr_1 = getelementptr [300 x i1]* @out_frame, i64 0, i64 %tmp_24
 
+ST_28: stg_185 [1/1] 2.39ns
+:8  store i1 %tmp_25, i1* %out_frame_addr_1, align 1
 
- <State 30>: 8.75ns
-ST_30: gmem_offset_addr_3_resp [1/5] 8.75ns
-:66  %gmem_offset_addr_3_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_11)
+ST_28: empty_10 [1/1] 0.00ns
+:9  %empty_10 = call i32 (...)* @_ssdm_op_SpecRegionEnd([12 x i8]* @p_str1812, i32 %tmp_3) nounwind
 
-ST_30: gmem_offset_addr_4_resp [3/5] 8.75ns
-:77  %gmem_offset_addr_4_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_14)
+ST_28: stg_187 [1/1] 0.00ns
+:10  br label %.preheader
 
-ST_30: gmem_offset_addr_5_resp [5/5] 8.75ns
-:88  %gmem_offset_addr_5_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_17)
 
-ST_30: tmp_28 [2/2] 7.52ns
-:92  %tmp_28 = call fastcc zeroext i1 @backsub_EM_ALGO(i8 zeroext %data_array_load, i10 %i, float* %gmem_offset, i30 %para5, i19 %phi_mul, i8 %x)
+ <State 29>: 4.67ns
+ST_29: tmp_15 [1/1] 1.96ns
+:30  %tmp_15 = add i13 %tmp_11, 2
 
+ST_29: tmp_15_cast [1/1] 0.00ns
+:31  %tmp_15_cast = sext i13 %tmp_15 to i32
 
- <State 31>: 8.75ns
-ST_31: gmem_offset_addr_4_resp [2/5] 8.75ns
-:77  %gmem_offset_addr_4_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_14)
+ST_29: tmp_16 [1/1] 0.00ns
+:32  %tmp_16 = zext i32 %tmp_15_cast to i64
 
-ST_31: gmem_offset_addr_5_resp [4/5] 8.75ns
-:88  %gmem_offset_addr_5_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_17)
+ST_29: parameters_addr_3 [1/1] 0.00ns
+:33  %parameters_addr_3 = getelementptr inbounds [1800 x float]* @parameters, i64 0, i64 %tmp_16
 
-ST_31: tmp_28 [1/2] 1.57ns
-:92  %tmp_28 = call fastcc zeroext i1 @backsub_EM_ALGO(i8 zeroext %data_array_load, i10 %i, float* %gmem_offset, i30 %para5, i19 %phi_mul, i8 %x)
+ST_29: stg_192 [1/1] 2.71ns
+:34  store float 4.900000e+03, float* %parameters_addr_3, align 8
 
-ST_31: out_frame_addr_1 [1/1] 0.00ns
-:93  %out_frame_addr_1 = getelementptr [600 x i1]* @out_frame, i64 0, i64 %tmp_27
+ST_29: tmp_17 [1/1] 1.96ns
+:35  %tmp_17 = add i13 %tmp_11, 3
 
-ST_31: stg_252 [1/1] 2.39ns
-:94  store i1 %tmp_28, i1* %out_frame_addr_1, align 1
+ST_29: tmp_17_cast [1/1] 0.00ns
+:36  %tmp_17_cast = sext i13 %tmp_17 to i32
 
+ST_29: tmp_18 [1/1] 0.00ns
+:37  %tmp_18 = zext i32 %tmp_17_cast to i64
 
- <State 32>: 8.75ns
-ST_32: gmem_offset_addr_4_resp [1/5] 8.75ns
-:77  %gmem_offset_addr_4_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_14)
+ST_29: parameters_addr_4 [1/1] 0.00ns
+:38  %parameters_addr_4 = getelementptr inbounds [1800 x float]* @parameters, i64 0, i64 %tmp_18
 
-ST_32: gmem_offset_addr_5_resp [3/5] 8.75ns
-:88  %gmem_offset_addr_5_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_17)
+ST_29: stg_197 [1/1] 2.71ns
+:39  store float 4.900000e+03, float* %parameters_addr_4, align 4
+
+ST_29: tmp_23 [1/1] 0.00ns
+:50  %tmp_23 = zext i9 %i to i64
+
+ST_29: data_array_addr_1 [1/1] 0.00ns
+:51  %data_array_addr_1 = getelementptr inbounds [300 x i8]* @data_array, i64 0, i64 %tmp_23
+
+ST_29: data_array_load [2/2] 2.71ns
+:52  %data_array_load = load i8* %data_array_addr_1, align 1
+
+
+ <State 30>: 4.67ns
+ST_30: tmp_19 [1/1] 1.96ns
+:40  %tmp_19 = add i13 %tmp_11, 4
+
+ST_30: tmp_19_cast [1/1] 0.00ns
+:41  %tmp_19_cast = sext i13 %tmp_19 to i32
+
+ST_30: tmp_20 [1/1] 0.00ns
+:42  %tmp_20 = zext i32 %tmp_19_cast to i64
+
+ST_30: parameters_addr_5 [1/1] 0.00ns
+:43  %parameters_addr_5 = getelementptr inbounds [1800 x float]* @parameters, i64 0, i64 %tmp_20
+
+ST_30: stg_205 [1/1] 2.71ns
+:44  store float 0x3FB70A3D80000000, float* %parameters_addr_5, align 8
+
+ST_30: tmp_21 [1/1] 1.96ns
+:45  %tmp_21 = add i13 %tmp_11, 5
+
+ST_30: tmp_21_cast [1/1] 0.00ns
+:46  %tmp_21_cast = sext i13 %tmp_21 to i32
+
+ST_30: tmp_22 [1/1] 0.00ns
+:47  %tmp_22 = zext i32 %tmp_21_cast to i64
+
+ST_30: parameters_addr_6 [1/1] 0.00ns
+:48  %parameters_addr_6 = getelementptr inbounds [1800 x float]* @parameters, i64 0, i64 %tmp_22
+
+ST_30: stg_210 [1/1] 2.71ns
+:49  store float 0x3FB70A3D80000000, float* %parameters_addr_6, align 4
+
+ST_30: data_array_load [1/2] 2.71ns
+:52  %data_array_load = load i8* %data_array_addr_1, align 1
+
+
+ <State 31>: 7.42ns
+ST_31: tmp_2 [2/2] 7.42ns
+:53  %tmp_2 = call fastcc zeroext i1 @backsub_EM_ALGO(i8 zeroext %data_array_load, i9 %i, [1800 x float]* @parameters, i9 %x) nounwind
+
+
+ <State 32>: 3.96ns
+ST_32: stg_213 [1/1] 0.00ns
+:1  call void (...)* @_ssdm_op_SpecLoopTripCount(i64 300, i64 300, i64 300)
+
+ST_32: tmp_1 [1/1] 0.00ns
+:2  %tmp_1 = call i32 (...)* @_ssdm_op_SpecRegionBegin([12 x i8]* @p_str1811) nounwind
+
+ST_32: stg_215 [1/1] 0.00ns
+:3  call void (...)* @_ssdm_op_SpecPipeline(i32 1, i32 1, i32 1, i32 0, [1 x i8]* @p_str1806) nounwind
+
+ST_32: tmp_2 [1/2] 1.57ns
+:53  %tmp_2 = call fastcc zeroext i1 @backsub_EM_ALGO(i8 zeroext %data_array_load, i9 %i, [1800 x float]* @parameters, i9 %x) nounwind
+
+ST_32: out_frame_addr [1/1] 0.00ns
+:54  %out_frame_addr = getelementptr [300 x i1]* @out_frame, i64 0, i64 %tmp_23
+
+ST_32: stg_218 [1/1] 2.39ns
+:55  store i1 %tmp_2, i1* %out_frame_addr, align 1
+
+ST_32: empty_9 [1/1] 0.00ns
+:56  %empty_9 = call i32 (...)* @_ssdm_op_SpecRegionEnd([12 x i8]* @p_str1811, i32 %tmp_1) nounwind
+
+ST_32: stg_220 [1/1] 0.00ns
+:57  br label %.preheader3
 
 
  <State 33>: 8.75ns
-ST_33: gmem_offset_addr_5_resp [2/5] 8.75ns
-:88  %gmem_offset_addr_5_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_17)
+ST_33: tmp_36 [1/1] 0.00ns
+.loopexit:1  %tmp_36 = sext i33 %tmp_31 to i64
+
+ST_33: gmem_addr_2 [1/1] 0.00ns
+.loopexit:2  %gmem_addr_2 = getelementptr i8* %gmem, i64 %tmp_36
+
+ST_33: p_wr_req [1/1] 8.75ns
+.loopexit:3  %p_wr_req = call i1 @_ssdm_op_WriteReq.m_axi.i8P(i8* %gmem_addr_2, i32 300)
+
+ST_33: stg_224 [1/1] 1.57ns
+.loopexit:4  br label %burst.wr.header
 
 
- <State 34>: 8.75ns
-ST_34: stg_256 [1/1] 0.00ns
-:1  call void (...)* @_ssdm_op_SpecLoopTripCount(i64 600, i64 600, i64 600)
+ <State 34>: 3.40ns
+ST_34: indvar2 [1/1] 0.00ns
+burst.wr.header:0  %indvar2 = phi i9 [ 0, %.loopexit ], [ %indvar_next2, %burst.wr.body ]
 
-ST_34: tmp_2 [1/1] 0.00ns
-:2  %tmp_2 = call i32 (...)* @_ssdm_op_SpecRegionBegin([12 x i8]* @p_str1812) nounwind
+ST_34: exitcond4 [1/1] 2.03ns
+burst.wr.header:1  %exitcond4 = icmp eq i9 %indvar2, -212
 
-ST_34: stg_258 [1/1] 0.00ns
-:3  call void (...)* @_ssdm_op_SpecPipeline(i32 1, i32 1, i32 1, i32 0, [1 x i8]* @p_str1806) nounwind
+ST_34: stg_227 [1/1] 0.00ns
+burst.wr.header:2  call void (...)* @_ssdm_op_SpecLoopTripCount(i64 300, i64 300, i64 300)
 
-ST_34: gmem_offset_addr_5_resp [1/5] 8.75ns
-:88  %gmem_offset_addr_5_resp = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_17)
+ST_34: indvar_next2 [1/1] 1.84ns
+burst.wr.header:3  %indvar_next2 = add i9 %indvar2, 1
 
-ST_34: empty_8 [1/1] 0.00ns
-:95  %empty_8 = call i32 (...)* @_ssdm_op_SpecRegionEnd([12 x i8]* @p_str1812, i32 %tmp_2) nounwind
+ST_34: stg_229 [1/1] 0.00ns
+burst.wr.header:4  br i1 %exitcond4, label %burst.wr.header34.preheader, label %burst.wr.body
 
-ST_34: stg_261 [1/1] 0.00ns
-:96  br label %.preheader3
+ST_34: tmp_26 [1/1] 0.00ns
+burst.wr.body:3  %tmp_26 = zext i9 %indvar2 to i64
 
+ST_34: out_frame_addr_2 [1/1] 0.00ns
+burst.wr.body:4  %out_frame_addr_2 = getelementptr [300 x i1]* @out_frame, i64 0, i64 %tmp_26
 
- <State 35>: 8.75ns
-ST_35: empty_10 [1/1] 0.00ns
-.loopexit:0  %empty_10 = call i32 (...)* @_ssdm_op_SpecRegionEnd([6 x i8]* @p_str1811, i32 %tmp_1) nounwind
-
-ST_35: tmp_11 [1/1] 0.00ns
-.loopexit:2  %tmp_11 = sext i33 %tmp_10 to i64
-
-ST_35: gmem_addr_2 [1/1] 0.00ns
-.loopexit:3  %gmem_addr_2 = getelementptr i8* %gmem, i64 %tmp_11
-
-ST_35: p_wr_req [1/1] 8.75ns
-.loopexit:4  %p_wr_req = call i1 @_ssdm_op_WriteReq.m_axi.i8P(i8* %gmem_addr_2, i32 600)
-
-ST_35: stg_266 [1/1] 1.57ns
-.loopexit:5  br label %burst.wr.header
-
-
- <State 36>: 3.44ns
-ST_36: indvar1 [1/1] 0.00ns
-burst.wr.header:0  %indvar1 = phi i10 [ 0, %.loopexit ], [ %indvar_next1, %burst.wr.body ]
-
-ST_36: exitcond3 [1/1] 2.07ns
-burst.wr.header:1  %exitcond3 = icmp eq i10 %indvar1, -424
-
-ST_36: stg_269 [1/1] 0.00ns
-burst.wr.header:2  call void (...)* @_ssdm_op_SpecLoopTripCount(i64 600, i64 600, i64 600)
-
-ST_36: indvar_next1 [1/1] 1.84ns
-burst.wr.header:3  %indvar_next1 = add i10 %indvar1, 1
-
-ST_36: stg_271 [1/1] 0.00ns
-burst.wr.header:4  br i1 %exitcond3, label %burst.wr.end, label %burst.wr.body
-
-ST_36: tmp_29 [1/1] 0.00ns
-burst.wr.body:3  %tmp_29 = zext i10 %indvar1 to i64
-
-ST_36: out_frame_addr_2 [1/1] 0.00ns
-burst.wr.body:4  %out_frame_addr_2 = getelementptr [600 x i1]* @out_frame, i64 0, i64 %tmp_29
-
-ST_36: out_frame_load [2/2] 2.39ns
+ST_34: out_frame_load [2/2] 2.39ns
 burst.wr.body:5  %out_frame_load = load i1* %out_frame_addr_2, align 1
 
 
- <State 37>: 3.76ns
-ST_37: out_frame_load [1/2] 2.39ns
+ <State 35>: 3.76ns
+ST_35: out_frame_load [1/2] 2.39ns
 burst.wr.body:5  %out_frame_load = load i1* %out_frame_addr_2, align 1
 
-ST_37: extLd [1/1] 1.37ns
+ST_35: extLd [1/1] 1.37ns
 burst.wr.body:6  %extLd = select i1 %out_frame_load, i8 -1, i8 0
 
 
- <State 38>: 8.75ns
-ST_38: burstwrite_rbegin [1/1] 0.00ns
+ <State 36>: 8.75ns
+ST_36: burstwrite_rbegin [1/1] 0.00ns
 burst.wr.body:0  %burstwrite_rbegin = call i32 (...)* @_ssdm_op_SpecRegionBegin([18 x i8]* @burstwrite_OC_region_str) nounwind
 
-ST_38: stg_278 [1/1] 0.00ns
-burst.wr.body:1  call void (...)* @_ssdm_op_SpecPipeline(i32 1, i32 1, i32 1, i32 0, [1 x i8]* @p_str2)
+ST_36: stg_236 [1/1] 0.00ns
+burst.wr.body:1  call void (...)* @_ssdm_op_SpecPipeline(i32 1, i32 1, i32 1, i32 0, [1 x i8]* @p_str15)
 
-ST_38: empty_11 [1/1] 0.00ns
+ST_36: empty_11 [1/1] 0.00ns
 burst.wr.body:2  %empty_11 = call i32 (...)* @_ssdm_op_SpecLoopName([86 x i8]* @memcpy_OC_frame_out_OC_backsub) nounwind
 
-ST_38: gmem_addr_4 [1/1] 0.00ns
-burst.wr.body:7  %gmem_addr_4 = getelementptr i8* %gmem, i64 %tmp_11
+ST_36: gmem_addr_4 [1/1] 0.00ns
+burst.wr.body:7  %gmem_addr_4 = getelementptr i8* %gmem, i64 %tmp_36
 
-ST_38: stg_281 [1/1] 8.75ns
+ST_36: stg_239 [1/1] 8.75ns
 burst.wr.body:8  call void @_ssdm_op_Write.m_axi.i8P(i8* %gmem_addr_4, i8 %extLd, i1 true)
 
-ST_38: burstwrite_rend [1/1] 0.00ns
+ST_36: burstwrite_rend [1/1] 0.00ns
 burst.wr.body:9  %burstwrite_rend = call i32 (...)* @_ssdm_op_SpecRegionEnd([18 x i8]* @burstwrite_OC_region_str, i32 %burstwrite_rbegin) nounwind
 
-ST_38: stg_283 [1/1] 0.00ns
+ST_36: stg_241 [1/1] 0.00ns
 burst.wr.body:10  br label %burst.wr.header
 
 
- <State 39>: 8.75ns
-ST_39: gmem_addr_3 [1/1] 0.00ns
-burst.wr.end:0  %gmem_addr_3 = getelementptr i8* %gmem, i64 %tmp_11
+ <State 37>: 8.75ns
+ST_37: gmem_addr_3 [1/1] 0.00ns
+burst.wr.header34.preheader:0  %gmem_addr_3 = getelementptr i8* %gmem, i64 %tmp_36
 
-ST_39: p_wr_resp [5/5] 8.75ns
-burst.wr.end:1  %p_wr_resp = call i1 @_ssdm_op_WriteResp.m_axi.i8P(i8* %gmem_addr_3)
+ST_37: p_wr_resp [5/5] 8.75ns
+burst.wr.header34.preheader:1  %p_wr_resp = call i1 @_ssdm_op_WriteResp.m_axi.i8P(i8* %gmem_addr_3)
+
+
+ <State 38>: 8.75ns
+ST_38: p_wr_resp [4/5] 8.75ns
+burst.wr.header34.preheader:1  %p_wr_resp = call i1 @_ssdm_op_WriteResp.m_axi.i8P(i8* %gmem_addr_3)
+
+
+ <State 39>: 8.75ns
+ST_39: p_wr_resp [3/5] 8.75ns
+burst.wr.header34.preheader:1  %p_wr_resp = call i1 @_ssdm_op_WriteResp.m_axi.i8P(i8* %gmem_addr_3)
 
 
  <State 40>: 8.75ns
-ST_40: p_wr_resp [4/5] 8.75ns
-burst.wr.end:1  %p_wr_resp = call i1 @_ssdm_op_WriteResp.m_axi.i8P(i8* %gmem_addr_3)
+ST_40: p_wr_resp [2/5] 8.75ns
+burst.wr.header34.preheader:1  %p_wr_resp = call i1 @_ssdm_op_WriteResp.m_axi.i8P(i8* %gmem_addr_3)
 
 
  <State 41>: 8.75ns
-ST_41: p_wr_resp [3/5] 8.75ns
-burst.wr.end:1  %p_wr_resp = call i1 @_ssdm_op_WriteResp.m_axi.i8P(i8* %gmem_addr_3)
+ST_41: p_wr_resp [1/5] 8.75ns
+burst.wr.header34.preheader:1  %p_wr_resp = call i1 @_ssdm_op_WriteResp.m_axi.i8P(i8* %gmem_addr_3)
+
+ST_41: gmem_offset_addr_2 [1/1] 0.00ns
+burst.wr.header34.preheader:2  %gmem_offset_addr_2 = getelementptr float* %gmem_offset, i64 %tmp_10
+
+ST_41: p_wr_req12 [1/1] 8.75ns
+burst.wr.header34.preheader:3  %p_wr_req12 = call i1 @_ssdm_op_WriteReq.m_axi.floatP(float* %gmem_offset_addr_2, i32 1800)
+
+ST_41: stg_250 [1/1] 1.57ns
+burst.wr.header34.preheader:4  br label %burst.wr.header34
 
 
- <State 42>: 8.75ns
-ST_42: p_wr_resp [2/5] 8.75ns
-burst.wr.end:1  %p_wr_resp = call i1 @_ssdm_op_WriteResp.m_axi.i8P(i8* %gmem_addr_3)
+ <State 42>: 3.48ns
+ST_42: indvar3 [1/1] 0.00ns
+burst.wr.header34:0  %indvar3 = phi i11 [ %indvar_next3, %burst.wr.body35 ], [ 0, %burst.wr.header34.preheader ]
+
+ST_42: exitcond5 [1/1] 2.11ns
+burst.wr.header34:1  %exitcond5 = icmp eq i11 %indvar3, -248
+
+ST_42: stg_253 [1/1] 0.00ns
+burst.wr.header34:2  call void (...)* @_ssdm_op_SpecLoopTripCount(i64 1800, i64 1800, i64 1800)
+
+ST_42: indvar_next3 [1/1] 1.84ns
+burst.wr.header34:3  %indvar_next3 = add i11 %indvar3, 1
+
+ST_42: stg_255 [1/1] 0.00ns
+burst.wr.header34:4  br i1 %exitcond5, label %burst.wr.end33, label %burst.wr.body35
+
+ST_42: tmp_28 [1/1] 0.00ns
+burst.wr.body35:3  %tmp_28 = zext i11 %indvar3 to i64
+
+ST_42: parameters_addr_7 [1/1] 0.00ns
+burst.wr.body35:4  %parameters_addr_7 = getelementptr [1800 x float]* @parameters, i64 0, i64 %tmp_28
+
+ST_42: parameters_load [2/2] 2.71ns
+burst.wr.body35:5  %parameters_load = load float* %parameters_addr_7, align 4
 
 
- <State 43>: 8.75ns
-ST_43: p_wr_resp [1/5] 8.75ns
-burst.wr.end:1  %p_wr_resp = call i1 @_ssdm_op_WriteResp.m_axi.i8P(i8* %gmem_addr_3)
+ <State 43>: 2.71ns
+ST_43: parameters_load [1/2] 2.71ns
+burst.wr.body35:5  %parameters_load = load float* %parameters_addr_7, align 4
 
-ST_43: empty_12 [1/1] 0.00ns
-burst.wr.end:2  %empty_12 = call i32 (...)* @_ssdm_op_SpecRegionEnd([12 x i8]* @p_str1810, i32 %tmp) nounwind
 
-ST_43: stg_291 [1/1] 0.00ns
-burst.wr.end:3  br label %1
+ <State 44>: 8.75ns
+ST_44: burstwrite_rbegin1 [1/1] 0.00ns
+burst.wr.body35:0  %burstwrite_rbegin1 = call i32 (...)* @_ssdm_op_SpecRegionBegin([18 x i8]* @burstwrite_OC_region_str) nounwind
+
+ST_44: stg_261 [1/1] 0.00ns
+burst.wr.body35:1  call void (...)* @_ssdm_op_SpecPipeline(i32 1, i32 1, i32 1, i32 0, [1 x i8]* @p_str29)
+
+ST_44: empty_12 [1/1] 0.00ns
+burst.wr.body35:2  %empty_12 = call i32 (...)* @_ssdm_op_SpecLoopName([82 x i8]* @memcpy_OC_para_OC_backsub_IC_u) nounwind
+
+ST_44: gmem_offset_addr_4 [1/1] 0.00ns
+burst.wr.body35:6  %gmem_offset_addr_4 = getelementptr float* %gmem_offset, i64 %tmp_10
+
+ST_44: stg_264 [1/1] 8.75ns
+burst.wr.body35:7  call void @_ssdm_op_Write.m_axi.floatP(float* %gmem_offset_addr_4, float %parameters_load, i4 -1)
+
+ST_44: burstwrite_rend45 [1/1] 0.00ns
+burst.wr.body35:8  %burstwrite_rend45 = call i32 (...)* @_ssdm_op_SpecRegionEnd([18 x i8]* @burstwrite_OC_region_str, i32 %burstwrite_rbegin1) nounwind
+
+ST_44: stg_266 [1/1] 0.00ns
+burst.wr.body35:9  br label %burst.wr.header34
+
+
+ <State 45>: 8.75ns
+ST_45: gmem_offset_addr_3 [1/1] 0.00ns
+burst.wr.end33:0  %gmem_offset_addr_3 = getelementptr float* %gmem_offset, i64 %tmp_10
+
+ST_45: p_wr_resp13 [5/5] 8.75ns
+burst.wr.end33:1  %p_wr_resp13 = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_3)
+
+
+ <State 46>: 8.75ns
+ST_46: p_wr_resp13 [4/5] 8.75ns
+burst.wr.end33:1  %p_wr_resp13 = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_3)
+
+
+ <State 47>: 8.75ns
+ST_47: p_wr_resp13 [3/5] 8.75ns
+burst.wr.end33:1  %p_wr_resp13 = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_3)
+
+
+ <State 48>: 8.75ns
+ST_48: p_wr_resp13 [2/5] 8.75ns
+burst.wr.end33:1  %p_wr_resp13 = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_3)
+
+
+ <State 49>: 8.75ns
+ST_49: p_wr_resp13 [1/5] 8.75ns
+burst.wr.end33:1  %p_wr_resp13 = call i1 @_ssdm_op_WriteResp.m_axi.floatP(float* %gmem_offset_addr_3)
+
+ST_49: empty_13 [1/1] 0.00ns
+burst.wr.end33:2  %empty_13 = call i32 (...)* @_ssdm_op_SpecRegionEnd([12 x i8]* @p_str1810, i32 %tmp) nounwind
+
+ST_49: stg_274 [1/1] 0.00ns
+burst.wr.end33:3  br label %1
 
 
 
@@ -1058,6 +1021,12 @@ N/A
 	State 41
 	State 42
 	State 43
+	State 44
+	State 45
+	State 46
+	State 47
+	State 48
+	State 49
 
 
 ============================================================

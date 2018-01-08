@@ -10,7 +10,7 @@
 
 module backsub_fpext_32ns_64_1
 #(parameter
-    ID         = 6,
+    ID         = 8,
     NUM_STAGE  = 1,
     din0_WIDTH = 32,
     dout_WIDTH = 64
